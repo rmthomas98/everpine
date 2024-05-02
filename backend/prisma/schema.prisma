@@ -12,3 +12,30 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum SubscriptionStatus {
+  ACTIVE
+  INACTIVE
+  PAST_DUE
+  NEW_USER
+  TRIAL
+}
+
+model User {
+  id                     Int                @id @default(autoincrement())
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
+  name                   String?
+  email                  String             @unique
+  password               String
+  isEmailVerified        Boolean            @default(false)
+  emailVerificationToken String?            @unique
+  trialEndDate           Int? // timestamp
+  hasPaymentMethod       Boolean            @default(false)
+  stripePaymentMethodId  String?
+  stripeCustomerId       String?
+  stripeSubscriptionId   String?
+  subscriptionStatus     SubscriptionStatus @default(NEW_USER)
+  latestInvoiceId        String? // get from payment failed webhook so when user updates payment method, we can retry the payment
+  cancelAtPeriodEnd      Boolean            @default(false)
+}

@@ -9,7 +9,7 @@ router.use((req, res, next) => {
 
 // Get all users
 // Path: /api/v1/user
-router.get('/' ,(req, res) => {
+router.get('/' ,  (req, res) => {
   // call the controller
   console.log('get all users')
   res.send('Get all users')
