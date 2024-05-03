@@ -1,18 +1,27 @@
 "use client";
 
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "next-themes";
+import dynamic from "next/dynamic";
+
+const Image = dynamic(() => import("next/image"), { ssr: false });
 
 export const Nav = () => {
+  const { resolvedTheme, setTheme } = useTheme();
+
   return (
     <>
-      <div className="h-[63px]"></div>
-      <nav className="px-4 py-3 fixed top-0 left-[50%] w-full translate-x-[-50%]">
-        <div className="w-full relative rounded-full max-w-[800px] mx-auto flex justify-between items-center px-3 py-2 backdrop-blur bg-zinc-300/20 border border-zinc-200 shadow-md">
+      {/*<Button*/}
+      {/*  onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}*/}
+      {/*>*/}
+      {/*  Light*/}
+      {/*</Button>*/}
+      <nav className="px-4 py-3 sticky top-0">
+        <div className="w-full fade-in-delayed opacity-0 rounded-full max-w-[800px] mx-auto flex justify-between backdrop-blur items-center px-2 py-2 border shadow-md">
           <Image
-            src="/images/logos/full-dark-text.svg"
+            src={`/images/logos/logo-${resolvedTheme}-mode.svg`}
             width={100}
-            height={21}
+            height={26}
             alt="dreamist logo"
             quality={100}
           />
