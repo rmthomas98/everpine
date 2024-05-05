@@ -1,6 +1,7 @@
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { ThemeProvider } from "@/components/themeProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = {
   icons: {
@@ -9,12 +10,15 @@ export const metadata = {
   },
 };
 
+export const runtime = "experimental-edge";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${GeistSans.className}`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

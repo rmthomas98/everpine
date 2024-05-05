@@ -4,9 +4,7 @@ const Home = () => {
   return (
     <>
       <Nav />
-      <div className="h-[500px]">
-        <h1>Home</h1>
-      </div>
+      {/*<Hero />*/}
     </>
   );
 };

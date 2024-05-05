@@ -70,6 +70,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -86,6 +87,12 @@ body {
 .fade-in-delayed {
   animation: fadeIn 500ms ease;
   animation-delay: 500ms;
+  animation-fill-mode: forwards;
+}
+
+.fade-in-short-delayed {
+  animation: fadeIn 500ms ease;
+  animation-delay: 250ms;
   animation-fill-mode: forwards;
 }
 
