@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../../controllers/v1/user");
+const createUserController = require("../../controllers/v1/user/createUser");
 
-// we need to verify the token on every request
-// router.use((req, res, next) => {
-//   console.log("Time: ", Date.now());
-//   next();
-// });
+// middleware to check referrer
+// check referrer to make sure the request is coming from the frontend
+// router.use(checkReferrer);
+
+// create user
+router.post("/create", createUserController);
 
 // Get all users
 // Path: /api/v1/user
@@ -23,9 +24,6 @@ const userController = require("../../controllers/v1/user");
 //     console.log("res close");
 //   });
 // });
-
-// create user
-router.post("/create", userController.createUser);
 
 // get user by id
 // router.get("/:id", (req, res) => {

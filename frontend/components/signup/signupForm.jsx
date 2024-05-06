@@ -18,7 +18,7 @@ import { useState } from "react";
 import { HiMiniCheck } from "react-icons/hi2";
 import { Label } from "@/components/ui/label";
 import { CgSpinner } from "react-icons/cg";
-import { api } from "@/lib/api";
+import { post } from "@/lib/api";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
@@ -44,17 +44,15 @@ export const SignupForm = () => {
     const { email, password } = values;
 
     try {
-      const res = await api.post("/v1/user/create", { email, password });
-      setIsLoading(false);
-      // router push to verify email / account page
+      await post("/v1/user/create", { body: { email, password } });
+      // redirect to account created page
+      router.push("/new-account");
     } catch (e) {
       setIsLoading(false);
       toast({
         variant: "destructive",
-        title: "Something went wrong",
-        description: e?.response?.data
-          ? e.response.data
-          : "There was an error creating your account.",
+        title: "Error creating your account",
+        description: e.data,
       });
     }
   };

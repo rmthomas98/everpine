@@ -1,7 +1,8 @@
-const prisma = require("../../db/prisma");
+const prisma = require("../../../db/prisma");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
-const sendVerificationEmail = require("../../services/v1/user/sendVerificationEmail");
+const sendVerificationEmail = require("../../../services/v1/user/sendVerificationEmail");
+const { createToken } = require("../../../lib/session");
 
 const createUser = async (req, res) => {
   let { email, password } = req.body;
@@ -38,21 +39,20 @@ const createUser = async (req, res) => {
   if (!user) return res.status(500).send("User could not be created");
 
   // set cookies and send the response
-  res.send("User created");
+  const { session, options } = await createToken({
+    id: user.id,
+    email: user.email,
+    subscriptionStatus: user.subscriptionStatus,
+    isEmailVerified: user.isEmailVerified,
+  });
+
+  // set the token in the cookie and send the response
+  res.cookie("session", session, options);
+  res.send("user created");
 
   // we will execute this after the response is sent
   // so user doesn't have to wait for the email to be sent
   await sendVerificationEmail(email, emailVerificationToken);
-
-  // res
-  //   .cookie("token", "1234", {
-  //     httpOnly: true,
-  //     domain: process.env.DOMAIN,
-  //     maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
-  //   })
-  //   .send("user created");
 };
 
-module.exports = {
-  createUser,
-};
+module.exports = createUser;
