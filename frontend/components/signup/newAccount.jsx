@@ -11,6 +11,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import Link from "next/link";
+import { ResendEmail } from "@/components/signup/resendEmail";
 
 const Image = dynamic(() => import("next/image"), { ssr: false });
 
@@ -45,7 +46,9 @@ export const NewAccount = ({ email }) => {
               to activate your account and start using Dreamist.
             </p>
           </CardContent>
-          <CardFooter>{/*<ResendEmail email={email} />*/}</CardFooter>
+          <CardFooter>
+            <ResendEmail />
+          </CardFooter>
         </Card>
       </div>
     </div>

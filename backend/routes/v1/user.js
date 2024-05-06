@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const createUserController = require("../../controllers/v1/user/createUser");
+const getUserController = require("../../controllers/v1/user/getUser");
+const resendController = require("../../controllers/v1/user/resendEmail");
 
 // middleware to check referrer
 // check referrer to make sure the request is coming from the frontend
@@ -8,6 +10,12 @@ const createUserController = require("../../controllers/v1/user/createUser");
 
 // create user
 router.post("/create", createUserController);
+
+// send verification email
+router.get("/resend-email", resendController);
+
+// get user by id
+router.get("/:id", getUserController);
 
 // Get all users
 // Path: /api/v1/user

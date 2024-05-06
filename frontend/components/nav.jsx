@@ -9,7 +9,7 @@ import Link from "next/link";
 const Image = dynamic(() => import("next/image"), { ssr: false });
 
 export const Nav = () => {
-  const { resolvedTheme, setTheme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   return (
     <>
