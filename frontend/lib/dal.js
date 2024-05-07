@@ -2,19 +2,19 @@ import "server-only";
 
 import { cookies } from "next/headers";
 import { decrypt } from "@/lib/session";
-import { redirect } from "next/navigation";
 import { ofetch } from "ofetch";
+import { cache } from "react";
 
-export const getSession = async () => {
+export const getSession = cache(async () => {
   const cookie = cookies().get("session").value;
-  const session = await decrypt(cookie);
-  if (!session.id) redirect("/login");
-  return session;
-};
+  return await decrypt(cookie);
+});
 
-export const getUser = async () => {
+export const getUser = cache(async () => {
   const session = await getSession();
+  if (!session) return null;
 
+  const { id } = session;
   let user;
 
   try {
@@ -26,7 +26,5 @@ export const getUser = async () => {
     user = null;
   }
 
-  if (!user) redirect("/login");
-
   return user;
-};
+});

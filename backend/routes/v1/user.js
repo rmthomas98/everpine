@@ -15,7 +15,10 @@ router.post("/create", createUserController);
 router.get("/resend-email", resendController);
 
 // get user by id
-router.get("/:id", getUserController);
+router.get("/:id", getUserController.getUserById);
+
+// get user by emailVerificationToken
+router.get("/verify/:emailToken", getUserController.getUserByEmailToken);
 
 // Get all users
 // Path: /api/v1/user

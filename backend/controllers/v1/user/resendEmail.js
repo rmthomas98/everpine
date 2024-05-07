@@ -14,10 +14,18 @@ const resendVerificationEmail = async (req, res) => {
 
     const { email, emailVerificationToken } = user;
 
-    res.send("Email sent!");
+    if (!emailVerificationToken)
+      return res.status(400).send("Email already verified");
 
     // send verification email
-    await sendVerificationEmail(email, emailVerificationToken);
+    try {
+      await sendVerificationEmail(email, emailVerificationToken);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send("Error sending email");
+    }
+
+    res.send("Email sent");
   } catch (e) {
     console.log(e);
     res.status(500).send("Internal server error");

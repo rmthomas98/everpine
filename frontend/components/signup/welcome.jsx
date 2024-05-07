@@ -15,7 +15,7 @@ import { ResendEmail } from "@/components/signup/resendEmail";
 
 const Image = dynamic(() => import("next/image"), { ssr: false });
 
-export const NewAccount = ({ email }) => {
+export const Welcome = ({ email }) => {
   const { resolvedTheme } = useTheme();
 
   return (

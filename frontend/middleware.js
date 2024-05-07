@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { decrypt } from "@/lib/session";
 import { updateSession } from "@/lib/session";
 
-const protectedRoutes = ["/dashboard", "/new-account", "/subscribe"];
+const protectedRoutes = ["/dashboard", "/welcome", "/subscribe"];
 const publicRoutes = ["/login", "/signup"];
 
 const middleware = async (req) => {
@@ -20,7 +20,6 @@ const middleware = async (req) => {
   if (session?.id) {
     res = await updateSession(req);
   }
-  // return await updateSession(req, NextResponse.next());
 
   // redirect to /login if the user is on a protected route and not logged in
   if (isProtected && !session?.id) {
