@@ -14,9 +14,6 @@ router.post("/create", createUserController);
 // send verification email
 router.get("/resend-email", resendController);
 
-// get user by id
-router.get("/:id", getUserController.getUserById);
-
 // get user by emailVerificationToken
 router.get("/verify/:emailToken", getUserController.getUserByEmailToken);
 

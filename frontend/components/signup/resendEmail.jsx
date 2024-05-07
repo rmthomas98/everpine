@@ -13,8 +13,7 @@ export const ResendEmail = () => {
   const onResend = async () => {
     setIsLoading(true);
     try {
-      const res = await apiGet("/user/resend-email");
-      console.log(res);
+      await apiGet("/user/resend-email");
       setIsLoading(false);
       toast({
         title: "Email has been resent!",
@@ -32,12 +31,7 @@ export const ResendEmail = () => {
 
   return (
     <div>
-      <Button
-        size="sm"
-        variant="outline"
-        onClick={onResend}
-        disabled={isLoading}
-      >
+      <Button size="sm" onClick={onResend} disabled={isLoading}>
         {isLoading && <CgSpinner className="animate-spin mr-1" size={16} />}
         Resend email
       </Button>

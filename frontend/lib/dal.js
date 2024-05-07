@@ -18,7 +18,7 @@ export const getUser = cache(async () => {
   let user;
 
   try {
-    user = await ofetch(`/user/${id}`, {
+    user = await ofetch(`/auth/me/${id}`, {
       baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
     });
   } catch (e) {
