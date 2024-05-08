@@ -3,28 +3,23 @@ import "server-only";
 import { cookies } from "next/headers";
 import { decrypt } from "@/lib/session";
 import { ofetch } from "ofetch";
-import { cache } from "react";
 
-export const getSession = cache(async () => {
+export const getSession = async () => {
   const cookie = cookies().get("session").value;
   return await decrypt(cookie);
-});
+};
 
-export const getUser = cache(async () => {
+export const getUser = async () => {
   const session = await getSession();
-  if (!session) return null;
-
-  const { id } = session;
-  let user;
+  if (!session || !session.id) return null;
 
   try {
-    user = await ofetch(`/auth/me/${id}`, {
+    return await ofetch(`/auth/me/${session.id}`, {
       baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+      cache: "no-store",
     });
   } catch (e) {
     console.log(e);
-    user = null;
+    return null;
   }
-
-  return user;
-});
+};

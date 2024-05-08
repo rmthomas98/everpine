@@ -62,14 +62,16 @@ export const SignupForm = () => {
       <div className="max-w-[400px] mx-auto">
         <div className="flex justify-center h-[25px]">
           <Link href="/" passHref scroll={false}>
-            <Image
-              src={`/images/logos/logo-${resolvedTheme}-mode.svg`}
-              width={100}
-              height={26}
-              alt="dreamist logo"
-              quality={100}
-              loading="eager"
-            />
+            {resolvedTheme && (
+              <Image
+                src={`/images/logos/logo-${resolvedTheme}-mode.svg`}
+                width={100}
+                height={26}
+                alt="dreamist logo"
+                quality={100}
+                loading="eager"
+              />
+            )}
           </Link>
         </div>
         <Card className="mt-4">

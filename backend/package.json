@@ -18,7 +18,8 @@
     "express": "^4.19.2",
     "jose": "^5.2.4",
     "nodemailer": "^6.9.13",
-    "prisma": "^5.13.0"
+    "prisma": "^5.13.0",
+    "stripe": "^15.5.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

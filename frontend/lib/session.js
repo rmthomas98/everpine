@@ -38,6 +38,7 @@ export async function updateSession(request) {
     httpOnly: true,
     expires: parsed.expires,
     domain: process.env.COOKIE_DOMAIN,
+    sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
   });
   return res;

@@ -11,7 +11,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import Link from "next/link";
-import { ResendEmail } from "@/components/signup/resendEmail";
+import { ResendEmail } from "@/components/accountSetup/resendEmail";
 
 const Image = dynamic(() => import("next/image"), { ssr: false });
 

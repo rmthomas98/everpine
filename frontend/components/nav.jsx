@@ -1,16 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useTheme } from "next-themes";
-import dynamic from "next/dynamic";
 import { HiArrowSmRight } from "react-icons/hi";
 import Link from "next/link";
-
-const Image = dynamic(() => import("next/image"), { ssr: false });
+import { ThemedLogo } from "@/components/ThemedLogo";
 
 export const Nav = () => {
-  const { resolvedTheme } = useTheme();
-
   return (
     <>
       {/*<Button*/}
@@ -22,16 +17,7 @@ export const Nav = () => {
         <div
           className={`w-full rounded-full max-w-[1000px] mx-auto flex justify-between backdrop-blur-[20px] items-center px-2 py-2 border shadow-md bg-background/30`}
         >
-          <div className="w-[100px]">
-            <Image
-              src={`/images/logos/logo-${resolvedTheme}-mode.svg`}
-              width={100}
-              height={26}
-              alt="dreamist logo"
-              quality={100}
-              loading="eager"
-            />
-          </div>
+          <ThemedLogo />
           <div className="flex items-center space-x-6 absolute left-[50%] translate-x-[-50%]">
             <p className="text-sm text-muted-foreground cursor-pointer hover:text-primary transition-all">
               Products
@@ -47,8 +33,8 @@ export const Nav = () => {
             </p>
           </div>
           <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="sm" className="rounded-full">
-              Sign in
+            <Button variant="ghost" size="sm" className="rounded-full" asChild>
+              <Link href="/login">Sign in</Link>
             </Button>
             <Button size="sm" className="rounded-full" asChild>
               <Link href="/signup">

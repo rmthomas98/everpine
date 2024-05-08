@@ -1,4 +1,4 @@
-import { Welcome } from "@/components/signup/welcome";
+import { Welcome } from "@/components/accountSetup/welcome";
 import { getUser } from "@/lib/dal";
 import { redirect } from "next/navigation";
 
