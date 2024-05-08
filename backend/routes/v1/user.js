@@ -17,6 +17,8 @@ router.get("/resend-email", resendController);
 // get user by emailVerificationToken
 router.get("/verify/:emailToken", getUserController.getUserByEmailToken);
 
+// verify user email
+
 // Get all users
 // Path: /api/v1/user
 // router.get("/", (req, res) => {
