@@ -8,7 +8,7 @@ const VerifyAccountPage = async ({ searchParams }) => {
   let user;
   // get user by email token and check if email is verified
   try {
-    user = await ofetch(`/user/verify/${token}`, {
+    user = await ofetch(`/account-setup/${token}`, {
       baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
     });
   } catch (e) {

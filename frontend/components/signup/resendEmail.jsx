@@ -13,7 +13,7 @@ export const ResendEmail = () => {
   const onResend = async () => {
     setIsLoading(true);
     try {
-      await apiGet("/user/resend-email");
+      await apiGet("/account-setup/resend-email");
       setIsLoading(false);
       toast({
         title: "Email has been resent!",

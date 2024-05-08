@@ -13,6 +13,4 @@ const me = async (req, res) => {
   }
 };
 
-module.exports = {
-  me,
-};
+module.exports = { me };

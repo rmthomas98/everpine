@@ -1,6 +1,6 @@
-const prisma = require("../../../db/prisma");
-const sendVerificationEmail = require("../../../services/v1/user/sendVerificationEmail");
-const { verifySession } = require("../../../lib/session");
+const { verifySession } = require("../../lib/session");
+const prisma = require("../../db/prisma");
+const sendVerificationEmail = require("../../services/v1/user/sendVerificationEmail");
 
 const resendVerificationEmail = async (req, res) => {
   try {
@@ -32,4 +32,24 @@ const resendVerificationEmail = async (req, res) => {
   }
 };
 
-module.exports = resendVerificationEmail;
+const getUserByEmailToken = async (req, res) => {
+  try {
+    const { emailToken } = req.params;
+    const user = await prisma.user.findUnique({
+      where: { emailVerificationToken: emailToken },
+    });
+    if (!user) return res.status(404).send("User not found");
+    res.json({ email: user.email, isEmailVerified: user.isEmailVerified });
+  } catch (e) {
+    console.log(e);
+    res.status(500).send("Internal server error");
+  }
+};
+
+const verifyEmail = async (req, res) => {};
+
+module.exports = {
+  resendVerificationEmail,
+  getUserByEmailToken,
+  verifyEmail,
+};
