@@ -17,7 +17,9 @@ export const Nav = () => {
         <div
           className={`w-full rounded-full max-w-[1000px] mx-auto flex justify-between backdrop-blur-[20px] items-center px-2 py-2 border shadow-md bg-background/30`}
         >
-          <ThemedLogo />
+          <Link href="/" passHref>
+            <ThemedLogo />
+          </Link>
           <div className="flex items-center space-x-6 absolute left-[50%] translate-x-[-50%]">
             <p className="text-sm text-muted-foreground cursor-pointer hover:text-primary transition-all">
               Products

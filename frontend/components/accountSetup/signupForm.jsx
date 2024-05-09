@@ -1,7 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useTheme } from "next-themes";
 import {
   Card,
   CardContent,
@@ -21,11 +19,9 @@ import { CgSpinner } from "react-icons/cg";
 import { apiPost } from "@/lib/api";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-
-const Image = dynamic(() => import("next/image"), { ssr: false });
+import { ThemedLogo } from "@/components/ThemedLogo";
 
 export const SignupForm = () => {
-  const { resolvedTheme } = useTheme();
   const { toast } = useToast();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -60,18 +56,9 @@ export const SignupForm = () => {
   return (
     <div className="p-4 fade-in-short-delayed opacity-0">
       <div className="max-w-[400px] mx-auto">
-        <div className="flex justify-center h-[25px]">
+        <div className="flex justify-center">
           <Link href="/" passHref scroll={false}>
-            {resolvedTheme && (
-              <Image
-                src={`/images/logos/logo-${resolvedTheme}-mode.svg`}
-                width={100}
-                height={26}
-                alt="dreamist logo"
-                quality={100}
-                loading="eager"
-              />
-            )}
+            <ThemedLogo />
           </Link>
         </div>
         <Card className="mt-4">

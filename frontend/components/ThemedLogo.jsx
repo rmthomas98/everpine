@@ -28,7 +28,7 @@ export const ThemedLogo = () => {
         width={100}
         height={26}
         quality={100}
-        alt="dreamist logo dark"
+        alt="dreamist logo"
         loading="eager"
       />
     </div>
