@@ -40,10 +40,7 @@ const createUser = async (req, res) => {
     if (!user) return res.status(500).send("User could not be created");
 
     // set cookies and send the response
-    const { session, options } = await createSession({
-      id: user.id,
-      email: user.email,
-    });
+    const { session, options } = await createSession({ id: user.id });
 
     // set the token in the cookie and send the response
     res.cookie("session", session, options);

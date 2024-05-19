@@ -1,10 +1,12 @@
 import { Nav } from "@/components/nav";
+import { getSession } from "@/lib/dal";
 
-const Home = () => {
+const Home = async () => {
+  const session = await getSession();
+
   return (
     <>
-      <Nav />
-      {/*<Hero />*/}
+      <Nav session={session} />
     </>
   );
 };

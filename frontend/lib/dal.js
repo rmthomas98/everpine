@@ -5,7 +5,7 @@ import { decrypt } from "@/lib/session";
 import { ofetch } from "ofetch";
 
 export const getSession = async () => {
-  const cookie = cookies().get("session").value;
+  const cookie = cookies().get("session")?.value;
   return await decrypt(cookie);
 };
 

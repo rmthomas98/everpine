@@ -3,6 +3,7 @@ const prisma = require("../../db/prisma");
 const me = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!id) return res.status(400).send("Invalid user id");
     const user = await prisma.user.findUnique({ where: { id } });
     if (!user) return res.status(404).send("User not found");
     const { email, isEmailVerified, subscriptionStatus } = user;

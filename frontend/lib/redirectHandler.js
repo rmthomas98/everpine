@@ -1,6 +1,6 @@
-"use server";
-
+import "server-only";
 import { redirect } from "next/navigation";
+
 export const redirectHandler = (user) => {
   const { isEmailVerified, subscriptionStatus } = user;
 

@@ -5,7 +5,7 @@ import { HiArrowSmRight } from "react-icons/hi";
 import Link from "next/link";
 import { ThemedLogo } from "@/components/ThemedLogo";
 
-export const Nav = () => {
+export const Nav = ({ session }) => {
   return (
     <>
       {/*<Button*/}
@@ -34,17 +34,31 @@ export const Nav = () => {
               Resources
             </p>
           </div>
-          <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="sm" className="rounded-full" asChild>
-              <Link href="/login">Sign in</Link>
-            </Button>
+          {!session ? (
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="rounded-full"
+                asChild
+              >
+                <Link href="/login">Sign in</Link>
+              </Button>
+              <Button size="sm" className="rounded-full" asChild>
+                <Link href="/signup">
+                  Get started
+                  <HiArrowSmRight className="ml-1" size={16} />
+                </Link>
+              </Button>
+            </div>
+          ) : (
             <Button size="sm" className="rounded-full" asChild>
-              <Link href="/signup">
-                Get started
+              <Link href="/dashboard">
+                Dashboard
                 <HiArrowSmRight className="ml-1" size={16} />
               </Link>
             </Button>
-          </div>
+          )}
         </div>
       </nav>
     </>

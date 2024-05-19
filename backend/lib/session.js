@@ -39,7 +39,7 @@ const createSession = async (data) => {
 
 const verifySession = async (cookie) => {
   const session = await decrypt(cookie);
-  if (!session.id) return null;
+  if (!session || !session?.id) return null;
   return session;
 };
 
