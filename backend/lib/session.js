@@ -28,7 +28,7 @@ const createSession = async (data) => {
 
   const options = {
     httpOnly: true,
-    domain: process.env.DOMAIN,
+    domain: process.env.COOKIE_DOMAIN,
     expires,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
@@ -43,9 +43,22 @@ const verifySession = async (cookie) => {
   return session;
 };
 
+// const destroySession = async () => {
+//   return {
+//     options: {
+//       httpOnly: true,
+//       domain: process.env.COOKIE_DOMAIN,
+//       expires: new Date(Date.now()),
+//       sameSite: "lax",
+//       secure: process.env.NODE_ENV === "production",
+//     },
+//   };
+// };
+
 module.exports = {
   encrypt,
   decrypt,
   createSession,
   verifySession,
+  // destroySession,
 };

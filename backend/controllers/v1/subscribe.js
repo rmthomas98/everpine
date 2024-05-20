@@ -2,7 +2,15 @@ const { verifySession } = require("../../lib/session");
 const prisma = require("../../db/prisma");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-const createTrial = async (req, res) => {
+const createSetupIntent = async (req, res) => {
+  try {
+  } catch (e) {
+    console.log(e);
+    res.status(500).send("Internal server error");
+  }
+};
+
+const activateTrial = async (req, res) => {
   try {
     const session = await verifySession(req.cookies.session);
     if (!session) return res.status(401).send("Unauthorized");
@@ -52,4 +60,4 @@ const createTrial = async (req, res) => {
 
 const activateSubscription = async (req, res) => {};
 
-module.exports = { createTrial, activateSubscription };
+module.exports = { createSetupIntent, activateTrial, activateSubscription };

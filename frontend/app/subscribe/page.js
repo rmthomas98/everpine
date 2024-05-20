@@ -1,6 +1,6 @@
 import { getUser } from "@/lib/dal";
 import { redirect } from "next/navigation";
-import { ofetch } from "ofetch";
+import { Subscribe } from "@/components/accountSetup/subscribe/subscribe";
 
 export const metadata = {
   title: "Dreamist | Subscribe",
@@ -21,18 +21,14 @@ const SubscribePage = async () => {
     redirect("/dashboard/settings/subscription");
   }
 
-  let clientSecret;
-
-  if (subscriptionStatus === "INACTIVE") {
-  }
-
-  await ofetch("/subscribe/create-trial", {
-    method: "POST",
-    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-    credentials: "include",
-  });
-
-  return <div>subscribe</div>;
+  return (
+    <div>
+      <Subscribe
+        email={user.email}
+        subscriptionStatus={user.subscriptionStatus}
+      />
+    </div>
+  );
 };
 
 export default SubscribePage;

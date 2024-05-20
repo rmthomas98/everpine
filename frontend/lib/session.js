@@ -45,6 +45,6 @@ export async function updateSession(request) {
   return res;
 }
 
-export const deleteSession = async () => {
+export const destroySession = async () => {
   cookies().delete("session");
 };
