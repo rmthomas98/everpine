@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 
 const Image = dynamic(() => import("next/image"), { ssr: false });
 
-export const ThemedLogo = () => {
+export const ThemedLogo = ({ isDashboard }) => {
   const { resolvedTheme } = useTheme();
 
   let src;
@@ -25,8 +25,8 @@ export const ThemedLogo = () => {
     <div className="h-[24.9px] max-h-[24.9px] w-[100px] max-w-[100px]">
       <Image
         src={src}
-        width={100}
-        height={26}
+        width={isDashboard ? 90 : 100}
+        height={isDashboard ? 24 : 26}
         quality={100}
         alt="dreamist logo"
         loading="eager"

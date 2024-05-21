@@ -1,7 +1,23 @@
+import { SideNav } from "@/components/dashboardLayout/sideNav";
+import { AppNav } from "@/components/dashboardLayout/appNav";
 import { getUser } from "@/lib/dal";
-import { redirect } from "next/navigation";
+
 const DashboardLayout = async ({ children }) => {
-  return <div>{children}</div>;
+  const user = await getUser();
+
+  return (
+    <div className="max-w-[1374px] mx-auto">
+      <div className="flex w-full">
+        <SideNav user={user} />
+        <div className="w-full">
+          <AppNav email={user.email} />
+          <div className="py-4 px-4">
+            <div className="w-full">{children}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default DashboardLayout;

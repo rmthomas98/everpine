@@ -4,7 +4,7 @@ import { decrypt } from "@/lib/session";
 import { updateSession } from "@/lib/session";
 
 const protectedRoutes = ["/dashboard", "/welcome", "/subscribe"];
-const publicRoutes = ["/login", "/accountSetup", "/signup"];
+const publicRoutes = ["/login", "/signup"];
 
 const middleware = async (req) => {
   // check if route is protected or public

@@ -21,15 +21,53 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signOut } from "@/app/actions/signout";
+import { apiPost } from "@/lib/api";
+import { useToast } from "@/components/ui/use-toast";
+import { SetupIntentModal } from "@/components/accountSetup/subscribe/setupIntent/setupIntentModal";
+
+const getClientSecret = async () => {
+  try {
+    const data = await apiPost("/subscribe/create-setup-intent");
+    return data?.clientSecret;
+  } catch (e) {
+    console.log(e.data);
+    return null;
+  }
+};
 
 export const Subscribe = ({ email, subscriptionStatus }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [clientSecret, setClientSecret] = useState(null);
   const router = useRouter();
+  const { toast } = useToast();
 
-  const activateTrial = async () => {};
+  useEffect(() => {
+    if (subscriptionStatus === "INACTIVE") {
+      getClientSecret().then((secret) => setClientSecret(secret));
+    }
+    return () => setClientSecret(null);
+  }, []);
+
+  const activateTrial = async () => {
+    setIsLoading(true);
+
+    try {
+      await apiPost("/subscribe/create-trial");
+      router.push("/dashboard");
+      router.refresh();
+    } catch (e) {
+      setIsLoading(false);
+      toast({
+        variant: "destructive",
+        title: "Error activating trial",
+        description: e.data ? e.data : "Please try again",
+      });
+    }
+  };
 
   return (
     <>
@@ -86,7 +124,11 @@ export const Subscribe = ({ email, subscriptionStatus }) => {
           <div className="mt-8 flex">
             <Card className="max-[500px]:w-full">
               <CardHeader className="pb-4">
-                <CardTitle>dreamist pro</CardTitle>
+                <CardTitle className="flex justify-between items-center">
+                  {subscriptionStatus === "NEW_USER"
+                    ? "Start your free trial"
+                    : "Activate your subscription"}
+                </CardTitle>
                 <CardDescription>
                   Get full access to all features and benefits.
                 </CardDescription>
@@ -138,6 +180,12 @@ export const Subscribe = ({ email, subscriptionStatus }) => {
                         Detailed analytics and insights
                       </p>
                     </div>
+                    <div className="flex itesm-center mt-2">
+                      <FaCheck size={13} />
+                      <p className="text-sm ml-2">
+                        Unlimited team members with roles
+                      </p>
+                    </div>
                     {/*<div className="flex items-center mt-2">*/}
                     {/*  <FaCheck size={14} />*/}
                     {/*  <p className="text-sm ml-2">Geo tracking</p>*/}
@@ -151,15 +199,17 @@ export const Subscribe = ({ email, subscriptionStatus }) => {
                   </div>
                 </div>
               </CardContent>
-              <CardFooter className="pb-2">
+              <CardFooter
+                className={subscriptionStatus === "NEW_USER" ? "pb-2" : "pb-6"}
+              >
                 <Button
                   disabled={isLoading}
                   className="w-full"
-                  // onClick={
-                  //   subscriptionStatus === "NEW_USER"
-                  //     ? handleActivateTrial
-                  //     : () => setIsModalOpen(true)
-                  // }
+                  onClick={
+                    subscriptionStatus === "NEW_USER"
+                      ? activateTrial
+                      : () => setIsModalOpen(true)
+                  }
                 >
                   {isLoading && (
                     <CgSpinner size={16} className="mr-2 animate-spin" />
@@ -178,13 +228,13 @@ export const Subscribe = ({ email, subscriptionStatus }) => {
           </div>
         </div>
       </div>
-      {/*{subscriptionStatus === "INACTIVE" && (*/}
-      {/*  <SetupIntentModal*/}
-      {/*    clientSecret={clientSecret}*/}
-      {/*    isOpen={isModalOpen}*/}
-      {/*    setIsOpen={setIsModalOpen}*/}
-      {/*  />*/}
-      {/*)}*/}
+      {subscriptionStatus === "INACTIVE" && (
+        <SetupIntentModal
+          clientSecret={clientSecret}
+          isOpen={isModalOpen}
+          setIsOpen={setIsModalOpen}
+        />
+      )}
     </>
   );
 };

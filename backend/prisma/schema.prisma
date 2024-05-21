@@ -21,6 +21,12 @@ enum SubscriptionStatus {
   TRIAL
 }
 
+enum Role {
+  SUPER_ADMIN // team owner, CRUD, change subscription, change team settings
+  ADMIN // can do everything, create, read, update, delete
+  USER // can only read and print data
+}
+
 model User {
   id                     String             @id @default(cuid())
   createdAt              DateTime           @default(now())
