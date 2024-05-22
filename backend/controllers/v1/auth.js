@@ -8,8 +8,8 @@ const me = async (req, res) => {
     if (!id) return res.status(400).send("Invalid user id");
     const user = await prisma.user.findUnique({ where: { id } });
     if (!user) return res.status(404).send("User not found");
-    const { email, isEmailVerified, subscriptionStatus } = user;
-    res.json({ id, email, isEmailVerified, subscriptionStatus });
+    const { email, isEmailVerified, subscriptionStatus, role } = user;
+    res.json({ id, email, isEmailVerified, subscriptionStatus, role });
   } catch (e) {
     console.log(e);
     res.status(500).send("Internal server error");
@@ -23,7 +23,7 @@ const signIn = async (req, res) => {
       return res.status(400).send("Invalid email or password");
 
     email = email.toLowerCase().trim();
-    const user = await prisma.user.findFirst({ where: { email } });
+    const user = await prisma.user.findUnique({ where: { email } });
     if (!user) return res.status(404).send("User not found");
 
     // compare password with hash

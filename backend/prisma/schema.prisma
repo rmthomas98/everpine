@@ -22,9 +22,9 @@ enum SubscriptionStatus {
 }
 
 enum Role {
-  SUPER_ADMIN // team owner, CRUD, change subscription, change team settings
-  ADMIN // can do everything, create, read, update, delete
-  USER // can only read and print data
+  SUPER_ADMIN // team owner, CRUD, change subscription, change team settings (ownly can be one)
+  ADMIN // can do everything, create, read, update, delete, (can be multiple)
+  USER // can only read and print data (can be multiple)
 }
 
 model User {
@@ -34,6 +34,7 @@ model User {
   name                   String?
   email                  String             @unique
   password               String
+  role                   Role               @default(SUPER_ADMIN)
   isEmailVerified        Boolean            @default(false)
   emailVerificationToken String?            @unique
   trialEndDate           Int? // timestamp

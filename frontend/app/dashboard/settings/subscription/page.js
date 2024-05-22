@@ -5,6 +5,9 @@ const Page = async () => {
   const user = await getUser();
   if (!user) redirect("/login");
 
+  const { role } = user;
+  if (role !== "SUPER_ADMIN") redirect("/dashboard");
+
   return (
     <div className="fade-in-short-delayed opacity-0">
       <h1>Subscription</h1>

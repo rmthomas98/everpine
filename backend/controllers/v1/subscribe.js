@@ -118,7 +118,7 @@ const activateSubscription = async (req, res) => {
       },
     });
 
-    res.send("Page activated");
+    res.send("Subscription created");
   } catch (e) {
     console.log(e);
     res.status(500).send("Internal server error");

@@ -21,16 +21,16 @@ export const Nav = ({ session }) => {
             <ThemedLogo />
           </Link>
           <div className="flex items-center space-x-6 absolute left-[50%] translate-x-[-50%]">
-            <p className="text-sm text-muted-foreground cursor-pointer hover:text-primary transition-all">
+            <p className="text-sm text-muted-foreground cursor-pointer hover:text-foreground transition-all">
               Products
             </p>
-            <p className="text-sm text-muted-foreground hover:text-primary cursor-pointer transition-all">
+            <p className="text-sm text-muted-foreground hover:text-foreground cursor-pointer transition-all">
               Solutions
             </p>
-            <p className="text-sm text-muted-foreground hover:text-primary cursor-pointer transition-all">
+            <p className="text-sm text-muted-foreground hover:text-foreground cursor-pointer transition-all">
               Pricing
             </p>
-            <p className="text-sm text-muted-foreground hover:text-primary cursor-pointer transition-all">
+            <p className="text-sm text-muted-foreground hover:text-foreground cursor-pointer transition-all">
               Resources
             </p>
           </div>

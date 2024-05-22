@@ -39,7 +39,7 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 
-export const AppNav = ({ email, subscriptionStatus }) => {
+export const AppNav = ({ email, subscriptionStatus, role }) => {
   const [isAccountTooltipOpen, setIsAccountTooltipOpen] = useState(false);
   const [isCreateTooltipOpen, setIsCreateTooltipOpen] = useState(false);
   const [isHelpTooltipOpen, setIsHelpTooltipOpen] = useState(false);
@@ -318,17 +318,19 @@ export const AppNav = ({ email, subscriptionStatus }) => {
                       Profile
                     </DropdownMenuItem>
                   </Link>
-                  <Link href="/dashboard/settings/subscription" passHref>
-                    <DropdownMenuItem
-                      disabled={
-                        subscriptionStatus === "NEW_USER" ||
-                        subscriptionStatus === "INACTIVE"
-                      }
-                    >
-                      <FiBox size={14} className="mr-2" />
-                      Subscription
-                    </DropdownMenuItem>
-                  </Link>
+                  {role === "SUPER_ADMIN" && (
+                    <Link href="/dashboard/settings/subscription" passHref>
+                      <DropdownMenuItem
+                        disabled={
+                          subscriptionStatus === "NEW_USER" ||
+                          subscriptionStatus === "INACTIVE"
+                        }
+                      >
+                        <FiBox size={14} className="mr-2" />
+                        Subscription
+                      </DropdownMenuItem>
+                    </Link>
+                  )}
                   {/*<Link href="/account/settings" passHref>*/}
                   {/*  <DropdownMenuItem*/}
                   {/*    disabled={*/}
