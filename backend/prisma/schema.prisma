@@ -13,6 +13,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id                     String        @id @default(cuid())
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
+  name                   String?
+  email                  String        @unique
+  password               String
+  isEmailVerified        Boolean       @default(false)
+  emailVerificationToken String?       @unique
+  teams                  Team[]
+  roles                  Role[]
+  subscription           Subscription? @relation(fields: [subscriptionId], references: [id]) // for the users that have their own subscriptions so they can create their own teams if they want
+  subscriptionId         String?
+}
+
 enum SubscriptionStatus {
   ACTIVE
   INACTIVE
@@ -21,28 +36,44 @@ enum SubscriptionStatus {
   TRIAL
 }
 
-enum Role {
-  SUPER_ADMIN // team owner, CRUD, change subscription, change team settings (ownly can be one)
-  ADMIN // can do everything, create, read, update, delete, (can be multiple)
-  USER // can only read and print data (can be multiple)
+model Subscription {
+  id                   String             @id @default(cuid())
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  trialEndDate         Int? // timestamp
+  hasPaymentMethod     Boolean            @default(false)
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  subscriptionStatus   SubscriptionStatus @default(NEW_USER)
+  latestInvoiceId      String? // get from payment failed webhook so when user updates payment method, we can retry the payment
+  cancelAtPeriodEnd    Boolean            @default(false)
+  teams                Team[]
+  users                User[]
 }
 
-model User {
-  id                     String             @id @default(cuid())
-  createdAt              DateTime           @default(now())
-  updatedAt              DateTime           @updatedAt
-  name                   String?
-  email                  String             @unique
-  password               String
-  role                   Role               @default(SUPER_ADMIN)
-  isEmailVerified        Boolean            @default(false)
-  emailVerificationToken String?            @unique
-  trialEndDate           Int? // timestamp
-  hasPaymentMethod       Boolean            @default(false)
-  stripePaymentMethodId  String?
-  stripeCustomerId       String?
-  stripeSubscriptionId   String?
-  subscriptionStatus     SubscriptionStatus @default(NEW_USER)
-  latestInvoiceId        String? // get from payment failed webhook so when user updates payment method, we can retry the payment
-  cancelAtPeriodEnd      Boolean            @default(false)
+model Team {
+  id             String        @id @default(cuid())
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  name           String
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id]) // will belong to the team owner (super admin)
+  subscriptionId String?
+  users          User[]
+  roles          Role[]
+}
+
+enum Roles {
+  SUPER_ADMIN // team owner (ownly can be one)
+  ADMIN // can do everything except changing subscription (can be multiple)
+  EDITOR // can create and edit the data (no team management)
+  READ_ONLY // can only view the data (can't see the team, only qr codes and links)
+}
+
+model Role {
+  id     String @id @default(cuid())
+  role   Roles  @default(SUPER_ADMIN)
+  team   Team   @relation(fields: [teamId], references: [id])
+  teamId String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }

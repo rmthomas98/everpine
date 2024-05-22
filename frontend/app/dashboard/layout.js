@@ -9,7 +9,7 @@ const DashboardLayout = async ({ children }) => {
 
   return (
     <>
-      <NextTopLoader showSpinner={false} color="#6366f1" height={2.5} />
+      <NextTopLoader showSpinner={false} color="#6366f1" height={2} />
       <div className="max-w-[1374px] mx-auto">
         <div className="flex w-full">
           <SideNav role={role} />

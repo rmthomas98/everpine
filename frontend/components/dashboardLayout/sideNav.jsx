@@ -25,7 +25,8 @@ import { ThemedLogo } from "@/components/ThemedLogo";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 
-export const SideNav = () => {
+export const SideNav = ({ role }) => {
+  console.log(role);
   const path = usePathname();
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -54,7 +55,7 @@ export const SideNav = () => {
       }`}
     >
       <div
-        className={`py-3 px-4 h-[100vh] flex justify-end w-[242px] overflow-y-auto`}
+        className={`py-3 px-4 h-[100vh] flex flex-col justify-between w-[242px] overflow-y-auto`}
       >
         <div className="w-full">
           <Link href="/dashboard" passHref>
@@ -71,34 +72,41 @@ export const SideNav = () => {
             {/*</Link>*/}
           </Link>
           <div className="mt-7">
-            <DropdownMenu modal={false}>
-              <DropdownMenuTrigger asChild>
-                <Button className="w-full justify-start" size="sm">
-                  <FiPlus size={15} className="mr-2 relative bottom-[0.5px]" />
-                  Create new
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="start"
-                side="right"
-                onCloseAutoFocus={(e) => e.preventDefault()}
-              >
-                <DropdownMenuLabel className="py-1">
-                  {/*<p className="text-[13px]">Create new</p>*/}
-                  <p className="text-xs text-muted-foreground">Create new</p>
-                </DropdownMenuLabel>
-                {/*<DropdownMenuSeparator />*/}
-                <DropdownMenuItem>
-                  <FiZap size={14} className="mr-2" />
-                  QR Code
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <FiLink2 size={14} className="mr-2 -rotate-45" />
-                  Link
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <div className="mt-7 pb-3">
+            {role !== "READ_ONLY" ? (
+              <DropdownMenu modal={false}>
+                <DropdownMenuTrigger asChild>
+                  <Button className="w-full justify-start" size="sm">
+                    <FiPlus
+                      size={15}
+                      className="mr-2 relative bottom-[0.5px]"
+                    />
+                    Create new
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="start"
+                  side="right"
+                  onCloseAutoFocus={(e) => e.preventDefault()}
+                >
+                  <DropdownMenuLabel className="py-1">
+                    {/*<p className="text-[13px]">Create new</p>*/}
+                    <p className="text-xs text-muted-foreground">Create new</p>
+                  </DropdownMenuLabel>
+                  {/*<DropdownMenuSeparator />*/}
+                  <DropdownMenuItem>
+                    <FiZap size={14} className="mr-2" />
+                    QR Code
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <FiLink2 size={14} className="mr-2 -rotate-45" />
+                    Link
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              ""
+            )}
+            <div className="mt-7 pb-7">
               <div>
                 <Button
                   asChild
@@ -176,29 +184,36 @@ export const SideNav = () => {
                   </Link>
                 </Button>
               </div>
-              <div>
-                <Button
-                  asChild
-                  variant="ghost"
-                  className={`w-full justify-start hover:accent-background ${
-                    path === "/dashboard/team"
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-muted-foreground"
-                  }`}
-                  size="sm"
-                >
-                  <Link href="/dashboard/team" passHref>
-                    <FiUsers
-                      size={14}
-                      className="mr-2.5 relative bottom-[1px]"
-                    />
-                    My Team
-                  </Link>
-                </Button>
-              </div>
+              {role === "SUPER_ADMIN" || role === "ADMIN" ? (
+                <div>
+                  <Button
+                    asChild
+                    variant="ghost"
+                    className={`w-full justify-start hover:accent-background ${
+                      path === "/dashboard/team"
+                        ? "text-foreground"
+                        : "text-muted-foreground hover:text-muted-foreground"
+                    }`}
+                    size="sm"
+                  >
+                    <Link href="/dashboard/team" passHref>
+                      <FiUsers
+                        size={14}
+                        className="mr-2.5 relative bottom-[1px]"
+                      />
+                      My Team
+                    </Link>
+                  </Button>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
+        <Button size="sm" variant="outline" className="min-h-8">
+          teams
+        </Button>
       </div>
     </div>
   );

@@ -298,7 +298,11 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
                       </Button>
                     </DropdownMenuTrigger>
                   </TooltipTrigger>
-                  <TooltipContent side="bottom" align="center" sideOffset={8}>
+                  <TooltipContent
+                    side="bottom"
+                    align={role === "READ_ONLY" ? "end" : "center"}
+                    sideOffset={8}
+                  >
                     <p>Account</p>
                   </TooltipContent>
                 </Tooltip>
@@ -363,47 +367,51 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            <div>
-              <DropdownMenu
-                modal={false}
-                onOpenChange={(open) => setIsCreateMenuOpen(open)}
-              >
-                <Tooltip open={isCreateTooltipOpen && !isAnyMenuOpen}>
-                  <TooltipTrigger
-                    asChild
-                    onMouseEnter={() => setIsCreateTooltipOpen(true)}
-                    onMouseLeave={() => setIsCreateTooltipOpen(false)}
-                  >
-                    <DropdownMenuTrigger asChild>
-                      <Button size="icon">
-                        <FiPlus size={15} />
-                      </Button>
-                    </DropdownMenuTrigger>
-                  </TooltipTrigger>
-                  <TooltipContent side="bottom" align={"end"} sideOffset={8}>
-                    <p>Create</p>
-                  </TooltipContent>
-                </Tooltip>
-                <DropdownMenuContent
-                  onCloseAutoFocus={(e) => e.preventDefault()}
-                  collisionBoundary={ref?.current}
+            {role !== "READ_ONLY" && (
+              <div>
+                <DropdownMenu
+                  modal={false}
+                  onOpenChange={(open) => setIsCreateMenuOpen(open)}
                 >
-                  <DropdownMenuLabel className="py-1">
-                    {/*<p className="text-[13px]">Create new</p>*/}
-                    <p className="text-xs text-muted-foreground">Create new</p>
-                  </DropdownMenuLabel>
-                  {/*<DropdownMenuSeparator />*/}
-                  <DropdownMenuItem>
-                    <FiZap size={14} className="mr-2" />
-                    QR Code
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <FiLink2 size={14} className="mr-2 -rotate-45" />
-                    Link
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+                  <Tooltip open={isCreateTooltipOpen && !isAnyMenuOpen}>
+                    <TooltipTrigger
+                      asChild
+                      onMouseEnter={() => setIsCreateTooltipOpen(true)}
+                      onMouseLeave={() => setIsCreateTooltipOpen(false)}
+                    >
+                      <DropdownMenuTrigger asChild>
+                        <Button size="icon">
+                          <FiPlus size={15} />
+                        </Button>
+                      </DropdownMenuTrigger>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom" align={"end"} sideOffset={8}>
+                      <p>Create</p>
+                    </TooltipContent>
+                  </Tooltip>
+                  <DropdownMenuContent
+                    onCloseAutoFocus={(e) => e.preventDefault()}
+                    collisionBoundary={ref?.current}
+                  >
+                    <DropdownMenuLabel className="py-1">
+                      {/*<p className="text-[13px]">Create new</p>*/}
+                      <p className="text-xs text-muted-foreground">
+                        Create new
+                      </p>
+                    </DropdownMenuLabel>
+                    {/*<DropdownMenuSeparator />*/}
+                    <DropdownMenuItem>
+                      <FiZap size={14} className="mr-2" />
+                      QR Code
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <FiLink2 size={14} className="mr-2 -rotate-45" />
+                      Link
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            )}
           </div>
         </div>
       </TooltipProvider>
