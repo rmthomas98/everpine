@@ -22,10 +22,9 @@ model User {
   password               String
   isEmailVerified        Boolean       @default(false)
   emailVerificationToken String?       @unique
+  defaultTeamId          String?
   teams                  Team[]
   roles                  Role[]
-  subscription           Subscription? @relation(fields: [subscriptionId], references: [id]) // for the users that have their own subscriptions so they can create their own teams if they want
-  subscriptionId         String?
 }
 
 enum SubscriptionStatus {
@@ -36,6 +35,16 @@ enum SubscriptionStatus {
   TRIAL
 }
 
+enum Plan {
+  PERSONAL
+  PROFESSIONAL
+  BUSINESS
+  ENTERPRISE
+}
+
+// this subsciption will belong to the team owner (super admin)
+// and will be attached to the team, so all the users in the team will have the same subscription
+// the team will use the subscription to get the plan and the status
 model Subscription {
   id                   String             @id @default(cuid())
   createdAt            DateTime           @default(now())
@@ -48,7 +57,6 @@ model Subscription {
   latestInvoiceId      String? // get from payment failed webhook so when user updates payment method, we can retry the payment
   cancelAtPeriodEnd    Boolean            @default(false)
   teams                Team[]
-  users                User[]
 }
 
 model Team {
