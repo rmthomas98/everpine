@@ -14,29 +14,29 @@ datasource db {
 }
 
 model User {
-  id                     String        @id @default(cuid())
-  createdAt              DateTime      @default(now())
-  updatedAt              DateTime      @updatedAt
+  id                     String         @id @default(cuid())
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
   name                   String?
-  email                  String        @unique
+  email                  String         @unique
   password               String
-  isEmailVerified        Boolean       @default(false)
-  emailVerificationToken String?       @unique
+  isEmailVerified        Boolean        @default(false)
+  emailVerificationToken String?        @unique
   defaultTeamId          String?
+  stripeCustomerId       String?
   teams                  Team[]
   roles                  Role[]
+  subscriptions          Subscription[]
 }
 
 enum SubscriptionStatus {
   ACTIVE
   INACTIVE
   PAST_DUE
-  NEW_USER
-  TRIAL
 }
 
 enum Plan {
-  PERSONAL
+  FREE // automatically assigned when user signs up and doesn't select a plan or selects free plan
   PROFESSIONAL
   BUSINESS
   ENTERPRISE
@@ -49,39 +49,77 @@ model Subscription {
   id                   String             @id @default(cuid())
   createdAt            DateTime           @default(now())
   updatedAt            DateTime           @updatedAt
-  trialEndDate         Int? // timestamp
-  hasPaymentMethod     Boolean            @default(false)
-  stripeCustomerId     String?
+  createdBy            User               @relation(fields: [createdById], references: [id])
+  createdById          String
+  plan                 Plan               @default(FREE)
+  status               SubscriptionStatus @default(ACTIVE)
   stripeSubscriptionId String?
-  subscriptionStatus   SubscriptionStatus @default(NEW_USER)
-  latestInvoiceId      String? // get from payment failed webhook so when user updates payment method, we can retry the payment
+  failedInvoiceId      String? // get from payment failed webhook so when user updates payment method, we can retry the payment
   cancelAtPeriodEnd    Boolean            @default(false)
-  teams                Team[]
+  team                 Team?
 }
 
 model Team {
-  id             String        @id @default(cuid())
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
+  id             String       @id @default(cuid())
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
   name           String
-  subscription   Subscription? @relation(fields: [subscriptionId], references: [id]) // will belong to the team owner (super admin)
-  subscriptionId String?
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
+  subscriptionId String       @unique
   users          User[]
   roles          Role[]
+  links          Link[]
+  qrCodes        QrCode[]
+  scans          Scan[]
+  clicks         Click[]
 }
 
 enum Roles {
-  SUPER_ADMIN // team owner (ownly can be one)
+  OWNER // team owner (can be multiple)
   ADMIN // can do everything except changing subscription (can be multiple)
-  EDITOR // can create and edit the data (no team management)
-  READ_ONLY // can only view the data (can't see the team, only qr codes and links)
+  MEMBER // can create and edit the data (no team management)
+  VIEWER // can only view the data (can't see the team, only qr codes and links)
+  INVITED // invited to join the team but hasn't accepted the invitation yet
+  INACTIVE // removed from the team
 }
 
 model Role {
   id     String @id @default(cuid())
-  role   Roles  @default(SUPER_ADMIN)
+  role   Roles  @default(OWNER)
   team   Team   @relation(fields: [teamId], references: [id])
   teamId String
   user   User   @relation(fields: [userId], references: [id])
   userId String
+}
+
+model Scan {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  team      Team     @relation(fields: [teamId], references: [id])
+  teamId    String
+}
+
+model Click {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Team      Team?    @relation(fields: [teamId], references: [id])
+  teamId    String?
+}
+
+model Link {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Team      Team?    @relation(fields: [teamId], references: [id])
+  teamId    String?
+}
+
+model QrCode {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Team      Team?    @relation(fields: [teamId], references: [id])
+  teamId    String?
 }
