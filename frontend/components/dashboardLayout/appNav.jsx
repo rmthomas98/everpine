@@ -6,6 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,9 @@ import {
   FiFlag,
   FiSun,
   FiMoon,
+  FiSettings,
+  FiBell,
+  FiCheckCircle,
 } from "react-icons/fi";
 import {
   Tooltip,
@@ -38,6 +42,12 @@ import { signOut } from "@/app/actions/signout";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
 
 export const AppNav = ({ email, subscriptionStatus, role }) => {
   const [isAccountTooltipOpen, setIsAccountTooltipOpen] = useState(false);
@@ -175,7 +185,7 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <div className="flex items-center space-x-1.5">
+          <div className="flex items-center space-x-2">
             <div>
               <Button
                 size="icon"
@@ -236,50 +246,50 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            {/*<div>*/}
-            {/*  <Popover*/}
-            {/*    onOpenChange={setIsNotifsMenuOpen}*/}
-            {/*    open={isNotifsMenuOpen}*/}
-            {/*  >*/}
-            {/*    <Tooltip open={isNotifsTooltipOpen && !isAnyMenuOpen}>*/}
-            {/*      <TooltipTrigger*/}
-            {/*        asChild*/}
-            {/*        onMouseEnter={() => setIsNotifsTooltipOpen(true)}*/}
-            {/*        onMouseLeave={() => setIsNotifsTooltipOpen(false)}*/}
-            {/*      >*/}
-            {/*        <PopoverTrigger*/}
-            {/*          asChild*/}
-            {/*          onClick={(e) => e.preventDefault()}*/}
-            {/*          onPointerDown={() => setIsNotifsMenuOpen((prev) => !prev)}*/}
-            {/*        >*/}
-            {/*          <Button size="icon" variant="ghost">*/}
-            {/*            <FiBell size={15} className="text-neutral-700" />*/}
-            {/*          </Button>*/}
-            {/*        </PopoverTrigger>*/}
-            {/*      </TooltipTrigger>*/}
-            {/*      <TooltipContent side="bottom" align="center" sideOffset={8}>*/}
-            {/*        <p>Notifications</p>*/}
-            {/*      </TooltipContent>*/}
-            {/*    </Tooltip>*/}
-            {/*    <PopoverContent*/}
-            {/*      onCloseAutoFocus={(e) => e.preventDefault()}*/}
-            {/*      collisionBoundary={ref?.current}*/}
-            {/*    >*/}
-            {/*      /!*<div className="flex items-center justify-between">*!/*/}
-            {/*      /!*  <p className="font-medium text-[13px]">Notifications</p>*!/*/}
-            {/*      /!*</div>*!/*/}
-            {/*      <div className="flex flex-col justify-center items-center w-full">*/}
-            {/*        <FiCheckCircle size={18} className="text-emerald-600" />*/}
-            {/*        <p className="text-xs text-center font-medium mt-2">*/}
-            {/*          You&#39;re all up to date*/}
-            {/*        </p>*/}
-            {/*        <p className="text-xs text-neutral-600 text-center mt-1">*/}
-            {/*          You have no new notifications at this time*/}
-            {/*        </p>*/}
-            {/*      </div>*/}
-            {/*    </PopoverContent>*/}
-            {/*  </Popover>*/}
-            {/*</div>*/}
+            <div>
+              <Popover
+                onOpenChange={setIsNotifsMenuOpen}
+                open={isNotifsMenuOpen}
+              >
+                <Tooltip open={isNotifsTooltipOpen && !isAnyMenuOpen}>
+                  <TooltipTrigger
+                    asChild
+                    onMouseEnter={() => setIsNotifsTooltipOpen(true)}
+                    onMouseLeave={() => setIsNotifsTooltipOpen(false)}
+                  >
+                    <PopoverTrigger
+                      asChild
+                      onClick={(e) => e.preventDefault()}
+                      onPointerDown={() => setIsNotifsMenuOpen((prev) => !prev)}
+                    >
+                      <Button size="icon" variant="ghost">
+                        <FiBell size={15} className="text-muted-foreground" />
+                      </Button>
+                    </PopoverTrigger>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom" align="center" sideOffset={8}>
+                    <p>Notifications</p>
+                  </TooltipContent>
+                </Tooltip>
+                <PopoverContent
+                  onCloseAutoFocus={(e) => e.preventDefault()}
+                  collisionBoundary={ref?.current}
+                >
+                  {/*<div className="flex items-center justify-between">*/}
+                  {/*  <p className="font-medium text-[13px]">Notifications</p>*/}
+                  {/*</div>*/}
+                  <div className="flex flex-col justify-center items-center w-full">
+                    <FiCheckCircle size={18} className="text-emerald-600" />
+                    <p className="text-xs text-center font-medium mt-2">
+                      You&#39;re all up to date
+                    </p>
+                    <p className="text-xs text-muted-foreground text-center mt-1">
+                      You have no new notifications at this time
+                    </p>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
 
             <div>
               <DropdownMenu
@@ -293,16 +303,15 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
                     onMouseLeave={() => setIsAccountTooltipOpen(false)}
                   >
                     <DropdownMenuTrigger asChild>
-                      <Button size="icon" variant="ghost">
-                        <FiUser size={15} className="text-muted-foreground" />
-                      </Button>
+                      {/*<Button size="icon" variant="ghost">*/}
+                      {/*  <FiUser size={15} className="text-muted-foreground" />*/}
+                      {/*</Button>*/}
+                      <Avatar className="cursor-pointer">
+                        <AvatarImage src="https://github.com/shadcn.png" />
+                      </Avatar>
                     </DropdownMenuTrigger>
                   </TooltipTrigger>
-                  <TooltipContent
-                    side="bottom"
-                    align={role === "READ_ONLY" ? "end" : "center"}
-                    sideOffset={8}
-                  >
+                  <TooltipContent side="bottom" align={"end"} sideOffset={8}>
                     <p>Account</p>
                   </TooltipContent>
                 </Tooltip>
@@ -316,36 +325,41 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
                     <p className="text-xs text-muted-foreground">{email}</p>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <Link href="/dashboard/settings/profile" passHref>
+                  <DropdownMenuItem>
+                    <FiPlus size={14} className="mr-2" />
+                    Create team
+                  </DropdownMenuItem>
+                  <Link href="/dashboard/settings" passHref>
                     <DropdownMenuItem>
-                      <FiUser size={14} className="mr-2" />
-                      Profile
+                      <FiSettings size={14} className="mr-2" />
+                      Account settings
                     </DropdownMenuItem>
                   </Link>
-                  {role === "SUPER_ADMIN" && (
-                    <Link href="/dashboard/settings/subscription" passHref>
-                      <DropdownMenuItem
-                        disabled={
-                          subscriptionStatus === "NEW_USER" ||
-                          subscriptionStatus === "INACTIVE"
-                        }
-                      >
-                        <FiBox size={14} className="mr-2" />
-                        Subscription
-                      </DropdownMenuItem>
-                    </Link>
-                  )}
-                  {/*<Link href="/account/settings" passHref>*/}
-                  {/*  <DropdownMenuItem*/}
-                  {/*    disabled={*/}
-                  {/*      subscriptionStatus === "NEW_USER" ||*/}
-                  {/*      subscriptionStatus === "INACTIVE"*/}
-                  {/*    }*/}
-                  {/*  >*/}
-                  {/*    <FiSettings size={14} className="mr-2" />*/}
-                  {/*    Settings*/}
-                  {/*  </DropdownMenuItem>*/}
-                  {/*</Link>*/}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onSelect={(e) => {
+                      e.preventDefault();
+                      setTheme(resolvedTheme === "dark" ? "light" : "dark");
+                    }}
+                  >
+                    {/*{resolvedTheme === "dark" ? (*/}
+                    {/*  <div className="flex items-center">*/}
+                    {/*    <FiSun size={14} className="mr-2" />*/}
+                    {/*    <span>Light mode</span>*/}
+                    {/*  </div>*/}
+                    {/*) : (*/}
+                    {/*  <div className="flex items-center">*/}
+                    {/*    <FiMoon size={14} className="mr-2" />*/}
+                    {/*    <span>Dark mode</span>*/}
+                    {/*  </div>*/}
+                    {/*)}*/}
+                    {resolvedTheme === "dark" ? (
+                      <FiSun size={14} className="mr-2" />
+                    ) : (
+                      <FiMoon size={14} className="mr-2" />
+                    )}
+                    {resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
                     <FiMessageSquare size={14} className="mr-2" /> Support
@@ -367,51 +381,51 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            {role !== "READ_ONLY" && (
-              <div>
-                <DropdownMenu
-                  modal={false}
-                  onOpenChange={(open) => setIsCreateMenuOpen(open)}
-                >
-                  <Tooltip open={isCreateTooltipOpen && !isAnyMenuOpen}>
-                    <TooltipTrigger
-                      asChild
-                      onMouseEnter={() => setIsCreateTooltipOpen(true)}
-                      onMouseLeave={() => setIsCreateTooltipOpen(false)}
-                    >
-                      <DropdownMenuTrigger asChild>
-                        <Button size="icon">
-                          <FiPlus size={15} />
-                        </Button>
-                      </DropdownMenuTrigger>
-                    </TooltipTrigger>
-                    <TooltipContent side="bottom" align={"end"} sideOffset={8}>
-                      <p>Create</p>
-                    </TooltipContent>
-                  </Tooltip>
-                  <DropdownMenuContent
-                    onCloseAutoFocus={(e) => e.preventDefault()}
-                    collisionBoundary={ref?.current}
-                  >
-                    <DropdownMenuLabel className="py-1">
-                      {/*<p className="text-[13px]">Create new</p>*/}
-                      <p className="text-xs text-muted-foreground">
-                        Create new
-                      </p>
-                    </DropdownMenuLabel>
-                    {/*<DropdownMenuSeparator />*/}
-                    <DropdownMenuItem>
-                      <FiZap size={14} className="mr-2" />
-                      QR Code
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <FiLink2 size={14} className="mr-2 -rotate-45" />
-                      Link
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            )}
+            {/*{role !== "READ_ONLY" && (*/}
+            {/*  <div>*/}
+            {/*    <DropdownMenu*/}
+            {/*      modal={false}*/}
+            {/*      onOpenChange={(open) => setIsCreateMenuOpen(open)}*/}
+            {/*    >*/}
+            {/*      <Tooltip open={isCreateTooltipOpen && !isAnyMenuOpen}>*/}
+            {/*        <TooltipTrigger*/}
+            {/*          asChild*/}
+            {/*          onMouseEnter={() => setIsCreateTooltipOpen(true)}*/}
+            {/*          onMouseLeave={() => setIsCreateTooltipOpen(false)}*/}
+            {/*        >*/}
+            {/*          <DropdownMenuTrigger asChild>*/}
+            {/*            <Button size="icon">*/}
+            {/*              <FiPlus size={15} />*/}
+            {/*            </Button>*/}
+            {/*          </DropdownMenuTrigger>*/}
+            {/*        </TooltipTrigger>*/}
+            {/*        <TooltipContent side="bottom" align={"end"} sideOffset={8}>*/}
+            {/*          <p>Create</p>*/}
+            {/*        </TooltipContent>*/}
+            {/*      </Tooltip>*/}
+            {/*      <DropdownMenuContent*/}
+            {/*        onCloseAutoFocus={(e) => e.preventDefault()}*/}
+            {/*        collisionBoundary={ref?.current}*/}
+            {/*      >*/}
+            {/*        <DropdownMenuLabel className="py-1">*/}
+            {/*          /!*<p className="text-[13px]">Create new</p>*!/*/}
+            {/*          <p className="text-xs text-muted-foreground">*/}
+            {/*            Create new*/}
+            {/*          </p>*/}
+            {/*        </DropdownMenuLabel>*/}
+            {/*        /!*<DropdownMenuSeparator />*!/*/}
+            {/*        <DropdownMenuItem>*/}
+            {/*          <FiZap size={14} className="mr-2" />*/}
+            {/*          QR Code*/}
+            {/*        </DropdownMenuItem>*/}
+            {/*        <DropdownMenuItem>*/}
+            {/*          <FiLink2 size={14} className="mr-2 -rotate-45" />*/}
+            {/*          Link*/}
+            {/*        </DropdownMenuItem>*/}
+            {/*      </DropdownMenuContent>*/}
+            {/*    </DropdownMenu>*/}
+            {/*  </div>*/}
+            {/*)}*/}
           </div>
         </div>
       </TooltipProvider>
