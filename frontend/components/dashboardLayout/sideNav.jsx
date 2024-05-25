@@ -24,9 +24,9 @@ import { usePathname } from "next/navigation";
 import { ThemedLogo } from "@/components/ThemedLogo";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
+import { TeamPicker } from "@/components/teamPicker";
 
 export const SideNav = ({ role }) => {
-  console.log(role);
   const path = usePathname();
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -211,9 +211,7 @@ export const SideNav = ({ role }) => {
             </div>
           </div>
         </div>
-        <Button size="sm" variant="outline" className="min-h-8">
-          teams
-        </Button>
+        <TeamPicker />
       </div>
     </div>
   );
