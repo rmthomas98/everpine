@@ -4,8 +4,15 @@ import { Button } from "@/components/ui/button";
 import { HiArrowSmRight } from "react-icons/hi";
 import Link from "next/link";
 import { ThemedLogo } from "@/components/ThemedLogo";
+import { usePathname } from "next/navigation";
 
-export const Nav = ({ session }) => {
+const showNavRoutes = ["/", "/pricing"];
+
+export const Nav = () => {
+  const path = usePathname();
+
+  if (!showNavRoutes.includes(path)) return <div></div>;
+
   return (
     <>
       {/*<Button*/}
@@ -34,31 +41,17 @@ export const Nav = ({ session }) => {
               Resources
             </p>
           </div>
-          {!session ? (
-            <div className="flex items-center space-x-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="rounded-full"
-                asChild
-              >
-                <Link href="/login">Sign in</Link>
-              </Button>
-              <Button size="sm" className="rounded-full" asChild>
-                <Link href="/signup">
-                  Get started
-                  <HiArrowSmRight className="ml-1" size={16} />
-                </Link>
-              </Button>
-            </div>
-          ) : (
+          <div className="flex items-center space-x-2">
+            <Button variant="ghost" size="sm" className="rounded-full" asChild>
+              <Link href="/login">Sign in</Link>
+            </Button>
             <Button size="sm" className="rounded-full" asChild>
-              <Link href="/dashboard">
-                Dashboard
+              <Link href="/pricing">
+                Get started
                 <HiArrowSmRight className="ml-1" size={16} />
               </Link>
             </Button>
-          )}
+          </div>
         </div>
       </nav>
     </>
