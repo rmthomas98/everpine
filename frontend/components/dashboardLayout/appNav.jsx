@@ -6,21 +6,16 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
   FiHelpCircle,
-  FiUser,
   FiPlus,
-  FiBox,
   FiMessageSquare,
   FiThumbsUp,
   FiLogOut,
-  FiLink2,
-  FiZap,
   FiSearch,
   FiInfo,
   FiFlag,
@@ -29,6 +24,7 @@ import {
   FiSettings,
   FiBell,
   FiCheckCircle,
+  FiPlusCircle,
 } from "react-icons/fi";
 import {
   Tooltip,
@@ -190,6 +186,7 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
               <Button
                 size="icon"
                 variant="ghost"
+                className="rounded-full"
                 onClick={() =>
                   setTheme(resolvedTheme === "dark" ? "light" : "dark")
                 }
@@ -213,7 +210,11 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
                     onMouseLeave={() => setIsHelpTooltipOpen(false)}
                   >
                     <DropdownMenuTrigger asChild>
-                      <Button size="icon" variant="ghost">
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="rounded-full"
+                      >
                         <FiHelpCircle
                           size={15}
                           className="text-muted-foreground"
@@ -262,7 +263,11 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
                       onClick={(e) => e.preventDefault()}
                       onPointerDown={() => setIsNotifsMenuOpen((prev) => !prev)}
                     >
-                      <Button size="icon" variant="ghost">
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="rounded-full"
+                      >
                         <FiBell size={15} className="text-muted-foreground" />
                       </Button>
                     </PopoverTrigger>

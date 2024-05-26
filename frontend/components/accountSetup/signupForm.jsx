@@ -42,7 +42,7 @@ export const SignupForm = () => {
     try {
       await apiPost("/user/create", { body: { email, password } });
       // redirect to account created page
-      router.push("/welcome");
+      router.push("/dashboard");
     } catch (e) {
       setIsLoading(false);
       toast({

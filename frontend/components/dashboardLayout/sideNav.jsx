@@ -72,40 +72,33 @@ export const SideNav = ({ role }) => {
             {/*</Link>*/}
           </Link>
           <div className="mt-7">
-            {role !== "READ_ONLY" ? (
-              <DropdownMenu modal={false}>
-                <DropdownMenuTrigger asChild>
-                  <Button className="w-full justify-start" size="sm">
-                    <FiPlus
-                      size={15}
-                      className="mr-2 relative bottom-[0.5px]"
-                    />
-                    Create new
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="start"
-                  side="right"
-                  onCloseAutoFocus={(e) => e.preventDefault()}
-                >
-                  <DropdownMenuLabel className="py-1">
-                    {/*<p className="text-[13px]">Create new</p>*/}
-                    <p className="text-xs text-muted-foreground">Create new</p>
-                  </DropdownMenuLabel>
-                  {/*<DropdownMenuSeparator />*/}
-                  <DropdownMenuItem>
-                    <FiZap size={14} className="mr-2" />
-                    QR Code
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <FiLink2 size={14} className="mr-2 -rotate-45" />
-                    Link
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              ""
-            )}
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger asChild>
+                <Button className="w-full justify-start" size="sm">
+                  <FiPlus size={15} className="mr-2 relative bottom-[0.5px]" />
+                  Create new
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="start"
+                side="right"
+                onCloseAutoFocus={(e) => e.preventDefault()}
+              >
+                <DropdownMenuLabel className="py-1">
+                  {/*<p className="text-[13px]">Create new</p>*/}
+                  <p className="text-xs text-muted-foreground">Create new</p>
+                </DropdownMenuLabel>
+                {/*<DropdownMenuSeparator />*/}
+                <DropdownMenuItem>
+                  <FiZap size={14} className="mr-2" />
+                  QR Code
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <FiLink2 size={14} className="mr-2 -rotate-45" />
+                  Link
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <div className="mt-7 pb-7">
               <div>
                 <Button
@@ -184,30 +177,26 @@ export const SideNav = ({ role }) => {
                   </Link>
                 </Button>
               </div>
-              {role === "SUPER_ADMIN" || role === "ADMIN" ? (
-                <div>
-                  <Button
-                    asChild
-                    variant="ghost"
-                    className={`w-full justify-start hover:accent-background ${
-                      path === "/dashboard/team"
-                        ? "text-foreground"
-                        : "text-muted-foreground hover:text-muted-foreground"
-                    }`}
-                    size="sm"
-                  >
-                    <Link href="/dashboard/team" passHref>
-                      <FiUsers
-                        size={14}
-                        className="mr-2.5 relative bottom-[1px]"
-                      />
-                      My Team
-                    </Link>
-                  </Button>
-                </div>
-              ) : (
-                ""
-              )}
+              <div>
+                <Button
+                  asChild
+                  variant="ghost"
+                  className={`w-full justify-start hover:accent-background ${
+                    path === "/dashboard/team"
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-muted-foreground"
+                  }`}
+                  size="sm"
+                >
+                  <Link href="/dashboard/team" passHref>
+                    <FiUsers
+                      size={14}
+                      className="mr-2.5 relative bottom-[1px]"
+                    />
+                    My Team
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
