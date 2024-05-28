@@ -1,11 +1,14 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import dynamic from "next/dynamic";
-
-const Image = dynamic(() => import("next/image"), { ssr: false });
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export const ThemedLogo = ({ isDashboard }) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
   const { resolvedTheme } = useTheme();
 
   let src;
@@ -21,6 +24,8 @@ export const ThemedLogo = ({ isDashboard }) => {
       break;
   }
 
+  if (!mounted) return <div></div>;
+
   return (
     <div className="h-[24.9px] max-h-[24.9px] w-[100px] max-w-[100px]">
       <Image
@@ -28,7 +33,7 @@ export const ThemedLogo = ({ isDashboard }) => {
         width={isDashboard ? 90 : 100}
         height={isDashboard ? 24 : 26}
         quality={100}
-        alt="dreamist logo"
+        alt="dreamist"
         loading="eager"
       />
     </div>

@@ -20,9 +20,9 @@ export const Nav = () => {
       {/*>*/}
       {/*  Light*/}
       {/*</Button>*/}
-      <nav className="px-4 py-3 sticky top-0 fade-in-short-delayed opacity-0">
+      <nav className="px-4 py-3 sticky top-0 z-[9999]">
         <div
-          className={`w-full rounded-full max-w-[1000px] mx-auto flex justify-between backdrop-blur-[20px] items-center px-2 py-2 border shadow-md bg-background/30`}
+          className={`w-full rounded-full max-w-[1000px] mx-auto flex justify-between backdrop-blur-lg items-center px-2 py-2 border bg-background/60 shadow opacity-0 fade-in-short-delayed`}
         >
           <Link href="/" passHref>
             <ThemedLogo />

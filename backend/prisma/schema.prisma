@@ -40,6 +40,7 @@ enum Plan {
   PROFESSIONAL
   BUSINESS
   ENTERPRISE
+  CUSTOM
 }
 
 // this subsciption will belong to the team owner (super admin)
