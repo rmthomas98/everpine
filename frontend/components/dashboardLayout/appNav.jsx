@@ -24,7 +24,6 @@ import {
   FiSettings,
   FiBell,
   FiCheckCircle,
-  FiPlusCircle,
 } from "react-icons/fi";
 import {
   Tooltip,
@@ -38,7 +37,7 @@ import { signOut } from "@/app/actions/signout";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
   Popover,
   PopoverTrigger,

@@ -20,7 +20,7 @@ const tiersList = [
   {
     title: "Free",
     price: { monthly: 0, annually: 0 },
-    description: "For getting started with QR codes.",
+    description: "For personal use.",
     features: [
       "3 QR codes per month",
       "15 links per month",
@@ -32,7 +32,7 @@ const tiersList = [
   {
     title: "Professional",
     price: { monthly: 10, annually: 8 },
-    description: "For small businesses and startups.",
+    description: "For startups and small teams.",
     features: [
       "10 QR codes per month",
       "50 links per month",
@@ -47,7 +47,7 @@ const tiersList = [
   {
     title: "Business",
     price: { monthly: 20, annually: 16 },
-    description: "For growing businesses and teams.",
+    description: "For growing businesses.",
     features: [
       "20 QR codes per month",
       "100 links per month",
@@ -63,7 +63,7 @@ const tiersList = [
   {
     title: "Enterprise",
     price: { monthly: 120, annually: 100 },
-    description: "For large corporations.",
+    description: "For large scale operations.",
     features: [
       "50 QR codes per month",
       "Unlimited links per month",

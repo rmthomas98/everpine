@@ -9,6 +9,8 @@ import {
   FiPlus,
   FiZap,
   FiUsers,
+  FiLayout,
+  FiLayers,
 } from "react-icons/fi";
 import {
   DropdownMenu,
@@ -174,6 +176,26 @@ export const SideNav = ({ role }) => {
                       className="mr-2.5 relative bottom-[1px]"
                     />
                     Analytics
+                  </Link>
+                </Button>
+              </div>
+              <div>
+                <Button
+                  asChild
+                  variant="ghost"
+                  className={`w-full justify-start hover:accent-background ${
+                    path === "/dashboard/analytics"
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-muted-foreground"
+                  }`}
+                  size="sm"
+                >
+                  <Link href="/dashboard/series" passHref>
+                    <FiLayers
+                      size={14}
+                      className="mr-2.5 relative bottom-[1px]"
+                    />
+                    Series
                   </Link>
                 </Button>
               </div>

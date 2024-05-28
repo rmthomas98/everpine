@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/themeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { Nav } from "@/components/nav";
+import { Footer } from "@/components/footer";
 
 export const metadata = {
   icons: {
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <Nav />
           {children}
+          <Footer />
           <Toaster />
         </ThemeProvider>
       </body>
