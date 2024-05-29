@@ -109,27 +109,194 @@ const qrCodes = [
     ],
   },
   {
+    label: "Custom logo",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+  {
+    label: "Custom colors",
+    data: ["limited", "enhanced", "enhanced", "enhanced"],
+  },
+  {
+    label: "Custom patterns",
+    data: ["limited", "enhanced", "enhanced", "enhanced"],
+  },
+  {
+    label: "Download formats",
+    data: ["png/svg", "png/svg", "png/svg", "png/svg"],
+  },
+  {
     label: "Scans",
     data: ["unlimited", "unlimited", "unlimited", "unlimited"],
   },
 ];
 
+const analytics = [
+  {
+    label: "Historical data",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      "1 month",
+      "6 months",
+      "1 year",
+    ],
+  },
+  {
+    label: "Real time data",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+  {
+    label: "Geolocation data",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+  {
+    label: "OS, device, browser data",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+  {
+    label: "Referrer data",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+  {
+    label: "Download data",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+];
+
+const domains = [
+  {
+    label: "Custom domains",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      "unlimited",
+      "unlimited",
+      "unlimited",
+    ],
+  },
+  {
+    label: "Domain re-router",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+];
+
+const series = [
+  {
+    label: "Series",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+  {
+    label: "UTM builder",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+  {
+    label: "UTM presets",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+  {
+    label: "Series analytics",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+];
+
+const rules = [
+  {
+    label: "Password protection",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+  {
+    label: "Redirect by device",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+  {
+    label: "Redirect by day of week",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+  {
+    label: "Redirect by time of day",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+];
+
+const team = [];
+const support = [];
+
 export const Compare = () => {
-  const [offset, setOffset] = useState(0);
-
-  const ref = useRef(null);
-  const scrollY = useScrollPosition(60);
-
-  useEffect(() => {
-    setOffset(ref.current?.offsetTop);
-
-    return () => setOffset(0);
-  }, [scrollY]);
-
-  console.log(offset);
-
   return (
-    <div className="py-12 max-w-[1000px] mx-auto" ref={ref}>
+    <div className="py-12 max-w-[1000px] mx-auto">
       <div className="mx-auto mb-4 w-fit">
         <Badge variant="outline">Compare</Badge>
       </div>
@@ -225,7 +392,7 @@ export const Compare = () => {
             <TableHeader>
               <TableRow>
                 <TableHead className="text-foreground text-base">
-                  QR Codes
+                  QR codes
                 </TableHead>
                 <TableHead className="w-[140px]"></TableHead>
                 <TableHead className="w-[140px]"></TableHead>
@@ -262,7 +429,7 @@ export const Compare = () => {
             <TableHeader>
               <TableRow>
                 <TableHead className="text-foreground text-base">
-                  Analytics and Tracking
+                  Analytics and tracking
                 </TableHead>
                 <TableHead className="w-[140px]"></TableHead>
                 <TableHead className="w-[140px]"></TableHead>
@@ -271,13 +438,26 @@ export const Compare = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow className="bg-background-accent">
-                <TableCell>QR Codes per month</TableCell>
-                <TableCell className="text-center">2</TableCell>
-                <TableCell className="text-center">10</TableCell>
-                <TableCell className="text-center">50</TableCell>
-                <TableCell className="text-center">200</TableCell>
-              </TableRow>
+              {analytics.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell className="items-center flex">
+                    <span className="mr-1.5">{item.label}</span>
+                    <Tooltip>
+                      <TooltipTrigger className="cursor-auto">
+                        <FiInfo size={15} className="text-muted-foreground" />
+                      </TooltipTrigger>
+                      <TooltipContent withArrow side="right" sideOffset={10}>
+                        {item.info}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TableCell>
+                  {item.data.map((data, index) => (
+                    <TableCell key={index} className="text-center">
+                      {data}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
@@ -295,13 +475,26 @@ export const Compare = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow className="bg-background-accent">
-                <TableCell>QR Codes per month</TableCell>
-                <TableCell className="text-center">2</TableCell>
-                <TableCell className="text-center">10</TableCell>
-                <TableCell className="text-center">50</TableCell>
-                <TableCell className="text-center">200</TableCell>
-              </TableRow>
+              {series.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell className="items-center flex">
+                    <span className="mr-1.5">{item.label}</span>
+                    <Tooltip>
+                      <TooltipTrigger className="cursor-auto">
+                        <FiInfo size={15} className="text-muted-foreground" />
+                      </TooltipTrigger>
+                      <TooltipContent withArrow side="right" sideOffset={10}>
+                        {item.info}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TableCell>
+                  {item.data.map((data, index) => (
+                    <TableCell key={index} className="text-center">
+                      {data}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
@@ -310,7 +503,7 @@ export const Compare = () => {
             <TableHeader>
               <TableRow>
                 <TableHead className="text-foreground text-base">
-                  White Labeling
+                  Custom branding
                 </TableHead>
                 <TableHead className="w-[140px]"></TableHead>
                 <TableHead className="w-[140px]"></TableHead>
@@ -319,13 +512,26 @@ export const Compare = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow className="bg-background-accent">
-                <TableCell>QR Codes per month</TableCell>
-                <TableCell className="text-center">2</TableCell>
-                <TableCell className="text-center">10</TableCell>
-                <TableCell className="text-center">50</TableCell>
-                <TableCell className="text-center">200</TableCell>
-              </TableRow>
+              {domains.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell className="items-center flex">
+                    <span className="mr-1.5">{item.label}</span>
+                    <Tooltip>
+                      <TooltipTrigger className="cursor-auto">
+                        <FiInfo size={15} className="text-muted-foreground" />
+                      </TooltipTrigger>
+                      <TooltipContent withArrow side="right" sideOffset={10}>
+                        {item.info}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TableCell>
+                  {item.data.map((data, index) => (
+                    <TableCell key={index} className="text-center">
+                      {data}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
@@ -334,7 +540,7 @@ export const Compare = () => {
             <TableHeader>
               <TableRow>
                 <TableHead className="text-foreground text-base">
-                  Smart Rules
+                  Smart rules
                 </TableHead>
                 <TableHead className="w-[140px]"></TableHead>
                 <TableHead className="w-[140px]"></TableHead>
@@ -343,13 +549,26 @@ export const Compare = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow className="bg-background-accent">
-                <TableCell>QR Codes per month</TableCell>
-                <TableCell className="text-center">2</TableCell>
-                <TableCell className="text-center">10</TableCell>
-                <TableCell className="text-center">50</TableCell>
-                <TableCell className="text-center">200</TableCell>
-              </TableRow>
+              {rules.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell className="items-center flex">
+                    <span className="mr-1.5">{item.label}</span>
+                    <Tooltip>
+                      <TooltipTrigger className="cursor-auto">
+                        <FiInfo size={15} className="text-muted-foreground" />
+                      </TooltipTrigger>
+                      <TooltipContent withArrow side="right" sideOffset={10}>
+                        {item.info}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TableCell>
+                  {item.data.map((data, index) => (
+                    <TableCell key={index} className="text-center">
+                      {data}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
@@ -358,7 +577,7 @@ export const Compare = () => {
             <TableHeader>
               <TableRow>
                 <TableHead className="text-foreground text-base">
-                  Team Management
+                  Team management
                 </TableHead>
                 <TableHead className="w-[140px]"></TableHead>
                 <TableHead className="w-[140px]"></TableHead>
@@ -367,13 +586,26 @@ export const Compare = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow className="bg-background-accent">
-                <TableCell>QR Codes per month</TableCell>
-                <TableCell className="text-center">2</TableCell>
-                <TableCell className="text-center">10</TableCell>
-                <TableCell className="text-center">50</TableCell>
-                <TableCell className="text-center">200</TableCell>
-              </TableRow>
+              {team.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell className="items-center flex">
+                    <span className="mr-1.5">{item.label}</span>
+                    <Tooltip>
+                      <TooltipTrigger className="cursor-auto">
+                        <FiInfo size={15} className="text-muted-foreground" />
+                      </TooltipTrigger>
+                      <TooltipContent withArrow side="right" sideOffset={10}>
+                        {item.info}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TableCell>
+                  {item.data.map((data, index) => (
+                    <TableCell key={index} className="text-center">
+                      {data}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
@@ -382,7 +614,7 @@ export const Compare = () => {
             <TableHeader>
               <TableRow>
                 <TableHead className="text-foreground text-base">
-                  Customer Support
+                  Customer support
                 </TableHead>
                 <TableHead className="w-[140px]"></TableHead>
                 <TableHead className="w-[140px]"></TableHead>
@@ -391,13 +623,26 @@ export const Compare = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow className="bg-background-accent">
-                <TableCell>QR Codes per month</TableCell>
-                <TableCell className="text-center">2</TableCell>
-                <TableCell className="text-center">10</TableCell>
-                <TableCell className="text-center">50</TableCell>
-                <TableCell className="text-center">200</TableCell>
-              </TableRow>
+              {support.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell className="items-center flex">
+                    <span className="mr-1.5">{item.label}</span>
+                    <Tooltip>
+                      <TooltipTrigger className="cursor-auto">
+                        <FiInfo size={15} className="text-muted-foreground" />
+                      </TooltipTrigger>
+                      <TooltipContent withArrow side="right" sideOffset={10}>
+                        {item.info}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TableCell>
+                  {item.data.map((data, index) => (
+                    <TableCell key={index} className="text-center">
+                      {data}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
