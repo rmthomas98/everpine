@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   CardTitle,
-  CardFooter,
   CardDescription,
   CardHeader,
 } from "@/components/ui/card";
@@ -98,7 +97,7 @@ export const Tiers = () => {
       <div className="mt-6 flex justify-center">
         <div>
           <p className="mb-2 text-sm text-muted-foreground text-center">
-            Save <span className="text-foreground font-bold">20%</span> when you
+            Save <span className="text-violet-700 font-bold">20%</span> when you
             pay annually
           </p>
           <div className="flex items-center space-x-4">
@@ -203,7 +202,7 @@ export const Tiers = () => {
           </Card>
         ))}
       </div>
-      <Card className="mt-3">
+      <Card className="mt-8">
         <CardHeader>
           <div className="flex mb-4 justify-center">
             <Badge className="w-fit" variant="outline">

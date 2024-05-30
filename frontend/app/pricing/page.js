@@ -1,6 +1,11 @@
 import { Tiers } from "@/components/pricing/tiers";
 import { Compare } from "@/components/pricing/compare";
 
+export const metadata = {
+  title: "Pricing | Dreamist",
+  description: "Choose the right plan for your needs.",
+};
+
 const PricingPage = () => {
   return (
     <div className="p-4">

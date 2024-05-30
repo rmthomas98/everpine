@@ -26,6 +26,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { StartForFree } from "@/components/startForFree";
 
 const links = [
   {
@@ -215,7 +223,7 @@ const domains = [
 
 const series = [
   {
-    label: "Series",
+    label: "Campaigns",
     data: [
       <FiX className="mx-auto text-muted-foreground" />,
       <FiCheck className="mx-auto text-foreground" />,
@@ -242,7 +250,7 @@ const series = [
     ],
   },
   {
-    label: "Series analytics",
+    label: "Campaign analytics",
     data: [
       <FiX className="mx-auto text-muted-foreground" />,
       <FiCheck className="mx-auto text-foreground" />,
@@ -291,8 +299,42 @@ const rules = [
   },
 ];
 
-const team = [];
-const support = [];
+const team = [
+  {
+    label: "Platform seats",
+    data: [1, "unlimited", "Unlimited", "Unlimited"],
+  },
+  {
+    label: "Roles and permissions",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+];
+
+const support = [
+  {
+    label: "Email support",
+    data: [
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+  {
+    label: "Live chat support",
+    data: [
+      <FiX className="mx-auto text-muted-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+      <FiCheck className="mx-auto text-foreground" />,
+    ],
+  },
+];
 
 export const Compare = () => {
   return (
@@ -372,7 +414,7 @@ export const Compare = () => {
                       <TooltipTrigger className="cursor-auto">
                         <FiInfo size={15} className="text-muted-foreground" />
                       </TooltipTrigger>
-                      <TooltipContent withArrow side="right" sideOffset={10}>
+                      <TooltipContent side="right" sideOffset={10}>
                         {item.info}
                       </TooltipContent>
                     </Tooltip>
@@ -409,7 +451,7 @@ export const Compare = () => {
                       <TooltipTrigger className="cursor-auto">
                         <FiInfo size={15} className="text-muted-foreground" />
                       </TooltipTrigger>
-                      <TooltipContent withArrow side="right" sideOffset={10}>
+                      <TooltipContent side="right" sideOffset={10}>
                         {item.info}
                       </TooltipContent>
                     </Tooltip>
@@ -446,7 +488,7 @@ export const Compare = () => {
                       <TooltipTrigger className="cursor-auto">
                         <FiInfo size={15} className="text-muted-foreground" />
                       </TooltipTrigger>
-                      <TooltipContent withArrow side="right" sideOffset={10}>
+                      <TooltipContent side="right" sideOffset={10}>
                         {item.info}
                       </TooltipContent>
                     </Tooltip>
@@ -466,7 +508,7 @@ export const Compare = () => {
             <TableHeader>
               <TableRow>
                 <TableHead className="text-foreground text-base">
-                  Series
+                  Campaigns
                 </TableHead>
                 <TableHead className="w-[140px]"></TableHead>
                 <TableHead className="w-[140px]"></TableHead>
@@ -483,7 +525,7 @@ export const Compare = () => {
                       <TooltipTrigger className="cursor-auto">
                         <FiInfo size={15} className="text-muted-foreground" />
                       </TooltipTrigger>
-                      <TooltipContent withArrow side="right" sideOffset={10}>
+                      <TooltipContent side="right" sideOffset={10}>
                         {item.info}
                       </TooltipContent>
                     </Tooltip>
@@ -520,7 +562,7 @@ export const Compare = () => {
                       <TooltipTrigger className="cursor-auto">
                         <FiInfo size={15} className="text-muted-foreground" />
                       </TooltipTrigger>
-                      <TooltipContent withArrow side="right" sideOffset={10}>
+                      <TooltipContent side="right" sideOffset={10}>
                         {item.info}
                       </TooltipContent>
                     </Tooltip>
@@ -557,7 +599,7 @@ export const Compare = () => {
                       <TooltipTrigger className="cursor-auto">
                         <FiInfo size={15} className="text-muted-foreground" />
                       </TooltipTrigger>
-                      <TooltipContent withArrow side="right" sideOffset={10}>
+                      <TooltipContent side="right" sideOffset={10}>
                         {item.info}
                       </TooltipContent>
                     </Tooltip>
@@ -594,7 +636,7 @@ export const Compare = () => {
                       <TooltipTrigger className="cursor-auto">
                         <FiInfo size={15} className="text-muted-foreground" />
                       </TooltipTrigger>
-                      <TooltipContent withArrow side="right" sideOffset={10}>
+                      <TooltipContent side="right" sideOffset={10}>
                         {item.info}
                       </TooltipContent>
                     </Tooltip>
@@ -609,7 +651,7 @@ export const Compare = () => {
             </TableBody>
           </Table>
         </div>
-        <div className="mt-8">
+        <div className="mt-8 mb-16">
           <Table>
             <TableHeader>
               <TableRow>
@@ -631,7 +673,7 @@ export const Compare = () => {
                       <TooltipTrigger className="cursor-auto">
                         <FiInfo size={15} className="text-muted-foreground" />
                       </TooltipTrigger>
-                      <TooltipContent withArrow side="right" sideOffset={10}>
+                      <TooltipContent side="right" sideOffset={10}>
                         {item.info}
                       </TooltipContent>
                     </Tooltip>
@@ -647,6 +689,7 @@ export const Compare = () => {
           </Table>
         </div>
       </TooltipProvider>
+      <StartForFree />
     </div>
   );
 };
