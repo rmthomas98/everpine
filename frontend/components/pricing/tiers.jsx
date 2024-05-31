@@ -97,7 +97,7 @@ export const Tiers = () => {
       <div className="mt-6 flex justify-center">
         <div>
           <p className="mb-2 text-sm text-muted-foreground text-center">
-            Save <span className="text-violet-700 font-bold">20%</span> when you
+            Save <span className="text-foreground font-bold">20%</span> when you
             pay annually
           </p>
           <div className="flex items-center space-x-4">

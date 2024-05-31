@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemedLogo } from "@/components/ThemedLogo";
+import { ThemedLogo } from "@/components/themedLogo";
 import { HiChevronDown } from "react-icons/hi";
 import { FaCheck } from "react-icons/fa";
 import { CgSpinner } from "react-icons/cg";

@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { ThemedLogo } from "@/components/ThemedLogo";
+import { ThemedLogo } from "@/components/themedLogo";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
@@ -70,8 +70,8 @@ export const Footer = () => {
         <div className="flex justify-between">
           <div>
             <ThemedLogo />
-            <p className="text-sm mt-4 text-muted-foreground">
-              Bring your QR codes to life
+            <p className="text-sm mt-4 text-muted-foreground max-w-[200px]">
+              Bring your QR codes to life with the power of AI
             </p>
           </div>
           <div className="flex space-x-12 mt-1">

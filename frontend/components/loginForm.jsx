@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import { ThemedLogo } from "@/components/ThemedLogo";
+import { ThemedLogo } from "@/components/themedLogo";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";

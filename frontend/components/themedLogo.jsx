@@ -15,10 +15,10 @@ export const ThemedLogo = ({ isDashboard }) => {
 
   switch (resolvedTheme) {
     case "light":
-      src = "/images/logos/logo-light-mode.svg";
+      src = "/images/logos/full-logo-black.svg";
       break;
     case "dark":
-      src = "/images/logos/logo-dark-mode.svg";
+      src = "/images/logos/full-logo-white.svg";
       break;
     default:
       break;

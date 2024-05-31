@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { usePathname } from "next/navigation";
-import { ThemedLogo } from "@/components/ThemedLogo";
+import { ThemedLogo } from "@/components/themedLogo";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 import { TeamPicker } from "@/components/teamPicker";

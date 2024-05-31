@@ -19,7 +19,7 @@ import { CgSpinner } from "react-icons/cg";
 import { apiPost } from "@/lib/api";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import { ThemedLogo } from "@/components/ThemedLogo";
+import { ThemedLogo } from "@/components/themedLogo";
 
 export const SignupForm = () => {
   const { toast } = useToast();
