@@ -22,7 +22,7 @@ export const StartForFree = () => {
   if (!isMounted) return <div></div>;
 
   return (
-    <Card className={resolvedTheme === "light" ? "dark" : "light"}>
+    <Card className="max-w-[1000px] mx-auto">
       <CardHeader>
         {/*<div className="flex mb-4 justify-center">*/}
         {/*  <Badge className="w-fit" variant="outline">*/}

@@ -33,7 +33,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { StartForFree } from "@/components/startForFree";
 
 const links = [
   {
@@ -651,7 +650,7 @@ export const Compare = () => {
             </TableBody>
           </Table>
         </div>
-        <div className="mt-8 mb-16">
+        <div className="mt-8">
           <Table>
             <TableHeader>
               <TableRow>
@@ -689,7 +688,6 @@ export const Compare = () => {
           </Table>
         </div>
       </TooltipProvider>
-      <StartForFree />
     </div>
   );
 };

@@ -5,6 +5,14 @@ import { HiArrowSmRight } from "react-icons/hi";
 import Link from "next/link";
 import { ThemedLogo } from "@/components/ThemedLogo";
 import { usePathname } from "next/navigation";
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
+  NavigationMenuLink,
+} from "@/components/ui/navigation-menu";
 
 const showNavRoutes = ["/", "/pricing"];
 
@@ -28,18 +36,41 @@ export const Nav = () => {
             <ThemedLogo />
           </Link>
           <div className="flex items-center space-x-6 absolute left-[50%] translate-x-[-50%]">
-            <p className="text-sm text-muted-foreground cursor-pointer hover:text-foreground transition-all">
-              Products
-            </p>
-            <p className="text-sm text-muted-foreground hover:text-foreground cursor-pointer transition-all">
-              Solutions
-            </p>
-            <p className="text-sm text-muted-foreground hover:text-foreground cursor-pointer transition-all">
-              Pricing
-            </p>
-            <p className="text-sm text-muted-foreground hover:text-foreground cursor-pointer transition-all">
-              Resources
-            </p>
+            {/*<p className="text-sm text-muted-foreground cursor-pointer hover:text-foreground transition-all">*/}
+            {/*  Products*/}
+            {/*</p>*/}
+            {/*<p className="text-sm text-muted-foreground hover:text-foreground cursor-pointer transition-all">*/}
+            {/*  Solutions*/}
+            {/*</p>*/}
+            {/*<p className="text-sm text-muted-foreground hover:text-foreground cursor-pointer transition-all">*/}
+            {/*  Pricing*/}
+            {/*</p>*/}
+            {/*<p className="text-sm text-muted-foreground hover:text-foreground cursor-pointer transition-all">*/}
+            {/*  Resources*/}
+            {/*</p>*/}
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="rounded-full bg-transparent text-[13px] h-8">
+                    Products
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <NavigationMenuLink>Link</NavigationMenuLink>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="rounded-full bg-transparent text-[13px] h-8">
+                    Solutions
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <NavigationMenuLink>Link</NavigationMenuLink>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuLink>Pricing</NavigationMenuLink>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
           </div>
           <div className="flex items-center space-x-2">
             <Button variant="ghost" size="sm" className="rounded-full" asChild>
