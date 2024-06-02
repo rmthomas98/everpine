@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
-import { HiMiniCheck } from "react-icons/hi2";
+import { HiMiniCheck, HiMiniCheckCircle } from "react-icons/hi2";
 import Link from "next/link";
 
 const tiersList = [
@@ -114,11 +114,11 @@ export const Tiers = () => {
           </div>
         </div>
       </div>
-      <div className="mt-8 flex w-full space-x-3">
+      <div className="mt-8 flex w-full space-x-4">
         {tiersList.map((tier, index) => (
           <Card
             className={`w-full ${
-              index === 2 && "border-foreground border-2"
+              index === 2 && "border-foreground border"
             } relative`}
             key={index}
           >
@@ -193,8 +193,10 @@ export const Tiers = () => {
               <div className="flex flex-col">
                 {tier.features.map((feature, index) => (
                   <div key={index} className="flex items-center mt-1.5">
-                    <HiMiniCheck size={14} />
-                    <p className={`text-[13px] ml-2`}>{feature}</p>
+                    <HiMiniCheck size={15} className="relative bottom-[1px]" />
+                    <p className={`text-[13px] ml-2 text-muted-foreground`}>
+                      {feature}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -202,23 +204,21 @@ export const Tiers = () => {
           </Card>
         ))}
       </div>
-      <Card className="mt-8">
+      <Card className="mt-4 flex items-center justify-between">
         <CardHeader>
-          <div className="flex mb-4 justify-center">
-            <Badge className="w-fit" variant="outline">
-              Custom plan
-            </Badge>
-          </div>
-          <CardTitle className="text-center text-lg">
-            Need a custom plan for your business?
-          </CardTitle>
-          <CardDescription className="mt-1.5 text-center">
+          {/*<div className="flex mb-4 justify-center">*/}
+          {/*  <Badge className="w-fit" variant="outline">*/}
+          {/*    Custom plan*/}
+          {/*  </Badge>*/}
+          {/*</div>*/}
+          <CardTitle>Need a custom plan for your business?</CardTitle>
+          <CardDescription>
             Contact us to discuss your requirements and get a custom plan
             tailored to your needs.
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex justify-center">
-          <Button className="w-[200px]">Get in touch</Button>
+        <CardContent className="py-4 px-6">
+          <Button>Contact sales</Button>
         </CardContent>
       </Card>
     </div>

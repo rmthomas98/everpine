@@ -20,9 +20,11 @@ import { FiCheck, FiMoon, FiSave, FiSun } from "react-icons/fi";
 const showNavRoutes = ["/", "/pricing"];
 
 const company = [
-  { label: "Press", href: "/press" },
+  // { label: "Press", href: "/press" },
   { label: "Blog", href: "/blog" },
-  { label: "About us", href: "/about" },
+  // { label: "About us", href: "/about" },
+  // { label: "Changelog", href: "/changelog" },
+  // { label: "Uptime status", href: "/uptime-status" },
 ];
 
 const products = [
@@ -32,10 +34,13 @@ const products = [
 ];
 
 const resources = [
-  { label: "Help center", href: "/help-center" },
-  { label: "FAQs", href: "/faqs" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Industries", href: "/industries" },
+  { label: "Documentation", href: "/documentation" },
+  { label: "Guides", href: "/guides" },
+  { label: "Help center", href: "/help" },
+  // { label: "FAQs", href: "/faqs" },
+  // { label: "Industries", href: "/industries" },
+  { label: "Uptime status", href: "/uptime-status" },
+  { label: "Changelog", href: "/changelog" },
 ];
 
 const contact = [

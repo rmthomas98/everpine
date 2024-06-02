@@ -22,6 +22,7 @@ import { ThemedIconLogo } from "@/components/themedIconLogo";
 import { HiMiniArrowRight } from "react-icons/hi2";
 import { FiBarChart2, FiLink2 } from "react-icons/fi";
 import { HiMiniQrCode } from "react-icons/hi2";
+import { BiBuilding, BiRocket } from "react-icons/bi";
 
 const showNavRoutes = ["/", "/pricing"];
 
@@ -39,7 +40,7 @@ export const Nav = () => {
       {/*</Button>*/}
       <nav className="px-4 py-3 sticky top-0 z-[9999]">
         <div
-          className={`w-full rounded-full max-w-[1000px] mx-auto flex justify-between backdrop-blur-lg items-center px-2 py-2 border bg-background/60 shadow opacity-0 fade-in-short-delayed`}
+          className={`w-full rounded-full max-w-[1000px] mx-auto flex justify-between items-center px-2 py-2 border bg-background/80 backdrop-blur opacity-0 fade-in-short-delayed shadow`}
         >
           <Link href="/" passHref>
             <ThemedLogo />
@@ -76,7 +77,7 @@ export const Nav = () => {
                         title="Custom links"
                         icon={<FiLink2 size={16} className="-rotate-45" />}
                       >
-                        Short, custom, branded links
+                        Short, branded links
                       </ListItem>
                       <ListItem
                         href="/docs/primitives/typography"
@@ -93,7 +94,98 @@ export const Nav = () => {
                     Solutions
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <NavigationMenuLink>Link</NavigationMenuLink>
+                    <div className="p-4">
+                      <div className="font-medium text-xs text-muted-foreground">
+                        By stage
+                      </div>
+                      <ul className="grid grid-cols-[1fr_1fr] mt-4 border-b border-dashed pb-4">
+                        <ListItem
+                          className="ml-0"
+                          href="/startups"
+                          title="Startups"
+                          icon={<BiRocket />}
+                        >
+                          Accelerate growth
+                        </ListItem>
+                        <ListItem
+                          className="ml-0"
+                          href="/startups"
+                          title="Small business"
+                          icon={<BiBuilding />}
+                        >
+                          Boost sales
+                        </ListItem>
+                        <ListItem
+                          className="ml-0 mt-4"
+                          href="/startups"
+                          title="Midmarket"
+                          icon={<BiBuilding />}
+                        >
+                          Drive innovation
+                        </ListItem>
+                        <ListItem
+                          className="ml-0 mt-4"
+                          href="/startups"
+                          title="Enterprise"
+                          icon={<BiBuilding />}
+                        >
+                          Scale operations
+                        </ListItem>
+                      </ul>
+                      <div className="font-medium text-xs text-muted-foreground mt-4">
+                        Use cases
+                      </div>
+                      <ul className="grid grid-cols-[1fr_1fr] mt-4">
+                        <ListItem
+                          className="ml-0"
+                          href="/startups"
+                          title="Surveys & feedback"
+                          icon={<BiRocket />}
+                        >
+                          Accelerate growth
+                        </ListItem>
+                        <ListItem
+                          className="ml-0"
+                          href="/startups"
+                          title="Product packaging"
+                          icon={<BiBuilding />}
+                        >
+                          Boost sales
+                        </ListItem>
+                        <ListItem
+                          className="ml-0 mt-4"
+                          href="/startups"
+                          title="Print marketing"
+                          icon={<BiBuilding />}
+                        >
+                          Drive innovation
+                        </ListItem>
+                        <ListItem
+                          className="ml-0 mt-4"
+                          href="/startups"
+                          title="Digital marketing"
+                          icon={<BiBuilding />}
+                        >
+                          Scale operations
+                        </ListItem>
+                        <ListItem
+                          className="ml-0 mt-4"
+                          href="/startups"
+                          title="Content sharing"
+                          icon={<BiBuilding />}
+                        >
+                          Scale operations
+                        </ListItem>
+                        <ListItem
+                          className="ml-0 mt-4"
+                          href="/startups"
+                          title="Events & conferences"
+                          icon={<BiBuilding />}
+                        >
+                          Scale operations
+                        </ListItem>
+                      </ul>
+                    </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
@@ -101,7 +193,83 @@ export const Nav = () => {
                     Resources
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <NavigationMenuLink>Link</NavigationMenuLink>
+                    <div className="p-4">
+                      <div className="font-medium text-xs text-muted-foreground">
+                        Company
+                      </div>
+                      <ul className="grid grid-cols-[1fr_1fr] mt-4 border-b border-dashed border-muted pb-4">
+                        {/*<ul>*/}
+                        <ListItem
+                          className="ml-0"
+                          href="/startups"
+                          title="Blog"
+                          icon={<BiRocket />}
+                        >
+                          Accelerate growth
+                        </ListItem>
+                        <ListItem
+                          className="ml-0"
+                          href="/startups"
+                          title="Contact sales"
+                          icon={<BiRocket />}
+                        >
+                          Accelerate growth
+                        </ListItem>
+                        <ListItem
+                          className="ml-0 mt-4"
+                          href="/startups"
+                          title="Uptime status"
+                          icon={<BiBuilding />}
+                        >
+                          Uptime status
+                        </ListItem>
+                        <ListItem
+                          className="ml-0 mt-4"
+                          href="/startups"
+                          title="Changelog"
+                          icon={<BiBuilding />}
+                        >
+                          Careers
+                        </ListItem>
+                      </ul>
+                      <div className="font-medium text-xs text-muted-foreground mt-4">
+                        Get started
+                      </div>
+                      <ul className="grid grid-cols-[1fr_1fr] mt-4">
+                        <ListItem
+                          className="ml-0"
+                          href="/startups"
+                          title="Onboarding"
+                          icon={<BiBuilding />}
+                        >
+                          Drive innovation
+                        </ListItem>
+                        <ListItem
+                          className="ml-0"
+                          href="/startups"
+                          title="Documentation"
+                          icon={<BiBuilding />}
+                        >
+                          Scale operations
+                        </ListItem>
+                        <ListItem
+                          className="mt-4 ml-0"
+                          href="/startups"
+                          title="Help center"
+                          icon={<BiRocket />}
+                        >
+                          Accelerate growth
+                        </ListItem>
+                        <ListItem
+                          className="mt-4 ml-0"
+                          href="/startups"
+                          title="Guides"
+                          icon={<BiBuilding />}
+                        >
+                          Boost sales
+                        </ListItem>
+                      </ul>
+                    </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
@@ -136,31 +304,31 @@ export const Nav = () => {
 
 const ListItem = forwardRef(
   ({ className, children, title, icon, ...props }, ref) => (
-    <li>
+    <li className="flex items-center">
       <NavigationMenuLink asChild>
         <a
           ref={ref}
           className={cn(
-            "block select-none w-[250px] group rounded-md py-2 ml-2 leading-none no-underline outline-none transition-colors focus:bg-accent focus:text-accent-foreground",
+            "block select-none w-[250px] group rounded-md ml-2 leading-none no-underline outline-none transition-colors focus:bg-accent focus:text-accent-foreground",
             className,
           )}
           {...props}
         >
-          <div className="flex items-center space-x-2.5">
-            <div className="h-[34px] w-[34px] border rounded-md flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-all">
+          <div className="flex space-x-2.5">
+            <div className="relative bottom-[1px] h-[34px] w-[34px] border rounded-md flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-all">
               {icon}
             </div>
-            <div className="space-y-1">
+            <div className="h-[34px] flex flex-col justify-between">
               <div className="flex items-center space-x-2">
                 <span className="text-[13px] font-medium leading-none">
                   {title}
                 </span>
-                <HiMiniArrowRight
+                <HiArrowSmRight
                   size={14}
                   className="opacity-0 group-hover:opacity-100 transition-all translate-x-1 group-hover:translate-x-0"
                 />
               </div>
-              <p className="line-clamp-2 text-[13px] leading-snug text-muted-foreground group-hover:text-foreground transition-all">
+              <p className="text-[12px] leading-snug text-muted-foreground group-hover:text-foreground transition-all">
                 {children}
               </p>
             </div>

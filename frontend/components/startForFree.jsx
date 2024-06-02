@@ -37,7 +37,13 @@ export const StartForFree = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="flex justify-center">
-        <Button className="w-[200px]">Start for free</Button>
+        <div
+          className={`p-[1.5px] bg-gradient-to-tr from-fuchsia-600 to-violet-600 rounded-[8px]`}
+        >
+          <Button className="w-[200px] bg-background text-foreground hover:bg-transparent">
+            Start for free
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );
