@@ -28,7 +28,7 @@ const company = [
 ];
 
 const products = [
-  { label: "Short links", href: "/short-links" },
+  { label: "Custom links", href: "/custom-links" },
   { label: "QR Codes", href: "/qr-codes" },
   { label: "Analytics", href: "/analytics" },
 ];

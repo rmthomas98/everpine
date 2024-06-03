@@ -38,7 +38,7 @@ export const Nav = () => {
       {/*>*/}
       {/*  Light*/}
       {/*</Button>*/}
-      <nav className="px-4 py-3 sticky top-0 z-[9999]">
+      <nav className={`px-4 py-3 top-0 z-[9999] sticky`}>
         <div
           className={`w-full rounded-full max-w-[1000px] mx-auto flex justify-between items-center px-2 py-2 border bg-background/80 backdrop-blur opacity-0 fade-in-short-delayed shadow`}
         >
@@ -55,15 +55,17 @@ export const Nav = () => {
                   <NavigationMenuContent>
                     <ul className="grid gap-3 p-4 grid-cols-[.75fr_1fr]">
                       <li className="row-span-3">
-                        <Card className="w-[190px] flex h-full flex-col justify-end p-4 rounded-md no-underline outline-none shadow-none bg-accent">
-                          <ThemedIconLogo />
-                          <div className="mb-2 mt-4 font-medium">
-                            Dreamist AI
-                          </div>
-                          <p className="text-[13px] leading-tight">
-                            Bring your QR codes to life with the power of AI.
-                          </p>
-                        </Card>
+                        <div className="p-[1px] rounded-md bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 background-animate">
+                          <Card className="w-[190px] flex h-full flex-col justify-end p-4 rounded-md no-underline outline-none shadow-none border-none bg-background/90">
+                            <ThemedIconLogo />
+                            <div className="mb-2 mt-4 font-medium">
+                              Dreamist AI
+                            </div>
+                            <p className="text-[13px] leading-tight">
+                              Bring your QR codes to life with the power of AI.
+                            </p>
+                          </Card>
+                        </div>
                       </li>
                       <ListItem
                         href="/docs"
@@ -197,7 +199,7 @@ export const Nav = () => {
                       <div className="font-medium text-xs text-muted-foreground">
                         Company
                       </div>
-                      <ul className="grid grid-cols-[1fr_1fr] mt-4 border-b border-dashed border-muted pb-4">
+                      <ul className="grid grid-cols-[1fr_1fr] mt-4 border-b border-dashed pb-4">
                         {/*<ul>*/}
                         <ListItem
                           className="ml-0"
