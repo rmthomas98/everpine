@@ -1,7 +1,7 @@
 import { Tiers } from "@/components/pricing/tiers";
 import { Compare } from "@/components/pricing/compare";
 import { StartForFree } from "@/components/startForFree";
-import { Faqs } from "@/components/pricing/Faq";
+import { Faqs } from "@/components/pricing/faq";
 
 export const metadata = {
   title: "Pricing | Dreamist",

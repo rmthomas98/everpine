@@ -13,21 +13,24 @@ import {
   NavigationMenuContent,
   NavigationMenuLink,
   NavigationMenuIndicator,
+  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { ThemedIconLogo } from "@/components/themedIconLogo";
-import { HiMiniArrowRight } from "react-icons/hi2";
 import { FiBarChart2, FiLink2 } from "react-icons/fi";
 import { HiMiniQrCode } from "react-icons/hi2";
-import { BiBuilding, BiRocket } from "react-icons/bi";
+import { BiBuilding, BiHome, BiRocket } from "react-icons/bi";
+import useWindowScroll from "@react-hook/window-scroll";
+import { IconRocket } from "@tabler/icons-react";
 
 const showNavRoutes = ["/", "/pricing"];
 
 export const Nav = () => {
   const path = usePathname();
+  const scrollPosition = useWindowScroll();
 
   if (!showNavRoutes.includes(path)) return <div></div>;
 
@@ -38,14 +41,16 @@ export const Nav = () => {
       {/*>*/}
       {/*  Light*/}
       {/*</Button>*/}
-      <nav className={`px-4 py-3 top-0 z-[9999] sticky`}>
+      <div className={`px-4 py-3 top-0 z-[9999] sticky`}>
         <div
-          className={`w-full rounded-full max-w-[1000px] mx-auto flex justify-between items-center px-2 py-2 border bg-background/80 backdrop-blur opacity-0 fade-in-short-delayed shadow`}
+          className={`w-full rounded-full max-w-[1000px] mx-auto flex justify-between items-center px-2 py-2 border bg-background/80 backdrop-blur opacity-0 fade-in-short-delayed ${
+            scrollPosition > 50 && "shadow"
+          } transition-all`}
         >
           <Link href="/" passHref>
             <ThemedLogo />
           </Link>
-          <div className="flex items-center space-x-6 absolute left-[50%] translate-x-[-50%]">
+          <div className="absolute left-[50%] translate-x-[-50%]">
             <NavigationMenu delayDuration={100}>
               <NavigationMenuList>
                 <NavigationMenuItem>
@@ -55,7 +60,7 @@ export const Nav = () => {
                   <NavigationMenuContent>
                     <ul className="grid gap-3 p-4 grid-cols-[.75fr_1fr]">
                       <li className="row-span-3">
-                        <div className="p-[1px] rounded-md bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 background-animate">
+                        <div className="p-[1px] relative rounded-[7px] bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 background-animate">
                           <Card className="w-[190px] flex h-full flex-col justify-end p-4 rounded-md no-underline outline-none shadow-none border-none bg-background/90">
                             <ThemedIconLogo />
                             <div className="mb-2 mt-4 font-medium">
@@ -105,7 +110,7 @@ export const Nav = () => {
                           className="ml-0"
                           href="/startups"
                           title="Startups"
-                          icon={<BiRocket />}
+                          icon={<BiRocket size={16} />}
                         >
                           Accelerate growth
                         </ListItem>
@@ -113,7 +118,7 @@ export const Nav = () => {
                           className="ml-0"
                           href="/startups"
                           title="Small business"
-                          icon={<BiBuilding />}
+                          icon={<BiHome />}
                         >
                           Boost sales
                         </ListItem>
@@ -299,7 +304,7 @@ export const Nav = () => {
             </Button>
           </div>
         </div>
-      </nav>
+      </div>
     </>
   );
 };
@@ -316,20 +321,12 @@ const ListItem = forwardRef(
           )}
           {...props}
         >
-          <div className="flex space-x-2.5">
+          <div className="flex items-center space-x-2.5">
             <div className="relative bottom-[1px] h-[34px] w-[34px] border rounded-md flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-all">
               {icon}
             </div>
-            <div className="h-[34px] flex flex-col justify-between">
-              <div className="flex items-center space-x-2">
-                <span className="text-[13px] font-medium leading-none">
-                  {title}
-                </span>
-                <HiArrowSmRight
-                  size={14}
-                  className="opacity-0 group-hover:opacity-100 transition-all translate-x-1 group-hover:translate-x-0"
-                />
-              </div>
+            <div className="h-[33px] flex flex-col justify-between">
+              <p className="text-[13px] font-medium leading-none">{title}</p>
               <p className="text-[12px] leading-snug text-muted-foreground group-hover:text-foreground transition-all">
                 {children}
               </p>

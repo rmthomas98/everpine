@@ -60,7 +60,7 @@ export const StartForFree = () => {
       </div>
       <div className="space-y-3 flex flex-col items-center">
         <div
-          className={`p-[1.5px] bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 background-animate rounded-[8px] w-fit`}
+          className={`p-[1px] bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 background-animate rounded-[7px] w-fit`}
         >
           <Button
             className={`bg-background/90 hover:bg-transparent text-foreground w-[200px] ${

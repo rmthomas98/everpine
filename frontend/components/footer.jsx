@@ -75,7 +75,7 @@ export const Footer = () => {
         <div className="flex justify-between">
           <div>
             <ThemedLogo />
-            <p className="text-sm mt-4 text-muted-foreground max-w-[200px]">
+            <p className="text-[13px] mt-4 text-muted-foreground max-w-[180px]">
               Bring your QR codes to life with the power of AI
             </p>
           </div>
