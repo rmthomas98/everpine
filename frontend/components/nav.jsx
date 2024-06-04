@@ -22,9 +22,23 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ThemedIconLogo } from "@/components/themedIconLogo";
 import { FiBarChart2, FiLink2 } from "react-icons/fi";
 import { HiMiniQrCode } from "react-icons/hi2";
-import { BiBuilding, BiHome, BiRocket } from "react-icons/bi";
+import {
+  BiBarChart,
+  BiBarChartAlt,
+  BiBarChartAlt2,
+  BiBuilding,
+  BiBuildings,
+  BiGroup,
+  BiHome,
+  BiLink,
+  BiLinkAlt,
+  BiPackage,
+  BiRocket,
+  BiUserVoice,
+} from "react-icons/bi";
 import useWindowScroll from "@react-hook/window-scroll";
 import { IconRocket } from "@tabler/icons-react";
+import { TbBuildingSkyscraper } from "react-icons/tb";
 
 const showNavRoutes = ["/", "/pricing"];
 
@@ -82,7 +96,7 @@ export const Nav = () => {
                       <ListItem
                         href="/docs/installation"
                         title="Custom links"
-                        icon={<FiLink2 size={16} className="-rotate-45" />}
+                        icon={<BiLinkAlt size={16} />}
                       >
                         Short, branded links
                       </ListItem>
@@ -126,7 +140,7 @@ export const Nav = () => {
                           className="ml-0 mt-4"
                           href="/startups"
                           title="Midmarket"
-                          icon={<BiBuilding />}
+                          icon={<BiBuildings />}
                         >
                           Drive innovation
                         </ListItem>
@@ -134,7 +148,7 @@ export const Nav = () => {
                           className="ml-0 mt-4"
                           href="/startups"
                           title="Enterprise"
-                          icon={<BiBuilding />}
+                          icon={<TbBuildingSkyscraper />}
                         >
                           Scale operations
                         </ListItem>
@@ -147,7 +161,7 @@ export const Nav = () => {
                           className="ml-0"
                           href="/startups"
                           title="Surveys & feedback"
-                          icon={<BiRocket />}
+                          icon={<BiUserVoice />}
                         >
                           Accelerate growth
                         </ListItem>
@@ -155,7 +169,7 @@ export const Nav = () => {
                           className="ml-0"
                           href="/startups"
                           title="Product packaging"
-                          icon={<BiBuilding />}
+                          icon={<BiPackage />}
                         >
                           Boost sales
                         </ListItem>

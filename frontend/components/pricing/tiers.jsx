@@ -140,11 +140,13 @@ export const Tiers = () => {
               </CardHeader>
               <CardContent>
                 <div className="flex">
-                  <h2 className="text-3xl font-bold">
-                    {billingCycle === "monthly"
-                      ? `$${tier.price.monthly}`
-                      : `$${tier.price.annually}`}
-                  </h2>
+                  <div className="relative">
+                    <h2 className="text-3xl font-bold">
+                      {billingCycle === "monthly"
+                        ? `$${tier.price.monthly}`
+                        : `$${tier.price.annually}`}
+                    </h2>
+                  </div>
                   <span className="text-muted-foreground ml-1.5 mt-3 text-sm">
                     /month
                   </span>

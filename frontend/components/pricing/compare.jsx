@@ -1,6 +1,5 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -10,13 +9,22 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useEffect, useRef, useState } from "react";
-import useScrollPosition from "@react-hook/window-scroll";
 import {
+  FiBarChart2,
+  FiBox,
   FiCheck,
   FiCheckCircle,
+  FiFilter,
+  FiFlag,
   FiInfo,
+  FiMessageCircle,
   FiMinus,
+  FiShield,
+  FiStar,
+  FiTool,
+  FiUserPlus,
+  FiUsers,
+  FiVolume2,
   FiX,
   FiXCircle,
 } from "react-icons/fi";
@@ -26,13 +34,18 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useInView } from "react-intersection-observer";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  HiInformationCircle,
+  HiMiniCheckCircle,
+  HiMiniInformationCircle,
+  HiMiniQrCode,
+  HiMiniXCircle,
+  HiOutlineInformationCircle,
+} from "react-icons/hi2";
+import { BiCheckCircle, BiLinkAlt, BiSolidCheckCircle } from "react-icons/bi";
+import { HiCheckCircle } from "react-icons/hi2";
+import { TbSpeakerphone } from "react-icons/tb";
 
 const links = [
   {
@@ -43,26 +56,26 @@ const links = [
   {
     label: "Branded links",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/70" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
     info: "The number of branded links you can create each month",
   },
   {
-    label: "Custom paths",
+    label: "Custom endings",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/70" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
   {
     label: "Redirects",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/70" size={20} />,
       "10/mo",
       "50/mo",
       "200/mo",
@@ -156,7 +169,7 @@ const analytics = [
     label: "Real time data",
     data: [
       <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
       <FiCheck className="mx-auto text-foreground" />,
       <FiCheck className="mx-auto text-foreground" />,
     ],
@@ -336,359 +349,476 @@ const support = [
 ];
 
 export const Compare = () => {
+  const { ref, inView } = useInView({});
+
+  console.log(inView);
+
   return (
-    <div className="py-12 px-4">
-      <div className="max-w-[1000px] mx-auto">
+    <div className="py-12">
+      <div>
         {/*<div className="mx-auto mb-4 w-fit">*/}
         {/*  <Badge variant="outline">Compare</Badge>*/}
         {/*</div>*/}
-        <h2 className="text-2xl font-bold text-center">
+        <h2 className="text-2xl font-bold text-center" ref={ref}>
           Compare the full feature set
         </h2>
         <p className="text-muted-foreground mt-2 text-center text-sm">
           Compare all features across all plans to find the best plan for you
         </p>
-        <div
-          className={`flex justify-between items-end pt-8 sticky top-[60px] bg-background pb-4`}
-        >
-          <h3 className="text-xl font-semibold">Choose your plan:</h3>
-          <div className="flex items-center">
-            <div className="w-[140px] px-2">
-              <p className="mb-2 text-center text-sm">Free</p>
-              {/*<p className="text-center text-muted-foreground text-xs mb-2">*/}
-              {/*  $0/month*/}
-              {/*</p>*/}
-              <Button size="sm" className="w-full">
-                Select
-              </Button>
-            </div>
-            <div className="w-[140px] px-2">
-              <p className="mb-2 text-center text-sm">Professional</p>
-              {/*<p className="text-center text-muted-foreground text-xs mb-2">*/}
-              {/*  $0/month*/}
-              {/*</p>*/}
-              <Button size="sm" className="w-full">
-                Select
-              </Button>
-            </div>
-            <div className="w-[140px] px-2">
-              <p className="mb-2 text-center text-sm">Business</p>
-              {/*<p className="text-center text-muted-foreground text-xs mb-2">*/}
-              {/*  $0/month*/}
-              {/*</p>*/}
-              <Button size="sm" className="w-full">
-                Select
-              </Button>
-            </div>
-            <div className="w-[140px] px-2">
-              <p className="mb-2 text-center text-sm">Enterprise</p>
-              {/*<p className="text-center text-muted-foreground text-xs mb-2">*/}
-              {/*  $0/month*/}
-              {/*</p>*/}
-              <Button size="sm" className="w-full">
-                Select
-              </Button>
+        <div className={`border-b px-4 h-full sticky top-[60px]`}>
+          <div
+            className={`flex justify-between items-end pt-8 bg-background pb-4 max-w-[1000px] mx-auto`}
+          >
+            <h3
+              className={`text-xl font-semibold ${
+                !inView && "opacity-0 pointer-events-none"
+              } transition-all`}
+            >
+              Choose your plan:
+            </h3>
+            <div className="flex items-center">
+              <div className="w-[140px] px-2">
+                <p className="mb-2 text-center text-sm">Free</p>
+                {/*<p className="text-center text-muted-foreground text-xs mb-2">*/}
+                {/*  $0/month*/}
+                {/*</p>*/}
+                <Button size="sm" className="w-full">
+                  Select
+                </Button>
+              </div>
+              <div className="w-[140px] px-2">
+                <p className="mb-2 text-center text-sm">Professional</p>
+                {/*<p className="text-center text-muted-foreground text-xs mb-2">*/}
+                {/*  $0/month*/}
+                {/*</p>*/}
+                <Button size="sm" className="w-full">
+                  Select
+                </Button>
+              </div>
+              <div className="w-[140px] px-2">
+                <p className="mb-2 text-center text-sm">Business</p>
+                {/*<p className="text-center text-muted-foreground text-xs mb-2">*/}
+                {/*  $0/month*/}
+                {/*</p>*/}
+                <Button size="sm" className="w-full">
+                  Select
+                </Button>
+              </div>
+              <div className="w-[140px] px-2">
+                <p className="mb-2 text-center text-sm">Enterprise</p>
+                {/*<p className="text-center text-muted-foreground text-xs mb-2">*/}
+                {/*  $0/month*/}
+                {/*</p>*/}
+                <Button size="sm" className="w-full">
+                  Select
+                </Button>
+              </div>
             </div>
           </div>
         </div>
-        <TooltipProvider delayDuration={0}>
-          <div className="mt-4">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-foreground text-base bg-accent-background">
-                    Link management
-                  </TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {links.map((item, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="items-center flex">
-                      <span className="mr-1.5">{item.label}</span>
-                      <Tooltip>
-                        <TooltipTrigger className="cursor-auto">
-                          <FiInfo size={15} className="text-muted-foreground" />
-                        </TooltipTrigger>
-                        <TooltipContent side="right" sideOffset={10}>
-                          {item.info}
-                        </TooltipContent>
-                      </Tooltip>
-                    </TableCell>
-                    {item.data.map((data, index) => (
-                      <TableCell key={index} className="text-center">
-                        {data}
-                      </TableCell>
+        <div className="px-4">
+          <div className="max-w-[1000px] mx-auto">
+            <TooltipProvider delayDuration={0}>
+              <div className="mt-8">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                        <div className="flex items-center space-x-2">
+                          <BiLinkAlt />
+                          <span>Custom links</span>
+                        </div>
+                      </TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody className="border-b">
+                    {links.map((item, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="items-center flex border-r py-4">
+                          <span className="mr-1.5">{item.label}</span>
+                          <Tooltip>
+                            <TooltipTrigger className="cursor-auto">
+                              <FiInfo
+                                size={15}
+                                className="text-muted-foreground"
+                              />
+                            </TooltipTrigger>
+                            <TooltipContent side="right" sideOffset={10}>
+                              {item.info}
+                            </TooltipContent>
+                          </Tooltip>
+                        </TableCell>
+                        {item.data.map((data, index) => (
+                          <TableCell
+                            key={index}
+                            className={`text-center text-muted-foreground ${
+                              index !== 3 && "border-r"
+                            } py-4`}
+                          >
+                            {data}
+                          </TableCell>
+                        ))}
+                      </TableRow>
                     ))}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-          <div className="mt-8">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-foreground text-base">
-                    QR codes
-                  </TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {qrCodes.map((item, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="items-center flex">
-                      <span className="mr-1.5">{item.label}</span>
-                      <Tooltip>
-                        <TooltipTrigger className="cursor-auto">
-                          <FiInfo size={15} className="text-muted-foreground" />
-                        </TooltipTrigger>
-                        <TooltipContent side="right" sideOffset={10}>
-                          {item.info}
-                        </TooltipContent>
-                      </Tooltip>
-                    </TableCell>
-                    {item.data.map((data, index) => (
-                      <TableCell key={index} className="text-center">
-                        {data}
-                      </TableCell>
+                  </TableBody>
+                </Table>
+              </div>
+              <div className="mt-8">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                        <div className="flex items-center space-x-2">
+                          <HiMiniQrCode />
+                          <span>QR codes</span>
+                        </div>
+                      </TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody className="border-b">
+                    {qrCodes.map((item, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="items-center flex py-4 border-r">
+                          <span className="mr-1.5">{item.label}</span>
+                          <Tooltip>
+                            <TooltipTrigger className="cursor-auto">
+                              <FiInfo
+                                size={15}
+                                className="text-muted-foreground"
+                              />
+                            </TooltipTrigger>
+                            <TooltipContent side="right" sideOffset={10}>
+                              {item.info}
+                            </TooltipContent>
+                          </Tooltip>
+                        </TableCell>
+                        {item.data.map((data, index) => (
+                          <TableCell
+                            key={index}
+                            className={`text-center text-muted-foreground py-4 ${
+                              index !== 3 && "border-r"
+                            }`}
+                          >
+                            {data}
+                          </TableCell>
+                        ))}
+                      </TableRow>
                     ))}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-          <div className="mt-8">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-foreground text-base">
-                    Analytics and tracking
-                  </TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {analytics.map((item, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="items-center flex">
-                      <span className="mr-1.5">{item.label}</span>
-                      <Tooltip>
-                        <TooltipTrigger className="cursor-auto">
-                          <FiInfo size={15} className="text-muted-foreground" />
-                        </TooltipTrigger>
-                        <TooltipContent side="right" sideOffset={10}>
-                          {item.info}
-                        </TooltipContent>
-                      </Tooltip>
-                    </TableCell>
-                    {item.data.map((data, index) => (
-                      <TableCell key={index} className="text-center">
-                        {data}
-                      </TableCell>
+                  </TableBody>
+                </Table>
+              </div>
+              <div className="mt-8">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                        <div className="flex items-center space-x-2">
+                          <FiBarChart2 />
+                          <span>Analytics and tracking</span>
+                        </div>
+                      </TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {analytics.map((item, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="items-center flex">
+                          <span className="mr-1.5">{item.label}</span>
+                          <Tooltip>
+                            <TooltipTrigger className="cursor-auto">
+                              <FiInfo
+                                size={15}
+                                className="text-muted-foreground"
+                              />
+                            </TooltipTrigger>
+                            <TooltipContent side="right" sideOffset={10}>
+                              {item.info}
+                            </TooltipContent>
+                          </Tooltip>
+                        </TableCell>
+                        {item.data.map((data, index) => (
+                          <TableCell key={index} className="text-center">
+                            {data}
+                          </TableCell>
+                        ))}
+                      </TableRow>
                     ))}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-          <div className="mt-8">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-foreground text-base">
-                    Campaigns
-                  </TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {series.map((item, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="items-center flex">
-                      <span className="mr-1.5">{item.label}</span>
-                      <Tooltip>
-                        <TooltipTrigger className="cursor-auto">
-                          <FiInfo size={15} className="text-muted-foreground" />
-                        </TooltipTrigger>
-                        <TooltipContent side="right" sideOffset={10}>
-                          {item.info}
-                        </TooltipContent>
-                      </Tooltip>
-                    </TableCell>
-                    {item.data.map((data, index) => (
-                      <TableCell key={index} className="text-center">
-                        {data}
-                      </TableCell>
+                  </TableBody>
+                </Table>
+              </div>
+              <div className="mt-8">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                        <div className="flex items-center space-x-2">
+                          <FiStar />
+                          <span>Campaigns</span>
+                        </div>
+                      </TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {series.map((item, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="items-center flex">
+                          <span className="mr-1.5">{item.label}</span>
+                          <Tooltip>
+                            <TooltipTrigger className="cursor-auto">
+                              <FiInfo
+                                size={15}
+                                className="text-muted-foreground"
+                              />
+                            </TooltipTrigger>
+                            <TooltipContent side="right" sideOffset={10}>
+                              {item.info}
+                            </TooltipContent>
+                          </Tooltip>
+                        </TableCell>
+                        {item.data.map((data, index) => (
+                          <TableCell key={index} className="text-center">
+                            {data}
+                          </TableCell>
+                        ))}
+                      </TableRow>
                     ))}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-          <div className="mt-8">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-foreground text-base">
-                    Custom branding
-                  </TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {domains.map((item, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="items-center flex">
-                      <span className="mr-1.5">{item.label}</span>
-                      <Tooltip>
-                        <TooltipTrigger className="cursor-auto">
-                          <FiInfo size={15} className="text-muted-foreground" />
-                        </TooltipTrigger>
-                        <TooltipContent side="right" sideOffset={10}>
-                          {item.info}
-                        </TooltipContent>
-                      </Tooltip>
-                    </TableCell>
-                    {item.data.map((data, index) => (
-                      <TableCell key={index} className="text-center">
-                        {data}
-                      </TableCell>
+                  </TableBody>
+                </Table>
+              </div>
+              <div className="mt-8">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                        <div className="flex items-center space-x-2">
+                          <FiBox />
+                          <span>Custom branding</span>
+                        </div>
+                      </TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {domains.map((item, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="items-center flex">
+                          <span className="mr-1.5">{item.label}</span>
+                          <Tooltip>
+                            <TooltipTrigger className="cursor-auto">
+                              <FiInfo
+                                size={15}
+                                className="text-muted-foreground"
+                              />
+                            </TooltipTrigger>
+                            <TooltipContent side="right" sideOffset={10}>
+                              {item.info}
+                            </TooltipContent>
+                          </Tooltip>
+                        </TableCell>
+                        {item.data.map((data, index) => (
+                          <TableCell key={index} className="text-center">
+                            {data}
+                          </TableCell>
+                        ))}
+                      </TableRow>
                     ))}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-          <div className="mt-8">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-foreground text-base">
-                    Smart rules
-                  </TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {rules.map((item, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="items-center flex">
-                      <span className="mr-1.5">{item.label}</span>
-                      <Tooltip>
-                        <TooltipTrigger className="cursor-auto">
-                          <FiInfo size={15} className="text-muted-foreground" />
-                        </TooltipTrigger>
-                        <TooltipContent side="right" sideOffset={10}>
-                          {item.info}
-                        </TooltipContent>
-                      </Tooltip>
-                    </TableCell>
-                    {item.data.map((data, index) => (
-                      <TableCell key={index} className="text-center">
-                        {data}
-                      </TableCell>
+                  </TableBody>
+                </Table>
+              </div>
+              <div className="mt-8">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                        <div className="flex items-center space-x-2">
+                          <FiFlag />
+                          <span>Smart rules</span>
+                        </div>
+                      </TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {rules.map((item, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="items-center flex">
+                          <span className="mr-1.5">{item.label}</span>
+                          <Tooltip>
+                            <TooltipTrigger className="cursor-auto">
+                              <FiInfo
+                                size={15}
+                                className="text-muted-foreground"
+                              />
+                            </TooltipTrigger>
+                            <TooltipContent side="right" sideOffset={10}>
+                              {item.info}
+                            </TooltipContent>
+                          </Tooltip>
+                        </TableCell>
+                        {item.data.map((data, index) => (
+                          <TableCell key={index} className="text-center">
+                            {data}
+                          </TableCell>
+                        ))}
+                      </TableRow>
                     ))}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-          <div className="mt-8">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-foreground text-base">
-                    Team management
-                  </TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {team.map((item, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="items-center flex">
-                      <span className="mr-1.5">{item.label}</span>
-                      <Tooltip>
-                        <TooltipTrigger className="cursor-auto">
-                          <FiInfo size={15} className="text-muted-foreground" />
-                        </TooltipTrigger>
-                        <TooltipContent side="right" sideOffset={10}>
-                          {item.info}
-                        </TooltipContent>
-                      </Tooltip>
-                    </TableCell>
-                    {item.data.map((data, index) => (
-                      <TableCell key={index} className="text-center">
-                        {data}
-                      </TableCell>
+                  </TableBody>
+                </Table>
+              </div>
+              <div className="mt-8">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                        <div className="flex items-center space-x-2">
+                          <FiUsers />
+                          <span>Team management</span>
+                        </div>
+                      </TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {team.map((item, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="items-center flex">
+                          <span className="mr-1.5">{item.label}</span>
+                          <Tooltip>
+                            <TooltipTrigger className="cursor-auto">
+                              <FiInfo
+                                size={15}
+                                className="text-muted-foreground"
+                              />
+                            </TooltipTrigger>
+                            <TooltipContent side="right" sideOffset={10}>
+                              {item.info}
+                            </TooltipContent>
+                          </Tooltip>
+                        </TableCell>
+                        {item.data.map((data, index) => (
+                          <TableCell key={index} className="text-center">
+                            {data}
+                          </TableCell>
+                        ))}
+                      </TableRow>
                     ))}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-          <div className="mt-8">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-foreground text-base">
-                    Customer support
-                  </TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                  <TableHead className="w-[140px]"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {support.map((item, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="items-center flex">
-                      <span className="mr-1.5">{item.label}</span>
-                      <Tooltip>
-                        <TooltipTrigger className="cursor-auto">
-                          <FiInfo size={15} className="text-muted-foreground" />
-                        </TooltipTrigger>
-                        <TooltipContent side="right" sideOffset={10}>
-                          {item.info}
-                        </TooltipContent>
-                      </Tooltip>
-                    </TableCell>
-                    {item.data.map((data, index) => (
-                      <TableCell key={index} className="text-center">
-                        {data}
-                      </TableCell>
+                  </TableBody>
+                </Table>
+              </div>
+              <div className="mt-8">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                        <div className="flex items-center space-x-2">
+                          <FiShield />
+                          <span>Security</span>
+                        </div>
+                      </TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {rules.map((item, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="items-center flex">
+                          <span className="mr-1.5">{item.label}</span>
+                          <Tooltip>
+                            <TooltipTrigger className="cursor-auto">
+                              <FiInfo
+                                size={15}
+                                className="text-muted-foreground"
+                              />
+                            </TooltipTrigger>
+                            <TooltipContent side="right" sideOffset={10}>
+                              {item.info}
+                            </TooltipContent>
+                          </Tooltip>
+                        </TableCell>
+                        {item.data.map((data, index) => (
+                          <TableCell key={index} className="text-center">
+                            {data}
+                          </TableCell>
+                        ))}
+                      </TableRow>
                     ))}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                  </TableBody>
+                </Table>
+              </div>
+              <div className="mt-8">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                        <div className="flex items-center space-x-2">
+                          <FiMessageCircle />
+                          <span>Customer support</span>
+                        </div>
+                      </TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {support.map((item, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="items-center flex">
+                          <span className="mr-1.5">{item.label}</span>
+                          <Tooltip>
+                            <TooltipTrigger className="cursor-auto">
+                              <FiInfo
+                                size={15}
+                                className="text-muted-foreground"
+                              />
+                            </TooltipTrigger>
+                            <TooltipContent side="right" sideOffset={10}>
+                              {item.info}
+                            </TooltipContent>
+                          </Tooltip>
+                        </TableCell>
+                        {item.data.map((data, index) => (
+                          <TableCell key={index} className="text-center">
+                            {data}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </TooltipProvider>
           </div>
-        </TooltipProvider>
+        </div>
       </div>
     </div>
   );
