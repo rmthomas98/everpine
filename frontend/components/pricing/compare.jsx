@@ -17,6 +17,7 @@ import {
   FiFilter,
   FiFlag,
   FiInfo,
+  FiLock,
   FiMessageCircle,
   FiMinus,
   FiShield,
@@ -37,6 +38,7 @@ import {
 import { useInView } from "react-intersection-observer";
 import {
   HiInformationCircle,
+  HiMiniCheck,
   HiMiniCheckCircle,
   HiMiniInformationCircle,
   HiMiniQrCode,
@@ -56,7 +58,7 @@ const links = [
   {
     label: "Branded links",
     data: [
-      <HiMiniXCircle className="mx-auto text-muted-foreground/70" size={20} />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
@@ -66,7 +68,7 @@ const links = [
   {
     label: "Custom endings",
     data: [
-      <HiMiniXCircle className="mx-auto text-muted-foreground/70" size={20} />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
@@ -75,7 +77,7 @@ const links = [
   {
     label: "Redirects",
     data: [
-      <HiMiniXCircle className="mx-auto text-muted-foreground/70" size={20} />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
       "10/mo",
       "50/mo",
       "200/mo",
@@ -84,7 +86,7 @@ const links = [
   {
     label: "Bulk creation",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
       "10/mo",
       "50/mo",
       "200/mo",
@@ -102,27 +104,27 @@ const qrCodes = [
     data: ["2/mo", "10/mo", "50/mo", "200/mo"],
   },
   {
-    label: "AI-generative QR art",
+    label: "AI generative QR art",
     data: [
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
   {
     label: "AI template library",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
   {
     label: "Redirects",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
       "10/mo",
       "50/mo",
       "200/mo",
@@ -131,10 +133,10 @@ const qrCodes = [
   {
     label: "Custom logo",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
   {
@@ -159,7 +161,7 @@ const analytics = [
   {
     label: "Historical data",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
       "1 month",
       "6 months",
       "1 year",
@@ -168,46 +170,46 @@ const analytics = [
   {
     label: "Real time data",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
   {
     label: "Geolocation data",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
   {
     label: "OS, device, browser data",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
   {
     label: "Referrer data",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
   {
     label: "Download data",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
 ];
@@ -216,7 +218,7 @@ const domains = [
   {
     label: "Custom domains",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
       "unlimited",
       "unlimited",
       "unlimited",
@@ -225,10 +227,10 @@ const domains = [
   {
     label: "Domain re-router",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
 ];
@@ -237,37 +239,37 @@ const series = [
   {
     label: "Campaigns",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
   {
     label: "UTM builder",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
   {
     label: "UTM presets",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
   {
     label: "Campaign analytics",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
 ];
@@ -276,37 +278,37 @@ const rules = [
   {
     label: "Password protection",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
   {
     label: "Redirect by device",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
   {
     label: "Redirect by day of week",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
   {
     label: "Redirect by time of day",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
 ];
@@ -319,10 +321,19 @@ const team = [
   {
     label: "Roles and permissions",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+    ],
+  },
+  {
+    label: "Admin privileges",
+    data: [
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
 ];
@@ -331,19 +342,19 @@ const support = [
   {
     label: "Email support",
     data: [
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
   {
     label: "Live chat support",
     data: [
-      <FiX className="mx-auto text-muted-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
-      <FiCheck className="mx-auto text-foreground" />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
 ];
@@ -358,12 +369,19 @@ const security = [
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
+  {
+    label: "Single sign-on (SSO)",
+    data: [
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+    ],
+  },
 ];
 
 export const Compare = () => {
   const { ref, inView } = useInView({});
-
-  console.log(inView);
 
   return (
     <div className="py-12">
@@ -543,10 +561,10 @@ export const Compare = () => {
                       <TableHead className="w-[140px]"></TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableBody>
+                  <TableBody className="border-b">
                     {analytics.map((item, index) => (
                       <TableRow key={index}>
-                        <TableCell className="items-center flex">
+                        <TableCell className="items-center flex py-4 border-r">
                           <span className="mr-1.5">{item.label}</span>
                           <Tooltip>
                             <TooltipTrigger className="cursor-auto">
@@ -561,7 +579,12 @@ export const Compare = () => {
                           </Tooltip>
                         </TableCell>
                         {item.data.map((data, index) => (
-                          <TableCell key={index} className="text-center">
+                          <TableCell
+                            key={index}
+                            className={`text-center py-4 ${
+                              index !== 3 && "border-r"
+                            }`}
+                          >
                             {data}
                           </TableCell>
                         ))}
@@ -586,10 +609,10 @@ export const Compare = () => {
                       <TableHead className="w-[140px]"></TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableBody>
+                  <TableBody className="border-b">
                     {series.map((item, index) => (
                       <TableRow key={index}>
-                        <TableCell className="items-center flex">
+                        <TableCell className="items-center flex py-4 border-r">
                           <span className="mr-1.5">{item.label}</span>
                           <Tooltip>
                             <TooltipTrigger className="cursor-auto">
@@ -604,7 +627,12 @@ export const Compare = () => {
                           </Tooltip>
                         </TableCell>
                         {item.data.map((data, index) => (
-                          <TableCell key={index} className="text-center">
+                          <TableCell
+                            key={index}
+                            className={`text-center ${
+                              index !== 3 && "border-r"
+                            }`}
+                          >
                             {data}
                           </TableCell>
                         ))}
@@ -629,10 +657,10 @@ export const Compare = () => {
                       <TableHead className="w-[140px]"></TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableBody>
+                  <TableBody className="border-b">
                     {domains.map((item, index) => (
                       <TableRow key={index}>
-                        <TableCell className="items-center flex">
+                        <TableCell className="items-center flex p-4 border-r">
                           <span className="mr-1.5">{item.label}</span>
                           <Tooltip>
                             <TooltipTrigger className="cursor-auto">
@@ -647,7 +675,12 @@ export const Compare = () => {
                           </Tooltip>
                         </TableCell>
                         {item.data.map((data, index) => (
-                          <TableCell key={index} className="text-center">
+                          <TableCell
+                            key={index}
+                            className={`text-center ${
+                              index !== 3 && "border-r"
+                            }`}
+                          >
                             {data}
                           </TableCell>
                         ))}
@@ -662,7 +695,7 @@ export const Compare = () => {
                     <TableRow>
                       <TableHead className="text-foreground text-base sticky top-[120px]">
                         <div className="flex items-center space-x-2">
-                          <FiFlag />
+                          <FiLock />
                           <span>Smart rules</span>
                         </div>
                       </TableHead>
@@ -672,10 +705,10 @@ export const Compare = () => {
                       <TableHead className="w-[140px]"></TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableBody>
+                  <TableBody className="border-b">
                     {rules.map((item, index) => (
                       <TableRow key={index}>
-                        <TableCell className="items-center flex">
+                        <TableCell className="items-center flex py-4 border-r">
                           <span className="mr-1.5">{item.label}</span>
                           <Tooltip>
                             <TooltipTrigger className="cursor-auto">
@@ -690,7 +723,12 @@ export const Compare = () => {
                           </Tooltip>
                         </TableCell>
                         {item.data.map((data, index) => (
-                          <TableCell key={index} className="text-center">
+                          <TableCell
+                            key={index}
+                            className={`text-center ${
+                              index !== 3 && "border-r"
+                            }`}
+                          >
                             {data}
                           </TableCell>
                         ))}
@@ -715,10 +753,10 @@ export const Compare = () => {
                       <TableHead className="w-[140px]"></TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableBody>
+                  <TableBody className="border-b">
                     {team.map((item, index) => (
                       <TableRow key={index}>
-                        <TableCell className="items-center flex">
+                        <TableCell className="items-center flex py-4 border-r">
                           <span className="mr-1.5">{item.label}</span>
                           <Tooltip>
                             <TooltipTrigger className="cursor-auto">
@@ -733,7 +771,12 @@ export const Compare = () => {
                           </Tooltip>
                         </TableCell>
                         {item.data.map((data, index) => (
-                          <TableCell key={index} className="text-center">
+                          <TableCell
+                            key={index}
+                            className={`text-center py-4 ${
+                              index !== 3 && "border-r"
+                            }`}
+                          >
                             {data}
                           </TableCell>
                         ))}
@@ -758,10 +801,10 @@ export const Compare = () => {
                       <TableHead className="w-[140px]"></TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableBody>
+                  <TableBody className="border-b">
                     {security.map((item, index) => (
                       <TableRow key={index}>
-                        <TableCell className="items-center flex">
+                        <TableCell className="items-center flex py-4 border-r">
                           <span className="mr-1.5">{item.label}</span>
                           <Tooltip>
                             <TooltipTrigger className="cursor-auto">
@@ -776,7 +819,12 @@ export const Compare = () => {
                           </Tooltip>
                         </TableCell>
                         {item.data.map((data, index) => (
-                          <TableCell key={index} className="text-center">
+                          <TableCell
+                            key={index}
+                            className={`text-center py-4 ${
+                              index !== 3 && "border-r"
+                            }`}
+                          >
                             {data}
                           </TableCell>
                         ))}
@@ -801,10 +849,10 @@ export const Compare = () => {
                       <TableHead className="w-[140px]"></TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableBody>
+                  <TableBody className="border-b">
                     {support.map((item, index) => (
                       <TableRow key={index}>
-                        <TableCell className="items-center flex">
+                        <TableCell className="items-center flex py-4 border-r">
                           <span className="mr-1.5">{item.label}</span>
                           <Tooltip>
                             <TooltipTrigger className="cursor-auto">
@@ -819,7 +867,12 @@ export const Compare = () => {
                           </Tooltip>
                         </TableCell>
                         {item.data.map((data, index) => (
-                          <TableCell key={index} className="text-center">
+                          <TableCell
+                            key={index}
+                            className={`text-center py-4 ${
+                              index !== 3 && "border-r"
+                            }`}
+                          >
                             {data}
                           </TableCell>
                         ))}

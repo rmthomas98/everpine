@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
-import { HiMiniCheck, HiMiniCheckCircle } from "react-icons/hi2";
+import { HiMiniCheck, HiMiniCheckCircle, HiMiniXCircle } from "react-icons/hi2";
 import Link from "next/link";
 
 const tiersList = [
@@ -80,11 +80,15 @@ const tiersList = [
 export const Tiers = () => {
   const [billingCycle, setBillingCycle] = useState("annually");
 
+  // we will make a bordered square grid background
+
   return (
-    <div className="px-4 py-12">
+    <div className="px-4 py-12 relative">
+      {/*<div className="absolute top-[-74px] left-0 w-full h-[calc(100%+74px)] bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 opacity-10 z-[-1]"></div>*/}
+      {/*<div className="absolute top-[-74px] left-0 w-full h-[calc(100%+74px)] z-[-1] bg-grid"></div>*/}
       <div className="max-w-[1200px] mx-auto">
         <div className="flex justify-center">
-          <Badge className="w-fit mx-auto mb-4" variant="outline">
+          <Badge className="w-fit mx-auto mb-4 bg-background" variant="outline">
             Plans and pricing
           </Badge>
         </div>

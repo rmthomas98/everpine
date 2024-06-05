@@ -98,6 +98,20 @@ module.exports = {
           from: { opacity: "1" },
           to: { opacity: "0" },
         },
+        ringPulse: {
+          "0%": {
+            "box-shadow":
+              "var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color)",
+          },
+          "50%": {
+            "box-shadow":
+              "var(--tw-ring-inset) 0 0 0 calc(6px + var(--tw-ring-offset-width)) var(--tw-ring-color)",
+          },
+          "100%": {
+            "box-shadow":
+              "var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -110,6 +124,7 @@ module.exports = {
         enterFromRight: "enterFromRight 250ms ease",
         exitToLeft: "exitToLeft 250ms ease",
         exitToRight: "exitToRight 250ms ease",
+        ringPulse: "ringPulse 2s infinite",
       },
     },
   },
