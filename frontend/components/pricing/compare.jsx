@@ -348,6 +348,18 @@ const support = [
   },
 ];
 
+const security = [
+  {
+    label: "2-factor authentication",
+    data: [
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+    ],
+  },
+];
+
 export const Compare = () => {
   const { ref, inView } = useInView({});
 
@@ -747,7 +759,7 @@ export const Compare = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {rules.map((item, index) => (
+                    {security.map((item, index) => (
                       <TableRow key={index}>
                         <TableCell className="items-center flex">
                           <span className="mr-1.5">{item.label}</span>
