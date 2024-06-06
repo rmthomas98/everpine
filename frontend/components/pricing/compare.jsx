@@ -695,7 +695,7 @@ export const Compare = () => {
                     <TableRow>
                       <TableHead className="text-foreground text-base sticky top-[120px]">
                         <div className="flex items-center space-x-2">
-                          <FiLock />
+                          <FiFlag />
                           <span>Smart rules</span>
                         </div>
                       </TableHead>
