@@ -18,7 +18,7 @@ export const Features = () => {
     <div className="py-12 px-4">
       <div className="max-w-[1200px] mx-auto">
         <h2 className="text-2xl font-bold text-center">
-          Access to powerful features
+          Features that will benefit your business
         </h2>
         <p className="text-muted-foreground mt-2 text-center text-sm">
           Unlock the full potential of Dreamist with our powerful features.
@@ -111,7 +111,7 @@ export const Features = () => {
                 Role-based access
               </p>
               <h3 className="font-semibold leading-none tracking-tight mt-4">
-                Set permissions for your team
+                Multi-user access with permissions
               </h3>
               <p className="text-sm text-muted-foreground mt-1.5">
                 Create custom-branded short links that match your brand. Share
@@ -127,7 +127,7 @@ export const Features = () => {
             </div>
             <div>
               <p className="text-[13px] text-muted-foreground">
-                Custom branding and domains
+                White label solution
               </p>
               <h3 className="font-semibold leading-none tracking-tight mt-4">
                 Showcase your brand seamlessly

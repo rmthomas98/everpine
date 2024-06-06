@@ -648,7 +648,7 @@ export const Compare = () => {
                       <TableHead className="text-foreground text-base sticky top-[120px]">
                         <div className="flex items-center space-x-2">
                           <FiBox />
-                          <span>Custom branding</span>
+                          <span>White label</span>
                         </div>
                       </TableHead>
                       <TableHead className="w-[140px]"></TableHead>
