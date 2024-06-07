@@ -112,15 +112,15 @@ const qrCodes = [
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
-  {
-    label: "AI template library",
-    data: [
-      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
-      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
-      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
-      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
-    ],
-  },
+  // {
+  //   label: "AI template library",
+  //   data: [
+  //     <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+  //     <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+  //     <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+  //     <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+  //   ],
+  // },
   {
     label: "Redirects",
     data: [

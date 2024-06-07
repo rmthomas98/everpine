@@ -3,6 +3,7 @@
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { PiPlanetFill } from "react-icons/pi";
 
 export const ThemedLogo = ({ isDashboard }) => {
   const [mounted, setMounted] = useState(false);
@@ -27,15 +28,17 @@ export const ThemedLogo = ({ isDashboard }) => {
   if (!mounted) return <div></div>;
 
   return (
-    <div className="h-[24.9px] max-h-[24.9px] w-[100px] max-w-[100px]">
-      <Image
-        src={src}
-        width={isDashboard ? 90 : 100}
-        height={isDashboard ? 24 : 26}
-        quality={100}
-        alt="dreamist"
-        loading="eager"
-      />
+    <div className="h-[24.9px] max-h-[24.9px] w-[100px] max-w-[100px] flex items-center">
+      {/*<Image*/}
+      {/*  src={src}*/}
+      {/*  width={isDashboard ? 90 : 100}*/}
+      {/*  height={isDashboard ? 24 : 26}*/}
+      {/*  quality={100}*/}
+      {/*  alt="dreamist"*/}
+      {/*  loading="eager"*/}
+      {/*/>*/}
+      <PiPlanetFill size={24} />
+      <p className="text-[15px] font-medium ml-1.5">spacemon</p>
     </div>
   );
 };

@@ -14,6 +14,7 @@ import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { HiMiniCheck, HiMiniCheckCircle, HiMiniXCircle } from "react-icons/hi2";
 import Link from "next/link";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const tiersList = [
   {
@@ -22,40 +23,49 @@ const tiersList = [
     description: "For personal use.",
     features: [
       "3 QR codes per month",
-      "15 links per month",
+      "20 links per month",
+      "AI-generative QR art",
       "Unlimited scans and clicks",
       "Limited QR customization",
+      "1 platform seat",
     ],
     link: "/signup",
   },
   {
     title: "Professional",
-    price: { monthly: 10, annually: 8 },
+    price: { monthly: 15, annually: 12 },
     description: "For startups and small teams.",
     features: [
-      "10 QR codes per month",
-      "50 links per month",
+      "20 QR codes per month",
+      "200 links per month",
+      "AI-generative QR art",
       "Unlimited scans and clicks",
       "Full QR customization",
-      "Detailed analytics and insights",
-      "Unlimited team members with roles",
-      "Dedicated support and assistance",
+      "5 platform seats",
+      "Real time analytics",
+      "3 months historical data",
+      "Custom domains",
+      "Smart rules",
     ],
     link: "/signup?plan=professional",
   },
   {
     title: "Business",
-    price: { monthly: 20, annually: 16 },
+    price: { monthly: 40, annually: 32 },
     description: "For growing businesses.",
     features: [
-      "20 QR codes per month",
-      "100 links per month",
+      "100 QR codes per month",
+      "1,000 links per month",
+      "AI-generative QR art",
       "Unlimited scans and clicks",
       "Full QR customization",
-      "Custom domains and branded links",
-      "Detailed analytics and insights",
-      "Unlimited team members with roles",
-      "Dedicated support and assistance",
+      "15 platform seats",
+      "Real time analytics",
+      "1 year historical data",
+      "Custom domains",
+      "Smart rules",
+      "Campaigns",
+      "Priority support",
     ],
     link: "/signup?plan=business",
   },
@@ -64,14 +74,19 @@ const tiersList = [
     price: { monthly: 120, annually: 100 },
     description: "For large scale operations.",
     features: [
-      "50 QR codes per month",
-      "Unlimited links per month",
+      "500 QR codes per month",
+      "10,000 links per month",
+      "AI-generative QR art",
       "Unlimited scans and clicks",
       "Full QR customization",
-      "Custom domains and branded links",
-      "Detailed analytics and insights",
-      "Unlimited team members with roles",
-      "Dedicated support and assistance",
+      "Unlimited platform seats",
+      "Real time analytics",
+      "3 years historical data",
+      "Custom domains",
+      "Smart rules",
+      "Campaigns",
+      "Assigned support manager",
+      "Single sign-on (SSO)",
     ],
     link: "/signup?plan=enterprise",
   },
@@ -99,27 +114,41 @@ export const Tiers = () => {
           Connect with your audience and grow your business with our powerful AI
           integrated link management platform.
         </p>
-        <div className="mt-6 flex justify-center">
-          <div>
-            <p className="mb-2 text-sm text-muted-foreground text-center">
-              Save <span className="text-foreground font-bold">20%</span> when
-              you pay annually
-            </p>
-            <div className="flex items-center space-x-4">
-              <Label>Pay monthly</Label>
-              <Switch
-                checked={billingCycle === "annually"}
-                onCheckedChange={() =>
-                  setBillingCycle(
-                    billingCycle === "monthly" ? "annually" : "monthly",
-                  )
-                }
-              />
-              <Label>Pay annually</Label>
-            </div>
-          </div>
+        <div className="mt-8 flex justify-center">
+          {/*<div>*/}
+          {/*  <p className="mb-2 text-sm text-muted-foreground text-center">*/}
+          {/*    Save <span className="text-foreground font-bold">20%</span> when*/}
+          {/*    you pay annually*/}
+          {/*  </p>*/}
+          {/*  <div className="flex items-center space-x-4">*/}
+          {/*    <Label>Pay monthly</Label>*/}
+          {/*    <Switch*/}
+          {/*      checked={billingCycle === "annually"}*/}
+          {/*      onCheckedChange={() =>*/}
+          {/*        setBillingCycle(*/}
+          {/*          billingCycle === "monthly" ? "annually" : "monthly",*/}
+          {/*        )*/}
+          {/*      }*/}
+          {/*    />*/}
+          {/*    <Label>Pay annually</Label>*/}
+          {/*  </div>*/}
+          {/*</div>*/}
+          <Tabs
+            value={billingCycle}
+            onValueChange={setBillingCycle}
+            className="w-full max-w-[380px]"
+          >
+            <TabsList className="w-full">
+              <TabsTrigger value="monthly" className="w-full">
+                Monthly
+              </TabsTrigger>
+              <TabsTrigger value="annually" className="w-full">
+                Annual (Save 20%)
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
-        <div className="mt-8 flex w-full space-x-4">
+        <div className="mt-10 flex w-full space-x-4">
           {tiersList.map((tier, index) => (
             <Card
               className={`w-full ${
@@ -200,9 +229,9 @@ export const Tiers = () => {
                 <div className="flex flex-col">
                   {tier.features.map((feature, index) => (
                     <div key={index} className="flex items-center mt-1.5">
-                      <HiMiniCheck
+                      <HiMiniCheckCircle
                         size={15}
-                        className="relative bottom-[1px]"
+                        className={`relative bottom-[1px]`}
                       />
                       <p className={`text-[13px] ml-2 text-muted-foreground`}>
                         {feature}
