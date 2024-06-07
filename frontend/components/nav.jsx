@@ -20,7 +20,7 @@ import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { ThemedIconLogo } from "@/components/themedIconLogo";
-import { FiBarChart2, FiLink2 } from "react-icons/fi";
+import { FiBarChart2, FiGlobe, FiLink2 } from "react-icons/fi";
 import { HiMiniQrCode } from "react-icons/hi2";
 import {
   BiBarChart,
@@ -72,9 +72,9 @@ export const Nav = () => {
                     Products
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid gap-3 p-4 grid-cols-[.75fr_1fr]">
-                      <li className="row-span-3">
-                        <div className="p-[1px] relative rounded-[7px] bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 background-animate">
+                    <ul className="grid gap-4 p-4 grid-rows-[1fr_1fr_1fr_1fr] grid-cols-[.75fr_1fr]">
+                      <li className="row-span-4">
+                        <div className="p-[1px] h-full relative rounded-[7px] bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 background-animate">
                           <Card className="w-[190px] flex h-full flex-col justify-end p-4 rounded-md no-underline outline-none shadow-none border-none bg-background/90">
                             <ThemedIconLogo />
                             <div className="mb-2 mt-4 font-medium">
@@ -101,6 +101,13 @@ export const Nav = () => {
                         Short, branded links
                       </ListItem>
                       <ListItem
+                        href="/docs/installation"
+                        title="Landing pages"
+                        icon={<FiGlobe size={16} />}
+                      >
+                        Custom landing pages
+                      </ListItem>
+                      <ListItem
                         href="/docs/primitives/typography"
                         title="Analytics"
                         icon={<FiBarChart2 size={16} />}
@@ -119,9 +126,8 @@ export const Nav = () => {
                       <div className="font-medium text-xs text-muted-foreground">
                         By stage
                       </div>
-                      <ul className="grid grid-cols-[1fr_1fr] mt-4 border-b border-dashed pb-4">
+                      <ul className="grid gap-4 grid-cols-[1fr_1fr] mt-4 border-b border-dashed pb-4">
                         <ListItem
-                          className="ml-0"
                           href="/startups"
                           title="Startups"
                           icon={<BiRocket size={16} />}
@@ -129,7 +135,6 @@ export const Nav = () => {
                           Accelerate growth
                         </ListItem>
                         <ListItem
-                          className="ml-0"
                           href="/startups"
                           title="Small business"
                           icon={<BiHome />}
@@ -137,7 +142,6 @@ export const Nav = () => {
                           Boost sales
                         </ListItem>
                         <ListItem
-                          className="ml-0 mt-4"
                           href="/startups"
                           title="Midmarket"
                           icon={<BiBuildings />}
@@ -145,7 +149,6 @@ export const Nav = () => {
                           Drive innovation
                         </ListItem>
                         <ListItem
-                          className="ml-0 mt-4"
                           href="/startups"
                           title="Enterprise"
                           icon={<TbBuildingSkyscraper />}
@@ -156,9 +159,8 @@ export const Nav = () => {
                       <div className="font-medium text-xs text-muted-foreground mt-4">
                         Use cases
                       </div>
-                      <ul className="grid grid-cols-[1fr_1fr] mt-4">
+                      <ul className="grid gap-4 grid-cols-[1fr_1fr] mt-4">
                         <ListItem
-                          className="ml-0"
                           href="/startups"
                           title="Surveys & feedback"
                           icon={<BiUserVoice />}
@@ -166,7 +168,6 @@ export const Nav = () => {
                           Accelerate growth
                         </ListItem>
                         <ListItem
-                          className="ml-0"
                           href="/startups"
                           title="Product packaging"
                           icon={<BiPackage />}
@@ -174,7 +175,6 @@ export const Nav = () => {
                           Boost sales
                         </ListItem>
                         <ListItem
-                          className="ml-0 mt-4"
                           href="/startups"
                           title="Print marketing"
                           icon={<BiBuilding />}
@@ -182,7 +182,6 @@ export const Nav = () => {
                           Drive innovation
                         </ListItem>
                         <ListItem
-                          className="ml-0 mt-4"
                           href="/startups"
                           title="Digital marketing"
                           icon={<BiBuilding />}
@@ -190,7 +189,6 @@ export const Nav = () => {
                           Scale operations
                         </ListItem>
                         <ListItem
-                          className="ml-0 mt-4"
                           href="/startups"
                           title="Content sharing"
                           icon={<BiBuilding />}
@@ -198,7 +196,6 @@ export const Nav = () => {
                           Scale operations
                         </ListItem>
                         <ListItem
-                          className="ml-0 mt-4"
                           href="/startups"
                           title="Events & conferences"
                           icon={<BiBuilding />}
@@ -218,10 +215,9 @@ export const Nav = () => {
                       <div className="font-medium text-xs text-muted-foreground">
                         Company
                       </div>
-                      <ul className="grid grid-cols-[1fr_1fr] mt-4 border-b border-dashed pb-4">
+                      <ul className="grid gap-4 grid-cols-[1fr_1fr] mt-4 border-b border-dashed pb-4">
                         {/*<ul>*/}
                         <ListItem
-                          className="ml-0"
                           href="/startups"
                           title="Blog"
                           icon={<BiRocket />}
@@ -229,7 +225,6 @@ export const Nav = () => {
                           Accelerate growth
                         </ListItem>
                         <ListItem
-                          className="ml-0"
                           href="/startups"
                           title="Contact sales"
                           icon={<BiRocket />}
@@ -237,7 +232,6 @@ export const Nav = () => {
                           Accelerate growth
                         </ListItem>
                         <ListItem
-                          className="ml-0 mt-4"
                           href="/startups"
                           title="Uptime status"
                           icon={<BiBuilding />}
@@ -245,7 +239,6 @@ export const Nav = () => {
                           Uptime status
                         </ListItem>
                         <ListItem
-                          className="ml-0 mt-4"
                           href="/startups"
                           title="Changelog"
                           icon={<BiBuilding />}
@@ -256,9 +249,8 @@ export const Nav = () => {
                       <div className="font-medium text-xs text-muted-foreground mt-4">
                         Get started
                       </div>
-                      <ul className="grid grid-cols-[1fr_1fr] mt-4">
+                      <ul className="grid gap-4 grid-cols-[1fr_1fr] mt-4">
                         <ListItem
-                          className="ml-0"
                           href="/startups"
                           title="Onboarding"
                           icon={<BiBuilding />}
@@ -266,7 +258,6 @@ export const Nav = () => {
                           Drive innovation
                         </ListItem>
                         <ListItem
-                          className="ml-0"
                           href="/startups"
                           title="Documentation"
                           icon={<BiBuilding />}
@@ -274,7 +265,6 @@ export const Nav = () => {
                           Scale operations
                         </ListItem>
                         <ListItem
-                          className="mt-4 ml-0"
                           href="/startups"
                           title="Help center"
                           icon={<BiRocket />}
@@ -282,7 +272,6 @@ export const Nav = () => {
                           Accelerate growth
                         </ListItem>
                         <ListItem
-                          className="mt-4 ml-0"
                           href="/startups"
                           title="Guides"
                           icon={<BiBuilding />}
@@ -330,7 +319,7 @@ const ListItem = forwardRef(
         <a
           ref={ref}
           className={cn(
-            "block select-none w-[250px] group rounded-md ml-2 leading-none no-underline outline-none transition-colors focus:bg-accent focus:text-accent-foreground",
+            "block select-none w-[240px] group rounded-md leading-none no-underline outline-none transition-colors focus:bg-accent focus:text-accent-foreground",
             className,
           )}
           {...props}

@@ -12,22 +12,14 @@ import { Button } from "@/components/ui/button";
 import {
   FiBarChart2,
   FiBox,
-  FiCheck,
-  FiCheckCircle,
-  FiFilter,
   FiFlag,
+  FiFolder,
+  FiGlobe,
   FiInfo,
-  FiLock,
   FiMessageCircle,
-  FiMinus,
   FiShield,
   FiStar,
-  FiTool,
-  FiUserPlus,
   FiUsers,
-  FiVolume2,
-  FiX,
-  FiXCircle,
 } from "react-icons/fi";
 import {
   Tooltip,
@@ -37,23 +29,26 @@ import {
 } from "@/components/ui/tooltip";
 import { useInView } from "react-intersection-observer";
 import {
-  HiInformationCircle,
-  HiMiniCheck,
   HiMiniCheckCircle,
-  HiMiniInformationCircle,
   HiMiniQrCode,
   HiMiniXCircle,
-  HiOutlineInformationCircle,
 } from "react-icons/hi2";
-import { BiCheckCircle, BiLinkAlt, BiSolidCheckCircle } from "react-icons/bi";
-import { HiCheckCircle } from "react-icons/hi2";
-import { TbSpeakerphone } from "react-icons/tb";
+import { BiLinkAlt } from "react-icons/bi";
 
 const links = [
   {
     label: "Shortened links",
-    data: ["2/mo", "10/mo", "50/mo", "200/mo"],
+    data: ["15/mo", "400/mo", "2,000/mo", "10,000/mo"],
     info: "The number of links you can shorten each month",
+  },
+  {
+    label: "Redirects",
+    data: [
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      "100/mo",
+      "500/mo",
+      "2,500/mo",
+    ],
   },
   {
     label: "Branded links",
@@ -66,30 +61,21 @@ const links = [
     info: "The number of branded links you can create each month",
   },
   {
-    label: "Custom endings",
+    label: "Custom paths",
     data: [
       <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
-    ],
-  },
-  {
-    label: "Redirects",
-    data: [
-      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
-      "10/mo",
-      "50/mo",
-      "200/mo",
     ],
   },
   {
     label: "Bulk creation",
     data: [
       <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
-      "10/mo",
-      "50/mo",
-      "200/mo",
+      "400/mo",
+      "2,000/mo",
+      "10,000/mo",
     ],
   },
   {
@@ -101,7 +87,16 @@ const links = [
 const qrCodes = [
   {
     label: "QR codes",
-    data: ["2/mo", "10/mo", "50/mo", "200/mo"],
+    data: ["3/mo", "20/mo", "100/mo", "500/mo"],
+  },
+  {
+    label: "Redirects",
+    data: [
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      "5/mo",
+      "25/mo",
+      "125/mo",
+    ],
   },
   {
     label: "AI generative QR art",
@@ -121,15 +116,6 @@ const qrCodes = [
   //     <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
   //   ],
   // },
-  {
-    label: "Redirects",
-    data: [
-      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
-      "10/mo",
-      "50/mo",
-      "200/mo",
-    ],
-  },
   {
     label: "Custom logo",
     data: [
@@ -157,18 +143,47 @@ const qrCodes = [
   },
 ];
 
+const pages = [
+  {
+    label: "Custom pages",
+    data: ["1", "3", "10", "50"],
+  },
+  {
+    label: "Custom branding",
+    data: [
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+    ],
+  },
+  {
+    label: "Themes and templates",
+    data: ["limited", "enhanced", "enhanced", "enhanced"],
+  },
+];
+
 const analytics = [
   {
     label: "Historical data",
     data: [
       <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
-      "1 month",
-      "6 months",
+      "3 months",
       "1 year",
+      "3 years",
     ],
   },
   {
     label: "Real time data",
+    data: [
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+    ],
+  },
+  {
+    label: "Clicks, scans, page view data",
     data: [
       <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
@@ -219,9 +234,9 @@ const domains = [
     label: "Custom domains",
     data: [
       <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
-      "unlimited",
-      "unlimited",
-      "unlimited",
+      "1",
+      "3",
+      "10",
     ],
   },
   {
@@ -240,7 +255,7 @@ const series = [
     label: "Campaigns",
     data: [
       <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
-      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
@@ -267,7 +282,7 @@ const series = [
     label: "Campaign analytics",
     data: [
       <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
-      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
@@ -316,7 +331,7 @@ const rules = [
 const team = [
   {
     label: "Platform seats",
-    data: [1, "unlimited", "Unlimited", "Unlimited"],
+    data: ["1", "5", "15", "50"],
   },
   {
     label: "Roles and permissions",
@@ -349,11 +364,20 @@ const support = [
     ],
   },
   {
-    label: "Live chat support",
+    label: "Priority support",
     data: [
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
       <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+    ],
+  },
+  {
+    label: "Dedicated support manager",
+    data: [
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
@@ -361,7 +385,7 @@ const support = [
 
 const security = [
   {
-    label: "2-factor authentication",
+    label: "Multi-factor authentication (MFA)",
     data: [
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
@@ -374,7 +398,7 @@ const security = [
     data: [
       <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
       <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
-      <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
+      <HiMiniXCircle className="mx-auto text-muted-foreground/50" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
     ],
   },
@@ -551,6 +575,54 @@ export const Compare = () => {
                     <TableRow>
                       <TableHead className="text-foreground text-base sticky top-[120px]">
                         <div className="flex items-center space-x-2">
+                          <FiGlobe />
+                          <span>Landing pages</span>
+                        </div>
+                      </TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                      <TableHead className="w-[140px]"></TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody className="border-b">
+                    {pages.map((item, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="items-center flex py-4 border-r">
+                          <span className="mr-1.5">{item.label}</span>
+                          <Tooltip>
+                            <TooltipTrigger className="cursor-auto">
+                              <FiInfo
+                                size={15}
+                                className="text-muted-foreground"
+                              />
+                            </TooltipTrigger>
+                            <TooltipContent side="right" sideOffset={10}>
+                              {item.info}
+                            </TooltipContent>
+                          </Tooltip>
+                        </TableCell>
+                        {item.data.map((data, index) => (
+                          <TableCell
+                            key={index}
+                            className={`text-center text-muted-foreground py-4 ${
+                              index !== 3 && "border-r"
+                            }`}
+                          >
+                            {data}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+              <div className="mt-8">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                        <div className="flex items-center space-x-2">
                           <FiBarChart2 />
                           <span>Analytics and tracking</span>
                         </div>
@@ -599,7 +671,7 @@ export const Compare = () => {
                     <TableRow>
                       <TableHead className="text-foreground text-base sticky top-[120px]">
                         <div className="flex items-center space-x-2">
-                          <FiStar />
+                          <FiFolder />
                           <span>Campaigns</span>
                         </div>
                       </TableHead>

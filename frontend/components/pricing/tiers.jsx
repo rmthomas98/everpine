@@ -23,7 +23,8 @@ const tiersList = [
     description: "For personal use.",
     features: [
       "3 QR codes per month",
-      "20 links per month",
+      "15 links per month",
+      "1 landing page",
       "AI-generative QR art",
       "Unlimited scans and clicks",
       "Limited QR customization",
@@ -37,14 +38,15 @@ const tiersList = [
     description: "For startups and small teams.",
     features: [
       "20 QR codes per month",
-      "200 links per month",
+      "400 links per month",
+      "3 landing pages",
       "AI-generative QR art",
       "Unlimited scans and clicks",
       "Full QR customization",
       "5 platform seats",
       "Real time analytics",
       "3 months historical data",
-      "Custom domains",
+      "1 custom domain",
       "Smart rules",
     ],
     link: "/signup?plan=professional",
@@ -55,14 +57,15 @@ const tiersList = [
     description: "For growing businesses.",
     features: [
       "100 QR codes per month",
-      "1,000 links per month",
+      "2,000 links per month",
+      "10 landing pages",
       "AI-generative QR art",
       "Unlimited scans and clicks",
       "Full QR customization",
       "15 platform seats",
       "Real time analytics",
       "1 year historical data",
-      "Custom domains",
+      "3 custom domains",
       "Smart rules",
       "Campaigns",
       "Priority support",
@@ -71,21 +74,22 @@ const tiersList = [
   },
   {
     title: "Enterprise",
-    price: { monthly: 120, annually: 100 },
+    price: { monthly: 120, annually: 96 },
     description: "For large scale operations.",
     features: [
       "500 QR codes per month",
       "10,000 links per month",
+      "50 landing pages",
       "AI-generative QR art",
       "Unlimited scans and clicks",
       "Full QR customization",
-      "Unlimited platform seats",
+      "50 platform seats",
       "Real time analytics",
       "3 years historical data",
-      "Custom domains",
+      "10 custom domains",
       "Smart rules",
       "Campaigns",
-      "Assigned support manager",
+      "Dedicated support",
       "Single sign-on (SSO)",
     ],
     link: "/signup?plan=enterprise",
@@ -218,7 +222,9 @@ export const Tiers = () => {
                       href={
                         index === 0
                           ? tier.link
-                          : `${tier.link}&billing=${billingCycle}`
+                          : `${tier.link}&billing=${
+                              billingCycle === "monthly" ? "month" : "annual"
+                            }`
                       }
                       passHref
                     >
@@ -229,11 +235,12 @@ export const Tiers = () => {
                 <div className="flex flex-col">
                   {tier.features.map((feature, index) => (
                     <div key={index} className="flex items-center mt-1.5">
-                      <HiMiniCheckCircle
-                        size={15}
-                        className={`relative bottom-[1px]`}
-                      />
-                      <p className={`text-[13px] ml-2 text-muted-foreground`}>
+                      <HiMiniCheckCircle size={16} className={`relative`} />
+                      <p
+                        className={`text-[13px] ml-2 font-medium ${
+                          index >= 3 && "text-muted-foreground font-normal"
+                        }`}
+                      >
                         {feature}
                       </p>
                     </div>
