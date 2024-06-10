@@ -54,7 +54,7 @@ export const StartForFree = () => {
       <div>
         <h2 className="text-2xl font-bold">Generate. Engage. Grow.</h2>
         <p className="text-muted-foreground mt-2 text-sm max-w-[500px]">
-          Dreamist is the all-in-one platform to unleash the power of your
+          Spacemon is the all-in-one platform to unleash the power of your
           custom links and QR codes with AI. Get started for free today.
         </p>
       </div>

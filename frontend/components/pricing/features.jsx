@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BiBrain, BiLinkAlt } from "react-icons/bi";
+import { BiBarChart, BiBrain, BiGlobe, BiLinkAlt } from "react-icons/bi";
 import { HiMiniQrCode } from "react-icons/hi2";
 import {
   FiBarChart2,
@@ -22,12 +22,12 @@ export const Features = () => {
           Features that will benefit your business
         </h2>
         <p className="text-muted-foreground mt-2 text-center text-sm">
-          Unlock the full potential of Dreamist with our powerful features.
+          Unlock the full potential of Spacemon with our powerful features.
         </p>
         <div className="grid gap-4 grid-cols-[1fr_1fr] mt-8">
           <div className="p-6 pl-10 border shadow rounded-xl flex items-center space-x-10">
             <div>
-              <div className="h-[54px] w-[54px] border ring-[5px] ring-accent/60 rounded-xl flex items-center justify-center relative">
+              <div className="h-[54px] w-[54px] border ring-[5px] ring-accent/65 rounded-xl flex items-center justify-center relative">
                 <BiLinkAlt size={22} />
               </div>
             </div>
@@ -46,7 +46,7 @@ export const Features = () => {
           </div>
           <div className="p-6 pl-10 border shadow rounded-xl flex items-center space-x-10">
             <div>
-              <div className="h-[54px] w-[54px] border ring-[5px] ring-accent/60 rounded-xl flex items-center justify-center relative">
+              <div className="h-[54px] w-[54px] border ring-[5px] ring-accent/65 rounded-xl flex items-center justify-center relative">
                 <HiMiniQrCode size={22} />
               </div>
             </div>
@@ -65,7 +65,7 @@ export const Features = () => {
           </div>
           <div className="p-6 pl-10 border shadow rounded-xl flex items-center space-x-10">
             <div>
-              <div className="h-[54px] w-[54px] border ring-[5px] ring-accent/60 rounded-xl flex items-center justify-center relative">
+              <div className="h-[54px] w-[54px] border ring-[5px] ring-accent/65 rounded-xl flex items-center justify-center relative">
                 <BiBrain size={22} />
               </div>
             </div>
@@ -84,8 +84,8 @@ export const Features = () => {
           </div>
           <div className="p-6 pl-10 border shadow rounded-xl flex items-center space-x-10">
             <div>
-              <div className="h-[54px] w-[54px] border ring-[5px] ring-accent/60 rounded-xl flex items-center justify-center relative">
-                <FiGlobe size={22} />
+              <div className="h-[54px] w-[54px] border ring-[5px] ring-accent/65 rounded-xl flex items-center justify-center relative">
+                <BiGlobe size={22} />
               </div>
             </div>
             <div>
@@ -103,8 +103,8 @@ export const Features = () => {
           </div>
           <div className="p-6 pl-10 border shadow rounded-xl flex items-center space-x-10">
             <div>
-              <div className="h-[54px] w-[54px] border ring-[5px] ring-accent/60 rounded-xl flex items-center justify-center relative">
-                <FiBarChart2 size={22} />
+              <div className="h-[54px] w-[54px] border ring-[5px] ring-accent/65 rounded-xl flex items-center justify-center relative">
+                <BiBarChart size={22} />
               </div>
             </div>
             <div>
@@ -122,7 +122,7 @@ export const Features = () => {
           </div>
           <div className="p-6 pl-10 border shadow rounded-xl flex items-center space-x-10">
             <div>
-              <div className="h-[54px] w-[54px] border ring-[5px] ring-accent/60 rounded-xl flex items-center justify-center relative">
+              <div className="h-[54px] w-[54px] border ring-[5px] ring-accent/65 rounded-xl flex items-center justify-center relative">
                 <MdOutlineAdminPanelSettings size={24} />
               </div>
             </div>

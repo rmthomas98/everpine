@@ -28,8 +28,10 @@ const company = [
 ];
 
 const products = [
-  { label: "Custom links", href: "/custom-links" },
+  { label: "AI", href: "/ai" },
   { label: "QR Codes", href: "/qr-codes" },
+  { label: "Custom links", href: "/custom-links" },
+  { label: "Landing pages", href: "/landing-pages" },
   { label: "Analytics", href: "/analytics" },
 ];
 
@@ -159,7 +161,7 @@ export const Footer = () => {
         </div>
         <div className="mt-12 flex items-center justify-between">
           <p className="text-xs text-muted-foreground">
-            © 2024 Dreamist. All rights reserved.
+            © 2024 Spacemon. All rights reserved.
           </p>
           {isMounted && (
             <DropdownMenu modal={false}>

@@ -33,7 +33,7 @@ import {
   HiMiniQrCode,
   HiMiniXCircle,
 } from "react-icons/hi2";
-import { BiLinkAlt } from "react-icons/bi";
+import { BiBarChart, BiGlobe, BiLinkAlt, BiFolder } from "react-icons/bi";
 
 const links = [
   {
@@ -575,7 +575,7 @@ export const Compare = () => {
                     <TableRow>
                       <TableHead className="text-foreground text-base sticky top-[120px]">
                         <div className="flex items-center space-x-2">
-                          <FiGlobe />
+                          <BiGlobe />
                           <span>Landing pages</span>
                         </div>
                       </TableHead>
@@ -623,7 +623,7 @@ export const Compare = () => {
                     <TableRow>
                       <TableHead className="text-foreground text-base sticky top-[120px]">
                         <div className="flex items-center space-x-2">
-                          <FiBarChart2 />
+                          <BiBarChart />
                           <span>Analytics and tracking</span>
                         </div>
                       </TableHead>
@@ -671,7 +671,7 @@ export const Compare = () => {
                     <TableRow>
                       <TableHead className="text-foreground text-base sticky top-[120px]">
                         <div className="flex items-center space-x-2">
-                          <FiFolder />
+                          <BiFolder />
                           <span>Campaigns</span>
                         </div>
                       </TableHead>

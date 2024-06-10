@@ -11,6 +11,8 @@ import {
   FiUsers,
   FiLayout,
   FiLayers,
+  FiFolder,
+  FiGlobe,
 } from "react-icons/fi";
 import {
   DropdownMenu,
@@ -21,12 +23,20 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
+import { HiMiniGlobeAlt, HiMiniQrCode } from "react-icons/hi2";
 
 import { usePathname } from "next/navigation";
 import { ThemedLogo } from "@/components/themedLogo";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 import { TeamPicker } from "@/components/teamPicker";
+import {
+  BiFolder,
+  BiGlobe,
+  BiHome,
+  BiHomeAlt,
+  BiLinkAlt,
+} from "react-icons/bi";
 
 export const SideNav = ({ role }) => {
   const path = usePathname();
@@ -92,12 +102,16 @@ export const SideNav = ({ role }) => {
                 </DropdownMenuLabel>
                 {/*<DropdownMenuSeparator />*/}
                 <DropdownMenuItem>
-                  <FiZap size={14} className="mr-2" />
+                  <BiLinkAlt size={15} className="mr-2" />
+                  Link
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <HiMiniQrCode size={15} className="mr-2" />
                   QR Code
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <FiLink2 size={14} className="mr-2 -rotate-45" />
-                  Link
+                  <BiGlobe size={15} className="mr-2" />
+                  Page
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -114,8 +128,8 @@ export const SideNav = ({ role }) => {
                   size="sm"
                 >
                   <Link href="/dashboard" passHref>
-                    <FiHome
-                      size={14}
+                    <BiHomeAlt
+                      size={15}
                       className="mr-2.5 relative bottom-[1px]"
                     />
                     Home
@@ -134,9 +148,9 @@ export const SideNav = ({ role }) => {
                   size="sm"
                 >
                   <Link href="/dashboard/links" passHref>
-                    <FiLink2
-                      size={14}
-                      className="mr-2.5 relative bottom-[1px] -rotate-45"
+                    <BiLinkAlt
+                      size={15}
+                      className="mr-2.5 relative bottom-[1px]"
                     />
                     Links
                   </Link>
@@ -154,8 +168,31 @@ export const SideNav = ({ role }) => {
                   size="sm"
                 >
                   <Link href="/dashboard/qr" passHref>
-                    <FiZap size={14} className="mr-2.5 relative bottom-[1px]" />
+                    <HiMiniQrCode
+                      size={15}
+                      className="mr-2.5 relative bottom-[1px]"
+                    />
                     QR Codes
+                  </Link>
+                </Button>
+              </div>
+              <div>
+                <Button
+                  asChild
+                  variant="ghost"
+                  className={`w-full justify-start hover:accent-background ${
+                    path === "/dashboard/pages"
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-muted-foreground"
+                  }`}
+                  size="sm"
+                >
+                  <Link href="/dashboard/pages" passHref>
+                    <BiGlobe
+                      size={15}
+                      className="mr-2.5 relative bottom-[1px]"
+                    />
+                    Pages
                   </Link>
                 </Button>
               </div>
@@ -172,7 +209,7 @@ export const SideNav = ({ role }) => {
                 >
                   <Link href="/dashboard/analytics" passHref>
                     <FiBarChart2
-                      size={14}
+                      size={15}
                       className="mr-2.5 relative bottom-[1px]"
                     />
                     Analytics
@@ -191,11 +228,11 @@ export const SideNav = ({ role }) => {
                   size="sm"
                 >
                   <Link href="/dashboard/series" passHref>
-                    <FiLayers
-                      size={14}
+                    <FiFolder
+                      size={15}
                       className="mr-2.5 relative bottom-[1px]"
                     />
-                    Series
+                    Campaigns
                   </Link>
                 </Button>
               </div>

@@ -17,22 +17,22 @@ export const Faqs = () => {
           Frequently asked questions
         </h2>
         <p className="text-muted-foreground mt-2 text-sm text-center mx-auto">
-          Find answers to the most common questions about Dreamist and how it
+          Find answers to the most common questions about Spacemon and how it
           works.
         </p>
         <div className="mt-8">
           <Accordion type="single" collapsible defaultValue="item-1">
             <AccordionItem value="item-1" className="border-t">
               <AccordionTrigger>
-                Why should I use Dreamist for my business?
+                Why should I use Spacemon for my business?
               </AccordionTrigger>
               <AccordionContent>
                 <p className="text-sm">
-                  Dreamist is your all-in-one solution for creating
-                  custom-branded links and stunning QR codes powered by AI. Our
-                  platform is crafted to enhance your audience engagement,
-                  monitor your marketing campaigns, and drive your business
-                  growth.
+                  Spacemon is your all-in-one solution for creating
+                  custom-branded links, stunning QR codes powered by AI, and
+                  custom landing pages. Our platform is crafted to enhance your
+                  audience engagement, monitor your engagement, and drive your
+                  business growth.
                 </p>
               </AccordionContent>
             </AccordionItem>
@@ -40,7 +40,7 @@ export const Faqs = () => {
               <AccordionTrigger>What are AI-powered QR codes?</AccordionTrigger>
               <AccordionContent>
                 <p className="text-sm">
-                  Dreamist leverages AI to craft eye-catching QR codes by
+                  Spacemon leverages AI to craft eye-catching QR codes by
                   blending an AI-generated image, inspired by your imagination,
                   or a custom-uploaded image with the QR code itself. This
                   results in visually captivating and engaging QR codes that
@@ -84,10 +84,28 @@ export const Faqs = () => {
               <AccordionContent>
                 <p className="text-sm">
                   Short links are important for your business because they are
-                  easy to remember and share. They are great for branding and
-                  making your links more recognizable. Short links are also
-                  trackable, allowing you to monitor the performance of your
-                  links and see how many people are clicking on them.
+                  easy to remember and share. You can take a really long link
+                  and convert it into a great looking short link which makes it
+                  easier to share, especially in print media and places where
+                  you don't have a lot of space.
+                  {/*They are great for branding and*/}
+                  {/*making your links more recognizable. Short links are also*/}
+                  {/*trackable, allowing you to monitor the performance of your*/}
+                  {/*links and see how many people are clicking on them.*/}
+                </p>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-12">
+              <AccordionTrigger>
+                What are custom landing pages?
+              </AccordionTrigger>
+              <AccordionContent>
+                <p className="text-sm">
+                  A landing page is an webpage designed to promote your brand,
+                  product, or service. It can also serve as a link hub in a bio,
+                  directing visitors to various destinations. Its purpose is to
+                  captivate visitors and encourage specific actions, such as
+                  completing a purchase or registering for events.
                 </p>
               </AccordionContent>
             </AccordionItem>
@@ -98,9 +116,9 @@ export const Faqs = () => {
               <AccordionContent>
                 <p className="text-sm">
                   A custom domain allows you to use your own website name for
-                  your custom links and will show up as the URL when scanning
-                  your QR codes. This is great for branding and making your
-                  links more recognizable. You can follow&nbsp;
+                  your custom links, landing pages, and QR codes. This is great
+                  for branding and making your links more recognizable. You can
+                  follow&nbsp;
                   <Link
                     href="/guides/custom-domains"
                     target="_blank"
@@ -114,13 +132,13 @@ export const Faqs = () => {
             </AccordionItem>
             <AccordionItem value="item-2">
               <AccordionTrigger>
-                Which Dreamist plan is right for me?
+                Which Spacemon plan is right for me?
               </AccordionTrigger>
               <AccordionContent>
                 <p className="text-sm">
                   Our plans are designed to meet the needs of businesses of all
                   sizes. Our free plan is perfect for personal use or if you are
-                  just wanting to try out Dreamist. Our paid plans are going to
+                  just wanting to try out Spacemon. Our paid plans are going to
                   vary on your specific needs. If you are unsure, you can always
                   start with our free plan and upgrade later. Or you can contact
                   us and we can help you find the right plan.
@@ -181,10 +199,10 @@ export const Faqs = () => {
                   If you have any other questions, feel free to reach out to us
                   at&nbsp;
                   <Link
-                    href="mailto:support@dreamist.ai"
+                    href="mailto:support@spacemon.io"
                     className="text-blue-500 border-b border-transparent hover:underline"
                   >
-                    support@dreamist.ai
+                    support@spacemon.io
                   </Link>
                 </p>
               </AccordionContent>

@@ -140,13 +140,19 @@ export const Tiers = () => {
           <Tabs
             value={billingCycle}
             onValueChange={setBillingCycle}
-            className="w-full max-w-[380px]"
+            className="w-full max-w-[380px] rounded-full"
           >
-            <TabsList className="w-full">
-              <TabsTrigger value="monthly" className="w-full">
+            <TabsList className="w-full rounded-full">
+              <TabsTrigger
+                value="monthly"
+                className="w-full rounded-full text-[13px]"
+              >
                 Monthly
               </TabsTrigger>
-              <TabsTrigger value="annually" className="w-full">
+              <TabsTrigger
+                value="annually"
+                className="w-full rounded-full text-[13px]"
+              >
                 Annual (Save 20%)
               </TabsTrigger>
             </TabsList>
@@ -194,7 +200,7 @@ export const Tiers = () => {
                       billingCycle === "annually"
                         ? "opacity-1"
                         : "opacity-0 pointer-events-none"
-                    } transition-all`}
+                    } transition-all duration-300`}
                   >
                     {index === 0
                       ? `No credit card required`
@@ -211,11 +217,11 @@ export const Tiers = () => {
                 <div
                   className={`${
                     billingCycle === "annually" ? "mt-5" : "mt-0"
-                  } mb-4 transition-all`}
+                  } mb-4 transition-all duration-300`}
                 >
                   <Button
                     className={`w-full`}
-                    variant={index === 2 ? "default" : "secondary"}
+                    variant={index === 2 ? "default" : "outline"}
                     asChild
                   >
                     <Link

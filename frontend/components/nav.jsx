@@ -13,32 +13,214 @@ import {
   NavigationMenuContent,
   NavigationMenuLink,
   NavigationMenuIndicator,
-  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { ThemedIconLogo } from "@/components/themedIconLogo";
-import { FiBarChart2, FiGlobe, FiLink2 } from "react-icons/fi";
-import { HiMiniQrCode } from "react-icons/hi2";
 import {
-  BiBarChart,
-  BiBarChartAlt,
-  BiBarChartAlt2,
   BiBuilding,
   BiBuildings,
-  BiGroup,
-  BiHome,
-  BiLink,
-  BiLinkAlt,
+  BiDonateHeart,
   BiPackage,
   BiRocket,
+  BiShareAlt,
   BiUserVoice,
+  BiBeenHere,
+  BiWine,
+  BiBuildingHouse,
+  BiPurchaseTag,
+  BiStore,
+  BiCapsule,
+  BiCollection,
+  BiCandles,
+  BiIdCard,
+  BiPen,
+  BiDirections,
+  BiCompass,
+  BiMapPin,
+  BiMap,
+  BiMessageSquare,
+  BiBriefcase,
+  BiWorld,
+  BiBookContent,
+  BiBookOpen,
+  BiBook,
+  BiBookAlt,
+  BiMapAlt,
+  BiQuestionMark,
+  BiHelpCircle,
+  BiListUl,
+  BiTrain,
+  BiPlanet,
 } from "react-icons/bi";
 import useWindowScroll from "@react-hook/window-scroll";
 import { IconRocket } from "@tabler/icons-react";
 import { TbBuildingSkyscraper } from "react-icons/tb";
+import { PiPaintBucketBold } from "react-icons/pi";
+import { products } from "@/data/nav/navItems";
+
+const solutions = {
+  stages: [
+    {
+      title: "Startups",
+      description: "Accelerate growth",
+      icon: <BiRocket />,
+      href: "/stages/startups",
+    },
+    {
+      title: "Small business",
+      description: "Connect with customers",
+      icon: <BiStore />,
+      href: "/stages/small-business",
+    },
+    {
+      title: "Midmarket",
+      description: "Drive innovation",
+      icon: <BiBuildings />,
+      href: "/stages/midmarket",
+    },
+    {
+      title: "Enterprise",
+      description: "Scale operations",
+      icon: <TbBuildingSkyscraper />,
+      href: "/stages/enterprise",
+    },
+  ],
+  industries: [
+    {
+      title: "Restaurants",
+      description: "Redefine dining experiences",
+      icon: <BiWine />,
+      href: "/industries/hospitality",
+    },
+    {
+      title: "Retail",
+      description: "Keep customers coming back",
+      icon: <BiPurchaseTag />,
+      href: "/industries/retail",
+    },
+    {
+      title: "Real estate",
+      description: "Streamline property information",
+      icon: <BiBuildingHouse />,
+      href: "/industries/real-estate",
+    },
+    {
+      title: "Education",
+      description: "Educate quickly and effectively",
+      icon: <BiCollection />,
+      href: "/industries/charity",
+    },
+    {
+      title: "Healthcare",
+      description: "Improve patient care",
+      icon: <BiCapsule />,
+      href: "/industries/real-estate",
+    },
+    {
+      title: "Financial services",
+      description: "Lead with trust and security",
+      icon: <BiCandles />,
+      href: "/industries/charity",
+    },
+  ],
+};
+
+const useCases = [
+  {
+    title: "Surveys & feedback",
+    description: "Get insights from customers",
+    icon: <BiUserVoice />,
+    href: "/use-cases/surveys-feedback",
+  },
+  {
+    title: "Product packaging",
+    description: "Enhance customer experience",
+    icon: <BiPackage />,
+    href: "/use-cases/product-packaging",
+  },
+  {
+    title: "Content sharing",
+    description: "Share photos, videos, and more",
+    icon: <BiShareAlt />,
+    href: "/use-cases/content-sharing",
+  },
+  {
+    title: "Donations",
+    description: "Increase awareness",
+    icon: <BiDonateHeart />,
+    href: "/use-cases/donations",
+  },
+  {
+    title: "Business cards",
+    description: "Tell your story in seconds",
+    icon: <BiIdCard />,
+    href: "/use-cases/business-cards",
+  },
+  {
+    title: "Live events",
+    description: "Give your audience more",
+    icon: <BiMap />,
+    href: "/use-cases/live-events",
+  },
+];
+
+const resources = {
+  company: [
+    {
+      title: "Blog",
+      description: "Read the latest articles",
+      icon: <BiPen />,
+      href: "/startups",
+    },
+    {
+      title: "Contact sales",
+      description: "Get your tailored solution",
+      icon: <BiBriefcase />,
+      href: "/startups",
+    },
+    {
+      title: "Uptime status",
+      description: "Check the status of our services",
+      icon: <BiWorld />,
+      href: "/startups",
+    },
+    {
+      title: "Changelog",
+      description: "See what's new",
+      icon: <BiBookContent />,
+      href: "/startups",
+    },
+  ],
+  getStarted: [
+    {
+      title: "Onboarding",
+      description: "Tips to getting started",
+      icon: <BiRocket />,
+      href: "/startups",
+    },
+    {
+      title: "Documentation",
+      description: "Find what you need",
+      icon: <BiBookAlt />,
+      href: "/startups",
+    },
+    {
+      title: "Guides",
+      description: "Step-by-step instructions",
+      icon: <BiMapAlt />,
+      href: "/pricing",
+    },
+    {
+      title: "Help center",
+      description: "Get answers to your questions",
+      icon: <BiHelpCircle />,
+      href: "/startups",
+    },
+  ],
+};
 
 const showNavRoutes = ["/", "/pricing"];
 
@@ -57,13 +239,15 @@ export const Nav = () => {
       {/*</Button>*/}
       <div className={`px-4 py-3 top-0 z-[9999] sticky`}>
         <div
-          className={`w-full rounded-full max-w-[1000px] mx-auto flex justify-between items-center px-2 py-2 border bg-background/80 backdrop-blur opacity-0 fade-in-short-delayed ${
+          className={`w-full rounded-full max-w-[1100px] mx-auto flex justify-between items-center px-2 py-2 border bg-background/80 backdrop-blur opacity-0 fade-in-short-delayed ${
             scrollPosition > 50 && "shadow"
           } transition-all`}
         >
-          <Link href="/" passHref>
-            <ThemedLogo />
-          </Link>
+          <div className="ml-1">
+            <Link href="/" passHref>
+              <ThemedLogo />
+            </Link>
+          </div>
           <div className="absolute left-[50%] translate-x-[-50%]">
             <NavigationMenu delayDuration={100}>
               <NavigationMenuList>
@@ -72,13 +256,13 @@ export const Nav = () => {
                     Products
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid gap-4 p-4 grid-rows-[1fr_1fr_1fr_1fr] grid-cols-[.75fr_1fr]">
-                      <li className="row-span-4">
+                    <ul className="grid gap-x-4 gap-y-5 p-4 grid-rows-[1fr_1fr_1fr_1fr_1fr] grid-cols-[.75fr_1fr]">
+                      <li className="row-span-5">
                         <div className="p-[1px] h-full relative rounded-[7px] bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 background-animate">
                           <Card className="w-[190px] flex h-full flex-col justify-end p-4 rounded-md no-underline outline-none shadow-none border-none bg-background/90">
                             <ThemedIconLogo />
-                            <div className="mb-2 mt-4 font-medium">
-                              Dreamist AI
+                            <div className="mb-2 mt-3.5 font-medium">
+                              Spacemon AI
                             </div>
                             <p className="text-[13px] leading-tight">
                               Bring your QR codes to life with the power of AI.
@@ -86,34 +270,16 @@ export const Nav = () => {
                           </Card>
                         </div>
                       </li>
-                      <ListItem
-                        href="/docs"
-                        title="QR Codes"
-                        icon={<HiMiniQrCode size={16} />}
-                      >
-                        Stunning AI-powered QR codes
-                      </ListItem>
-                      <ListItem
-                        href="/docs/installation"
-                        title="Custom links"
-                        icon={<BiLinkAlt size={16} />}
-                      >
-                        Short, branded links
-                      </ListItem>
-                      <ListItem
-                        href="/docs/installation"
-                        title="Landing pages"
-                        icon={<FiGlobe size={16} />}
-                      >
-                        Custom landing pages
-                      </ListItem>
-                      <ListItem
-                        href="/docs/primitives/typography"
-                        title="Analytics"
-                        icon={<FiBarChart2 size={16} />}
-                      >
-                        Detailed analytics and insights
-                      </ListItem>
+                      {products.map((item, i) => (
+                        <ListItem
+                          key={i}
+                          href={item.href}
+                          title={item.title}
+                          icon={item.icon}
+                        >
+                          {item.description}
+                        </ListItem>
+                      ))}
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
@@ -126,82 +292,62 @@ export const Nav = () => {
                       <div className="font-medium text-xs text-muted-foreground">
                         By stage
                       </div>
-                      <ul className="grid gap-4 grid-cols-[1fr_1fr] mt-4 border-b border-dashed pb-4">
-                        <ListItem
-                          href="/startups"
-                          title="Startups"
-                          icon={<BiRocket size={16} />}
-                        >
-                          Accelerate growth
-                        </ListItem>
-                        <ListItem
-                          href="/startups"
-                          title="Small business"
-                          icon={<BiHome />}
-                        >
-                          Boost sales
-                        </ListItem>
-                        <ListItem
-                          href="/startups"
-                          title="Midmarket"
-                          icon={<BiBuildings />}
-                        >
-                          Drive innovation
-                        </ListItem>
-                        <ListItem
-                          href="/startups"
-                          title="Enterprise"
-                          icon={<TbBuildingSkyscraper />}
-                        >
-                          Scale operations
-                        </ListItem>
+                      <ul className="grid gap-5 grid-cols-[1fr_1fr] mt-4 border-b border-dashed pb-4">
+                        {solutions.stages.map((item, i) => (
+                          <ListItem
+                            key={i}
+                            href={item.href}
+                            title={item.title}
+                            icon={item.icon}
+                          >
+                            {item.description}
+                          </ListItem>
+                        ))}
                       </ul>
-                      <div className="font-medium text-xs text-muted-foreground mt-4">
-                        Use cases
+                      <div className="flex items-center justify-between w-full mt-4">
+                        <p className="font-medium text-xs text-muted-foreground">
+                          By industry
+                        </p>
+                        <MenuButton href="/pricing">Explore all</MenuButton>
                       </div>
-                      <ul className="grid gap-4 grid-cols-[1fr_1fr] mt-4">
-                        <ListItem
-                          href="/startups"
-                          title="Surveys & feedback"
-                          icon={<BiUserVoice />}
-                        >
-                          Accelerate growth
-                        </ListItem>
-                        <ListItem
-                          href="/startups"
-                          title="Product packaging"
-                          icon={<BiPackage />}
-                        >
-                          Boost sales
-                        </ListItem>
-                        <ListItem
-                          href="/startups"
-                          title="Print marketing"
-                          icon={<BiBuilding />}
-                        >
-                          Drive innovation
-                        </ListItem>
-                        <ListItem
-                          href="/startups"
-                          title="Digital marketing"
-                          icon={<BiBuilding />}
-                        >
-                          Scale operations
-                        </ListItem>
-                        <ListItem
-                          href="/startups"
-                          title="Content sharing"
-                          icon={<BiBuilding />}
-                        >
-                          Scale operations
-                        </ListItem>
-                        <ListItem
-                          href="/startups"
-                          title="Events & conferences"
-                          icon={<BiBuilding />}
-                        >
-                          Scale operations
-                        </ListItem>
+                      <ul className="grid gap-5 grid-cols-[1fr_1fr] mt-4">
+                        {solutions.industries.map((item, i) => (
+                          <ListItem
+                            key={i}
+                            href={item.href}
+                            title={item.title}
+                            icon={item.icon}
+                          >
+                            {item.description}
+                          </ListItem>
+                        ))}
+                      </ul>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="cursor-auto">
+                    Use cases
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="p-4">
+                      <div className="flex items-center justify-between w-full">
+                        <p className="font-medium text-xs text-muted-foreground">
+                          Use cases
+                        </p>
+                        <MenuButton href="/pricing">Explore all</MenuButton>
+                      </div>
+                      <ul className="grid gap-5 grid-cols-[1fr_1fr] mt-4">
+                        {useCases.map((item, i) => (
+                          <ListItem
+                            key={i}
+                            href={item.href}
+                            title={item.title}
+                            icon={item.icon}
+                          >
+                            {item.description}
+                          </ListItem>
+                        ))}
                       </ul>
                     </div>
                   </NavigationMenuContent>
@@ -215,69 +361,33 @@ export const Nav = () => {
                       <div className="font-medium text-xs text-muted-foreground">
                         Company
                       </div>
-                      <ul className="grid gap-4 grid-cols-[1fr_1fr] mt-4 border-b border-dashed pb-4">
+                      <ul className="grid gap-5 grid-cols-[1fr_1fr] mt-4 border-b border-dashed pb-4">
                         {/*<ul>*/}
-                        <ListItem
-                          href="/startups"
-                          title="Blog"
-                          icon={<BiRocket />}
-                        >
-                          Accelerate growth
-                        </ListItem>
-                        <ListItem
-                          href="/startups"
-                          title="Contact sales"
-                          icon={<BiRocket />}
-                        >
-                          Accelerate growth
-                        </ListItem>
-                        <ListItem
-                          href="/startups"
-                          title="Uptime status"
-                          icon={<BiBuilding />}
-                        >
-                          Uptime status
-                        </ListItem>
-                        <ListItem
-                          href="/startups"
-                          title="Changelog"
-                          icon={<BiBuilding />}
-                        >
-                          Careers
-                        </ListItem>
+                        {resources.company.map((item, i) => (
+                          <ListItem
+                            key={i}
+                            href={item.href}
+                            title={item.title}
+                            icon={item.icon}
+                          >
+                            {item.description}
+                          </ListItem>
+                        ))}
                       </ul>
                       <div className="font-medium text-xs text-muted-foreground mt-4">
                         Get started
                       </div>
-                      <ul className="grid gap-4 grid-cols-[1fr_1fr] mt-4">
-                        <ListItem
-                          href="/startups"
-                          title="Onboarding"
-                          icon={<BiBuilding />}
-                        >
-                          Drive innovation
-                        </ListItem>
-                        <ListItem
-                          href="/startups"
-                          title="Documentation"
-                          icon={<BiBuilding />}
-                        >
-                          Scale operations
-                        </ListItem>
-                        <ListItem
-                          href="/startups"
-                          title="Help center"
-                          icon={<BiRocket />}
-                        >
-                          Accelerate growth
-                        </ListItem>
-                        <ListItem
-                          href="/startups"
-                          title="Guides"
-                          icon={<BiBuilding />}
-                        >
-                          Boost sales
-                        </ListItem>
+                      <ul className="grid gap-5 grid-cols-[1fr_1fr] mt-4">
+                        {resources.getStarted.map((item, i) => (
+                          <ListItem
+                            key={i}
+                            href={item.href}
+                            title={item.title}
+                            icon={item.icon}
+                          >
+                            {item.description}
+                          </ListItem>
+                        ))}
                       </ul>
                     </div>
                   </NavigationMenuContent>
@@ -316,7 +426,7 @@ const ListItem = forwardRef(
   ({ className, children, title, icon, ...props }, ref) => (
     <li className="flex items-center">
       <NavigationMenuLink asChild>
-        <a
+        <Link
           ref={ref}
           className={cn(
             "block select-none w-[240px] group rounded-md leading-none no-underline outline-none transition-colors focus:bg-accent focus:text-accent-foreground",
@@ -335,8 +445,22 @@ const ListItem = forwardRef(
               </p>
             </div>
           </div>
-        </a>
+        </Link>
       </NavigationMenuLink>
     </li>
   ),
 );
+
+const MenuButton = forwardRef(({ className, children, ...props }, ref) => (
+  <NavigationMenuLink asChild>
+    <Link ref={ref} className={className} {...props}>
+      <Button
+        variant="ghost"
+        size="sm"
+        className="rounded-full h-[22px] px-3 text-xs w-[100px]"
+      >
+        {children} <HiArrowSmRight className="ml-1" size={12} />
+      </Button>
+    </Link>
+  </NavigationMenuLink>
+));
