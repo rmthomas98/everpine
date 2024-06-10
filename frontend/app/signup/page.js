@@ -12,17 +12,17 @@ const SignupPage = async ({ searchParams }) => {
 
   return (
     <div className="flex h-screen min-h-[500px] fade-in-short-delayed opacity-0">
-      <div className="w-3/4 h-full p-4">
-        <div className="relative z-10 w-fit">
+      <div className="w-3/4 h-full p-4 max-[860px]:w-full">
+        <div className="relative z-10 w-fit max-[860px]:mx-auto">
           <Link href="/" passHref>
             <ThemedLogo />
           </Link>
         </div>
-        <div className="w-full h-full flex items-center relative top-[-25px]">
+        <div className="w-full h-full items-center flex relative top-[-25px] ml-auto">
           <SignUpForm />
         </div>
       </div>
-      <div className="w-1/2 h-full bg-gradient-to-br from-blue-950 via-purple-950 to-orange-950 dark:from-blue-200 dark:via-purple-200 dark:to-orange-200 p-4 relative">
+      <div className="w-1/2 h-full bg-gradient-to-br from-blue-950 via-purple-950 to-orange-950 dark:from-blue-200 dark:via-purple-200 dark:to-orange-200 p-4 relative max-[860px]:hidden">
         <div className="flex w-full justify-end">
           <Link
             href="/sales"
