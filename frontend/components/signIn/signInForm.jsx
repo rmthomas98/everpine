@@ -20,7 +20,7 @@ import { Label } from "@/components/ui/label";
 import { CgSpinner } from "react-icons/cg";
 import { apiPost } from "@/lib/api";
 
-export const LoginForm = () => {
+export const SignInForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
@@ -79,7 +79,7 @@ export const LoginForm = () => {
                   tabIndex="1"
                 />
                 <p
-                  className={`text-xs text-rose-600 absolute -bottom-5 transition-all duration-300 ${
+                  className={`text-xs text-red-600 absolute -bottom-5 transition-all duration-300 ${
                     errors.email
                       ? "opacity-100 pointer-events-auto"
                       : "opacity-0 pointer-events-none"
@@ -111,7 +111,7 @@ export const LoginForm = () => {
                   tabIndex="2"
                 />
                 <p
-                  className={`text-xs text-rose-600 absolute -bottom-5 transition-all duration-300 ${
+                  className={`text-xs text-red-600 absolute -bottom-5 transition-all duration-300 ${
                     errors.password
                       ? "opacity-100 pointer-events-auto"
                       : "opacity-0 pointer-events-none"

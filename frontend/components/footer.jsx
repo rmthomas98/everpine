@@ -65,10 +65,12 @@ export const Footer = () => {
   if (!showNavRoutes.includes(path)) return <div></div>;
 
   const [isMounted, setIsMounted] = useState(false);
-  const { resolvedTheme, setTheme, theme } = useTheme();
+  const { setTheme, theme } = useTheme();
 
   useEffect(() => {
     setIsMounted(true);
+
+    return () => setIsMounted(false);
   }, []);
 
   return (
@@ -76,7 +78,9 @@ export const Footer = () => {
       <div className="max-w-[1000px] mx-auto">
         <div className="flex justify-between">
           <div>
-            <ThemedLogo />
+            <div className="h-[25px]">
+              <ThemedLogo />
+            </div>
             <p className="text-[13px] mt-4 text-muted-foreground max-w-[180px]">
               Bring your QR codes to life with the power of AI
             </p>

@@ -1,9 +1,9 @@
-import { LoginForm } from "@/components/loginForm";
+import { SignInForm } from "@/components/signIn/signInForm";
 
 const LoginPage = async () => {
   return (
     <div>
-      <LoginForm />
+      <SignInForm />
     </div>
   );
 };

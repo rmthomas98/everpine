@@ -140,9 +140,9 @@ export const Tiers = () => {
           <Tabs
             value={billingCycle}
             onValueChange={setBillingCycle}
-            className="w-full max-w-[380px] rounded-full"
+            className="w-full max-w-[380px] rounded-full relative"
           >
-            <TabsList className="w-full rounded-full">
+            <TabsList className="w-full rounded-full relative">
               <TabsTrigger
                 value="monthly"
                 className="w-full rounded-full text-[13px]"

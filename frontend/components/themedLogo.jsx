@@ -25,10 +25,13 @@ export const ThemedLogo = ({ isDashboard }) => {
       break;
   }
 
-  if (!mounted) return <div></div>;
+  if (!mounted)
+    return (
+      <div className="h-[25px] max-h-[25px] w-[100px] max-w-[100px]"></div>
+    );
 
   return (
-    <div className="h-[24.9px] max-h-[24.9px] w-[100px] max-w-[100px] flex items-center">
+    <div className="h-[25px] max-h-[25px] w-[100px] max-w-[100px] flex items-center">
       {/*<Image*/}
       {/*  src={src}*/}
       {/*  width={isDashboard ? 90 : 100}*/}
