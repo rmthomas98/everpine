@@ -99,7 +99,7 @@ export const Subscribe = ({ email, subscriptionStatus }) => {
                 <DropdownMenuItem
                   onClick={async () => {
                     await signOut();
-                    router.push("/login");
+                    router.push("/signin");
                   }}
                 >
                   Log out

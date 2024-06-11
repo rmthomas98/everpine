@@ -407,7 +407,7 @@ export const Nav = () => {
           </div>
           <div className="flex items-center space-x-2">
             <Button variant="ghost" size="sm" className="rounded-full" asChild>
-              <Link href="/login">Sign in</Link>
+              <Link href="/signin">Sign in</Link>
             </Button>
             <Button size="sm" className="rounded-full" asChild>
               <Link href="/pricing">

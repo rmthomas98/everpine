@@ -376,7 +376,7 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
                   <DropdownMenuItem
                     onClick={async () => {
                       await signOut();
-                      router.push("/login");
+                      router.push("/signin");
                     }}
                   >
                     <FiLogOut size={14} className="mr-2" />

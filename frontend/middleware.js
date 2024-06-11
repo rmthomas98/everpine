@@ -4,7 +4,7 @@ import { decrypt } from "@/lib/session";
 import { updateSession } from "@/lib/session";
 
 const protectedRoutes = ["/dashboard"];
-const publicRoutes = ["/login", "/signup", "/", "/pricing"];
+const publicRoutes = ["/signin", "/signup", "/", "/pricing"];
 
 const middleware = async (req) => {
   // check if route is protected or public
@@ -19,9 +19,9 @@ const middleware = async (req) => {
   let res;
   if (session?.id) res = await updateSession(req);
 
-  // redirect to /login if the user is on a protected route and not logged in
+  // redirect to /signin if the user is on a protected route and not logged in
   if (isProtected && !session?.id) {
-    return NextResponse.redirect(new URL("/login", req.nextUrl));
+    return NextResponse.redirect(new URL("/signin", req.nextUrl));
   }
 
   // redirect to /dashboard if the user is on a public route and logged on

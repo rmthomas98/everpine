@@ -4,14 +4,17 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { BiLogoGoogle } from "react-icons/bi";
-import { AiFillGoogleCircle } from "react-icons/ai";
+import Link from "next/link";
+import { useToast } from "@/components/ui/use-toast";
 
 export const SignUpForm = () => {
+  const { toast } = useToast();
+
   return (
     <div className="max-w-[400px] w-full mx-auto">
       <p className="font-semibold text-lg text-center">Create your account</p>
       <p className="text-muted-foreground mt-1 text-sm text-center">
-        Get started with Spacemon today
+        Enter your details below to get started
       </p>
       <form className="mt-6">
         <Input placeholder="Work email" className="w-full" type="email" />
@@ -28,13 +31,19 @@ export const SignUpForm = () => {
       <div>
         <Button variant="outline" className="w-full">
           <BiLogoGoogle size={20} className="mr-2" />
-          Continue with Google
+          Sign up with Google
         </Button>
       </div>
       <div className="mt-6 max-w-[340px] mx-auto">
         <p className="text-xs text-muted-foreground text-center leading-5">
-          By creating an account, you agree to our Terms of Service and Privacy
-          Policy.
+          By creating an account, you agree to our{" "}
+          <Link href="/terms" className="underline">
+            Terms of service
+          </Link>{" "}
+          and{" "}
+          <Link href="/privacy" className="underline">
+            Privacy policy
+          </Link>
         </p>
       </div>
     </div>

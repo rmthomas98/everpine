@@ -11,29 +11,35 @@ const SignupPage = async ({ searchParams }) => {
   const { plan, billing } = searchParams;
 
   return (
-    <div className="flex h-screen min-h-[500px] fade-in-short-delayed opacity-0">
-      <div className="w-3/4 h-full p-4 max-[860px]:w-full">
-        <div className="relative z-10 w-fit max-[860px]:mx-auto">
+    <div className="flex h-screen min-h-[600px] fade-in-short-delayed opacity-0">
+      <div className="w-3/4 h-full p-4 max-[860px]:pt-2 max-[860px]:w-full">
+        <div className="relative z-10 flex justify-between items-center max-[860px]:mx-[-16px] border-b border-transparent max-[860px]:border-border max-[860px]:px-4 pb-2">
           <Link href="/" passHref>
             <ThemedLogo />
           </Link>
+          <Link
+            href="/login"
+            passHref
+            className="text-[13px] hover:underline font-medium dark:font-normal"
+          >
+            Login
+          </Link>
         </div>
-        <div className="w-full h-full items-center flex relative top-[-25px] ml-auto">
+        <div className="w-full h-full items-center flex relative top-[-34px]">
           <SignUpForm />
         </div>
       </div>
-      <div className="w-1/2 h-full bg-gradient-to-br from-blue-950 via-purple-950 to-orange-950 dark:from-blue-200 dark:via-purple-200 dark:to-orange-200 p-4 relative max-[860px]:hidden">
-        <div className="flex w-full justify-end">
-          <Link
-            href="/sales"
-            passHref
-            className="flex items-center text-[13px] font-medium text-background hover:underline z-10"
-          >
-            Contact sales
-            <HiMiniArrowRight className="ml-1" size={15} />
-          </Link>
-        </div>
-        <div className="h-full flex flex-col justify-center relative top-[-20px] min-[1160px]:pl-20 max-[1160px]:pl-6 transition-all duration-300">
+      <div className="w-1/2 h-full bg-gradient-to-br from-blue-950 via-fuchsia-950 to-orange-950 dark:from-blue-200 dark:via-fuchsia-200 dark:to-orange-200 p-4 relative max-[860px]:hidden">
+        {/*<div className="flex w-full justify-end">*/}
+        {/*  <Link*/}
+        {/*    href="/sales"*/}
+        {/*    passHref*/}
+        {/*    className="flex items-center text-[13px] font-medium text-background hover:underline z-10"*/}
+        {/*  >*/}
+        {/*    Contact sales*/}
+        {/*  </Link>*/}
+        {/*</div>*/}
+        <div className="h-full flex flex-col justify-center relative min-[1160px]:pl-20 max-[1160px]:pl-6 transition-all duration-300">
           <div>
             <h1 className="text-background text-2xl font-bold max-w-[320px] min-w-[320px]">
               Spacemon is the ultimate tool for your business

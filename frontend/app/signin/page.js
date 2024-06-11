@@ -1,6 +1,6 @@
 import { SignInForm } from "@/components/signIn/signInForm";
 
-const LoginPage = async () => {
+const SignInPage = async () => {
   return (
     <div>
       <SignInForm />
@@ -8,4 +8,4 @@ const LoginPage = async () => {
   );
 };
 
-export default LoginPage;
+export default SignInPage;
