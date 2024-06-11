@@ -46,14 +46,15 @@ enum SubscriptionStatus {
 // and will be attached to the team, so all the users in the team will have the same subscription
 // the team will use the subscription to get the plan and the status
 model Subscription {
-  id                   String   @id @default(cuid())
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
-  createdBy            User     @relation(fields: [createdById], references: [id])
+  id                   String             @id @default(cuid())
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  createdBy            User               @relation(fields: [createdById], references: [id])
   createdById          String
+  status               SubscriptionStatus @default(ACTIVE)
   stripeSubscriptionId String?
   failedInvoiceId      String? // get from payment failed webhook so when user updates payment method, we can retry the payment
-  cancelAtPeriodEnd    Boolean  @default(false)
+  cancelAtPeriodEnd    Boolean            @default(false)
   team                 Team?
 }
 
