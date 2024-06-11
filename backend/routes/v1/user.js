@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const createUserController = require("../../controllers/v1/user/createUser");
+const createUserController = require("../../controllers/v1/user/create");
 
 // middleware to check referrer
 // check referrer to make sure the request is coming from the frontend

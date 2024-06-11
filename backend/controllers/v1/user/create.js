@@ -4,24 +4,23 @@ const crypto = require("crypto");
 const sendVerificationEmail = require("../../../services/v1/user/sendVerificationEmail");
 const { createSession } = require("../../../lib/session");
 
-const createUser = async (req, res) => {
+const create = async (req, res) => {
   try {
     let { email, password } = req.body;
-
     // make sure we have the email and password
     if (!email || !password) {
-      return res.status(400).send("Email and password are required");
+      return res.status(400).json("Email and password are required");
     }
 
     // format email
     email = email.toLowerCase().trim();
 
     const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    if (!isValidEmail) return res.status(400).send("Invalid email");
+    if (!isValidEmail) return res.status(400).json("Invalid email");
 
     // make sure the email is unique
     const isUser = await prisma.user.findUnique({ where: { email } });
-    if (isUser) return res.status(400).send("Email already exists");
+    if (isUser) return res.status(400).json("Email already exists");
 
     // hash the password and create email verification token
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -37,14 +36,17 @@ const createUser = async (req, res) => {
     });
 
     // make sure the user was created
-    if (!user) return res.status(500).send("User could not be created");
+    if (!user) return res.status(500).json("User could not be created");
 
-    // set cookies and send the response
-    const { session, options } = await createSession({ id: user.id });
+    // create a default team for the user
+    await prisma.team.create({
+      data: {
+        name: "Personal",
+        userId: user.id,
+      },
+    });
 
-    // set the token in the cookie and send the response
-    res.cookie("session", session, options);
-    res.send("user created");
+    res.json("user created");
 
     // we will execute this after the response is sent
     // so user doesn't have to wait for the email to be sent
@@ -55,4 +57,4 @@ const createUser = async (req, res) => {
   }
 };
 
-module.exports = createUser;
+module.exports = create;

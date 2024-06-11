@@ -10,7 +10,7 @@ const port = process.env.PORT || 8000;
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors({ credentials: true, origin: process.env.CLIENT_ORIGIN }));
+app.use(cors());
 
 const apiV1Router = require("./routes/v1");
 app.use("/v1", apiV1Router);

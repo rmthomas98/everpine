@@ -22,17 +22,10 @@ model User {
   password               String
   isEmailVerified        Boolean        @default(false)
   emailVerificationToken String?        @unique
-  defaultTeamId          String?
   stripeCustomerId       String?
   teams                  Team[]
   roles                  Role[]
   subscriptions          Subscription[]
-}
-
-enum SubscriptionStatus {
-  ACTIVE
-  INACTIVE
-  PAST_DUE
 }
 
 enum Plan {
@@ -43,20 +36,24 @@ enum Plan {
   CUSTOM
 }
 
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+}
+
 // this subsciption will belong to the team owner (super admin)
 // and will be attached to the team, so all the users in the team will have the same subscription
 // the team will use the subscription to get the plan and the status
 model Subscription {
-  id                   String             @id @default(cuid())
-  createdAt            DateTime           @default(now())
-  updatedAt            DateTime           @updatedAt
-  createdBy            User               @relation(fields: [createdById], references: [id])
+  id                   String   @id @default(cuid())
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  createdBy            User     @relation(fields: [createdById], references: [id])
   createdById          String
-  plan                 Plan               @default(FREE)
-  status               SubscriptionStatus @default(ACTIVE)
   stripeSubscriptionId String?
   failedInvoiceId      String? // get from payment failed webhook so when user updates payment method, we can retry the payment
-  cancelAtPeriodEnd    Boolean            @default(false)
+  cancelAtPeriodEnd    Boolean  @default(false)
   team                 Team?
 }
 
@@ -64,19 +61,21 @@ model Team {
   id             String       @id @default(cuid())
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
-  name           String
+  name           String?
+  plan           Plan         @default(FREE)
   subscription   Subscription @relation(fields: [subscriptionId], references: [id])
   subscriptionId String       @unique
   users          User[]
   roles          Role[]
-  links          Link[]
-  qrCodes        QrCode[]
-  scans          Scan[]
-  clicks         Click[]
+  // links          Link[]
+  // qrCodes        QrCode[]
+  // scans          Scan[]
+  // clicks         Click[]
 }
 
 enum Roles {
   OWNER // team owner (can be multiple)
+  SUPER_ADMIN // can do everything (can be multiple)
   ADMIN // can do everything except changing subscription (can be multiple)
   MEMBER // can create and edit the data (no team management)
   VIEWER // can only view the data (can't see the team, only qr codes and links)
@@ -93,34 +92,35 @@ model Role {
   userId String
 }
 
-model Scan {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  team      Team     @relation(fields: [teamId], references: [id])
-  teamId    String
-}
-
-model Click {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Team      Team?    @relation(fields: [teamId], references: [id])
-  teamId    String?
-}
-
-model Link {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Team      Team?    @relation(fields: [teamId], references: [id])
-  teamId    String?
-}
-
-model QrCode {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Team      Team?    @relation(fields: [teamId], references: [id])
-  teamId    String?
-}
+//
+// model Scan {
+//   id        String   @id @default(cuid())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   team      Team     @relation(fields: [teamId], references: [id])
+//   teamId    String
+// }
+//
+// model Click {
+//   id        String   @id @default(cuid())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   Team      Team?    @relation(fields: [teamId], references: [id])
+//   teamId    String?
+// }
+//
+// model Link {
+//   id        String   @id @default(cuid())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   Team      Team?    @relation(fields: [teamId], references: [id])
+//   teamId    String?
+// }
+//
+// model QrCode {
+//   id        String   @id @default(cuid())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   Team      Team?    @relation(fields: [teamId], references: [id])
+//   teamId    String?
+// }
