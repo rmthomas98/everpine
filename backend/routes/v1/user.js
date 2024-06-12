@@ -7,7 +7,10 @@ const createUserController = require("../../controllers/v1/user/create");
 // router.use(checkReferrer);
 
 // create user
-router.post("/create", createUserController);
+router.post("/create/credentials", createUserController.createByCredentials);
+
+// create user if signup with google provider
+router.post("/create/google", createUserController.createByGoogle);
 
 // verify user email
 

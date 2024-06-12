@@ -3,6 +3,7 @@ import { ThemedLogo } from "@/components/themedLogo";
 import Link from "next/link";
 import { HiMiniArrowRight, HiMiniQrCode } from "react-icons/hi2";
 import { BiBarChart, BiBrain, BiGlobe, BiLinkAlt } from "react-icons/bi";
+import { signIn } from "@/auth";
 
 const plans = ["professional", "business", "enterprise"];
 const cycle = ["month", "annual"];

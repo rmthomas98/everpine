@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { CgSpinner } from "react-icons/cg";
-import axios from "axios";
+import { signIn } from "next-auth/react";
 
 const planMap = {
   professional: "Professional",
@@ -35,16 +35,38 @@ export const SignUpForm = ({ plan, billing }) => {
     const { email, password } = values;
     setIsLoadingEmail(true);
 
-    const res = await fetch(`${baseUrl}/user/create`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    // const res = await fetch(`${baseUrl}/user/create/credentials`, {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({ email, password }),
+    // });
+
+    const res = { ok: true };
 
     if (res.ok) {
       // redirect to the next page
       // either the billing page or the dashboard
       // based on the plan
+      setIsLoadingEmail(false);
+      const options = { email, password, redirect: false };
+      const res = await signIn("credentials", options);
+      console.log(res);
+      if (res.error) {
+        toast({
+          title: "Error signing in",
+          description: "Invalid credentials",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (plan) {
+        // redirect to billing page
+        // with the plan and billing cycle
+
+        return;
+      }
+      return;
     }
 
     // handle the error
@@ -53,7 +75,6 @@ export const SignUpForm = ({ plan, billing }) => {
       title: "Error creating account",
       description: data,
       variant: "destructive",
-      position: "left",
     });
     setIsLoadingEmail(false);
   };
@@ -103,7 +124,10 @@ export const SignUpForm = ({ plan, billing }) => {
             Password must be at least 8 characters
           </p>
         )}
-        <Button className="mt-6 w-full" disabled={isLoadingEmail}>
+        <Button
+          className="mt-6 w-full"
+          disabled={isLoadingEmail || isLoadingGoogle}
+        >
           {isLoadingEmail ? (
             <CgSpinner className="animate-spin" />
           ) : (
@@ -119,9 +143,26 @@ export const SignUpForm = ({ plan, billing }) => {
         <Separator className="my-6" />
       </div>
       <div>
-        <Button variant="outline" className="w-full">
-          <BiLogoGoogle size={20} className="mr-2" />
-          Sign up with Google
+        <Button
+          variant="outline"
+          className="w-full"
+          disabled={isLoadingGoogle || isLoadingEmail}
+          onClick={() => {
+            setIsLoadingGoogle(true);
+            signIn("google", {
+              callbackUrl: "http://localhost:3000/signup",
+              redirect: false,
+            });
+          }}
+        >
+          {isLoadingGoogle ? (
+            <CgSpinner className="animate-spin" />
+          ) : (
+            <>
+              <BiLogoGoogle size={20} className="mr-2" />
+              Sign up with Google
+            </>
+          )}
         </Button>
       </div>
       <div className="mt-6 max-w-[340px] mx-auto">
