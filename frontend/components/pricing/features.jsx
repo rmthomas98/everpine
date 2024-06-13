@@ -1,17 +1,7 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BiBarChart, BiBrain, BiGlobe, BiLinkAlt } from "react-icons/bi";
 import { HiMiniQrCode } from "react-icons/hi2";
-import {
-  FiBarChart2,
-  FiBox,
-  FiFilter,
-  FiGlobe,
-  FiLock,
-  FiStar,
-  FiUsers,
-} from "react-icons/fi";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 
 export const Features = () => {

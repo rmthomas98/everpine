@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { CgSpinner } from "react-icons/cg";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const planMap = {
   professional: "Professional",
@@ -27,6 +28,7 @@ export const SignUpForm = ({ plan, billing }) => {
   } = useForm();
 
   const { toast } = useToast();
+  const router = useRouter();
 
   const [isLoadingEmail, setIsLoadingEmail] = useState(false);
   const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
@@ -35,13 +37,11 @@ export const SignUpForm = ({ plan, billing }) => {
     const { email, password } = values;
     setIsLoadingEmail(true);
 
-    // const res = await fetch(`${baseUrl}/user/create`, {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ email, password, provider: "credentials" }),
-    // });
-
-    const res = { ok: true };
+    const res = await fetch(`${baseUrl}/user/create`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password, provider: "credentials" }),
+    });
 
     if (res.ok) {
       // sign user in, redirect to next page based on plan
@@ -58,13 +58,7 @@ export const SignUpForm = ({ plan, billing }) => {
         return;
       }
 
-      if (plan) {
-        // redirect to billing page
-        // with the plan and billing cycle
-
-        return;
-      }
-      return;
+      // redirect to subscribe page if plan is selected
     }
 
     // handle the signup error here
@@ -99,7 +93,7 @@ export const SignUpForm = ({ plan, billing }) => {
           })}
         />
         {errors.email && (
-          <p className="text-destructive text-xs mt-1.5 dark:text-red-700">
+          <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
             Please enter a valid email address
           </p>
         )}
@@ -113,12 +107,12 @@ export const SignUpForm = ({ plan, billing }) => {
           {...register("password", { required: true, minLength: 8 })}
         />
         {errors.password?.type === "required" && (
-          <p className="text-destructive text-xs mt-1.5 dark:text-red-700">
+          <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
             Please enter a password
           </p>
         )}
         {errors.password?.type === "minLength" && (
-          <p className="text-destructive text-xs mt-1.5 dark:text-red-700">
+          <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
             Password must be at least 8 characters
           </p>
         )}
@@ -145,10 +139,10 @@ export const SignUpForm = ({ plan, billing }) => {
           variant="outline"
           className="w-full"
           disabled={isLoadingGoogle || isLoadingEmail}
-          onClick={() => {
+          onClick={async () => {
             setIsLoadingGoogle(true);
-            signIn("google", {
-              callbackUrl: "http://localhost:3000/signup",
+            const res = await signIn("google", {
+              callbackUrl: `http://localhost:3000/subscribe?plan=${plan}&billing=${billing}`,
               redirect: false,
             });
           }}

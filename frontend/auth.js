@@ -32,7 +32,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   ],
   session: { strategy: "jwt" },
   callbacks: {
-    signIn: async ({ user, account, profile }) => {
+    signIn: async ({ account, profile }) => {
       if (account?.provider === "google") {
         const { name, email } = profile;
         // check if user exists in the database
