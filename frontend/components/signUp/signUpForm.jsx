@@ -35,22 +35,20 @@ export const SignUpForm = ({ plan, billing }) => {
     const { email, password } = values;
     setIsLoadingEmail(true);
 
-    // const res = await fetch(`${baseUrl}/user/create/credentials`, {
+    // const res = await fetch(`${baseUrl}/user/create`, {
     //   method: "POST",
     //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ email, password }),
+    //   body: JSON.stringify({ email, password, provider: "credentials" }),
     // });
 
     const res = { ok: true };
 
     if (res.ok) {
-      // redirect to the next page
-      // either the billing page or the dashboard
-      // based on the plan
-      setIsLoadingEmail(false);
+      // sign user in, redirect to next page based on plan
       const options = { email, password, redirect: false };
       const res = await signIn("credentials", options);
-      console.log(res);
+
+      // check if error signing in
       if (res.error) {
         toast({
           title: "Error signing in",
@@ -69,7 +67,7 @@ export const SignUpForm = ({ plan, billing }) => {
       return;
     }
 
-    // handle the error
+    // handle the signup error here
     const data = await res.json();
     toast({
       title: "Error creating account",
@@ -101,7 +99,7 @@ export const SignUpForm = ({ plan, billing }) => {
           })}
         />
         {errors.email && (
-          <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
+          <p className="text-destructive text-xs mt-1.5 dark:text-red-700">
             Please enter a valid email address
           </p>
         )}
@@ -115,12 +113,12 @@ export const SignUpForm = ({ plan, billing }) => {
           {...register("password", { required: true, minLength: 8 })}
         />
         {errors.password?.type === "required" && (
-          <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
+          <p className="text-destructive text-xs mt-1.5 dark:text-red-700">
             Please enter a password
           </p>
         )}
         {errors.password?.type === "minLength" && (
-          <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
+          <p className="text-destructive text-xs mt-1.5 dark:text-red-700">
             Password must be at least 8 characters
           </p>
         )}

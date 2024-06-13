@@ -33,11 +33,38 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   session: { strategy: "jwt" },
   callbacks: {
     signIn: async ({ user, account, profile }) => {
-      const { name, email, sub } = profile;
-      const options = { email, name, sub };
+      if (account?.provider === "google") {
+        const { name, email } = profile;
+        // check if user exists in the database
+        const res = await fetch(`${baseUrl}/auth/check-db`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+        if (!res.ok) {
+          // create user if it doesn't exist
+          const res = await fetch(`${baseUrl}/user/create`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, provider: "google" }),
+          });
+          if (!res.ok) return false;
+        }
+      }
       return true;
     },
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user, trigger, account, profile }) => {
+      if (account?.provider === "google" && trigger === "signIn") {
+        // need to query the database to get the user id and attach it to the token
+        const res = await fetch(`${baseUrl}/auth/jwt`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: profile.email }),
+        });
+        if (!res.ok) return token;
+        token.id = await res.json();
+        return token;
+      }
       if (user) token.id = user.id;
       return token;
     },
@@ -46,5 +73,5 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       return session;
     },
   },
-  pages: { signIn: "/signin" },
+  pages: { signIn: "/signin", error: "/signup" },
 });

@@ -3,12 +3,25 @@ const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const sendVerificationEmail = require("../../../services/v1/user/sendVerificationEmail");
 
-const createByCredentials = async (req, res) => {
+const create = async (req, res) => {
   try {
-    let { email, password } = req.body;
-    // make sure we have the email and password
-    if (!email || !password) {
-      return res.status(400).json("Email and password are required");
+    let { name, email, password, provider } = req.body;
+
+    // check provider and make sure we have the required fields
+    if (provider !== "credentials" && provider !== "google") {
+      return res.status(400).json("Invalid provider");
+    }
+
+    if (provider === "credentials") {
+      if (!email || !password) {
+        return res.status(400).json("Invalid request");
+      }
+    }
+
+    if (provider === "google") {
+      if (!email) {
+        return res.status(400).json("Invalid request");
+      }
     }
 
     // format email
@@ -21,9 +34,13 @@ const createByCredentials = async (req, res) => {
     const isUser = await prisma.user.findUnique({ where: { email } });
     if (isUser) return res.status(400).json("Email already exists");
 
-    // hash the password and create email verification token
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const emailVerificationToken = crypto.randomBytes(32).toString("hex");
+    let hashedPassword;
+    let emailVerificationToken;
+    if (provider === "credentials") {
+      // hash the password and create email verification token
+      hashedPassword = await bcrypt.hash(password, 10);
+      emailVerificationToken = crypto.randomBytes(32).toString("hex");
+    }
 
     let user;
     let team;
@@ -33,16 +50,18 @@ const createByCredentials = async (req, res) => {
       // create the user
       user = await prisma.user.create({
         data: {
+          name,
           email,
-          password: hashedPassword,
-          emailVerificationToken,
+          password: hashedPassword || null,
+          emailVerificationToken: emailVerificationToken || null,
+          isEmailVerified: provider === "google" ? true : false,
         },
       });
 
       // create a default team for the user
       team = await prisma.team.create({
         data: {
-          name: email.split("@")[0],
+          name: name ? name : email.split("@")[0],
           users: { connect: { id: user.id } },
         },
       });
@@ -67,18 +86,15 @@ const createByCredentials = async (req, res) => {
 
     res.json("user created");
 
-    // we will execute this after the response is sent
-    // so user doesn't have to wait for the email to be sent
-    await sendVerificationEmail(email, emailVerificationToken);
+    if (provider === "credentials") {
+      // we will execute this after the response is sent
+      // so user doesn't have to wait for the email to be sent
+      await sendVerificationEmail(email, emailVerificationToken);
+    }
   } catch (e) {
     console.log(e);
     res.status(500).json("Something went wrong");
   }
 };
 
-const createByGoogle = async (req, res) => {};
-
-module.exports = {
-  createByCredentials,
-  createByGoogle,
-};
+module.exports = { create };
