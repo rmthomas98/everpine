@@ -1,6 +1,6 @@
 const { SignJWT, jwtVerify } = require("jose");
 
-const secretKey = process.env.TOKEN_SECRET;
+const secretKey = process.env.AUTH_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
 
 const encrypt = async (payload) => {
@@ -43,22 +43,13 @@ const verifySession = async (cookie) => {
   return session;
 };
 
-// const destroySession = async () => {
-//   return {
-//     options: {
-//       httpOnly: true,
-//       domain: process.env.COOKIE_DOMAIN,
-//       expires: new Date(Date.now()),
-//       sameSite: "lax",
-//       secure: process.env.NODE_ENV === "production",
-//     },
-//   };
-// };
+const issueAccessToken = async (data) => {
+  return encrypt(data);
+};
 
 module.exports = {
   encrypt,
   decrypt,
   createSession,
   verifySession,
-  // destroySession,
 };

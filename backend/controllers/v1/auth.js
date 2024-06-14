@@ -40,8 +40,8 @@ const checkUser = async (req, res) => {
   }
 };
 
-// this will be to get the user id by email to attach to the jwt token
-const jwt = async (req, res) => {
+// this will be to get the user id and access token
+const googleSignIn = async (req, res) => {
   try {
     let { email } = req.body;
     email = email.toLowerCase().trim();
@@ -54,4 +54,4 @@ const jwt = async (req, res) => {
   }
 };
 
-module.exports = { signIn, checkUser, jwt };
+module.exports = { signIn, checkUser, googleSignIn };

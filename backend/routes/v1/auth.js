@@ -6,6 +6,6 @@ router.post("/signin", authController.signIn);
 
 router.post("/check-db", authController.checkUser);
 
-router.post("/jwt", authController.jwt);
+router.post("/google-signin", authController.googleSignIn);
 
 module.exports = router;

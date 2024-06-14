@@ -1,6 +1,4 @@
-import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { cookies } from "next/headers";
 
 const protectedRoutes = ["/dashboard"];
 const publicRoutes = ["/signin", "/signup", "/", "/pricing"];
@@ -17,14 +15,19 @@ const publicRoutes = ["/signin", "/signup", "/", "/pricing"];
 //   console.log("session", session);
 // };
 
-export default auth((req) => {
-  const path = req.nextUrl.pathname;
-  const isProtected = protectedRoutes.includes(path);
-  const isPublic = publicRoutes.includes(path);
+// export default auth((req) => {
+//   const path = req.nextUrl.pathname;
+//   const isProtected = protectedRoutes.includes(path);
+//   const isPublic = publicRoutes.includes(path);
+//
+//   // const session = req.auth;
+//   // console.log(session);
+// });
 
-  const session = req.auth;
-  console.log(session);
-});
+export const middleware = async (req, res) => {
+  // const session = await auth();
+  // console.log(session);
+};
 
 // Routes Middleware should not run on
 export const config = {

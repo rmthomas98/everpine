@@ -58,7 +58,8 @@ export const SignUpForm = ({ plan, billing }) => {
         return;
       }
 
-      // redirect to subscribe page if plan is selected
+      // redirect to subsription page
+      return router.push(`/subscribe?plan=${plan}&billing=${billing}`);
     }
 
     // handle the signup error here
