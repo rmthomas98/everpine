@@ -4,18 +4,15 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const createSetupIntent = async (req, res) => {
   try {
-    const session = await verifySession(req.cookies.session);
-    if (!session) return res.status(401).send("Unauthorized");
-
-    const { id } = session;
-    const user = await prisma.user.findUnique({ where: { id } });
-    if (!user) return res.status(404).send("User not found");
+    const { userId } = req;
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) return res.status(404).json("User not found");
 
     const setupIntent = await stripe.setupIntents.create({
       customer: user.stripeCustomerId,
     });
     if (!setupIntent) {
-      return res.status(500).send("Error creating setup intent");
+      return res.status(500).json("Error creating setup intent");
     }
 
     res.json({ clientSecret: setupIntent.client_secret });

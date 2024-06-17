@@ -15,45 +15,22 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { plans } from "@/data/plans";
-import { TeamPicker } from "@/components/teamPicker";
-import { Separator } from "@/components/ui/separator";
 import { HiMiniCheckCircle } from "react-icons/hi2";
-
-const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-const getTeams = async (accessToken) => {
-  const res = await fetch(`${baseUrl}/team/roles`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json",
-    },
-    cache: "no-store",
-  });
-
-  if (!res.ok) return [];
-  return await res.json();
-};
+import { TeamSelector } from "@/components/subscribe/teamSelector/teamSelector";
+import { PaymentProvider } from "@/components/subscribe/payment/paymentProvider";
 
 export const Subscribe = ({ accessToken, plan, billing }) => {
-  const [teams, setTeams] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [billingCycle, setBillingCycle] = useState(billing);
+
+  console.log(selectedTeam);
+
   const totalAnnualPrice = plans[plan.toLowerCase()].price.annual * 12;
   const totalMonthlyPrice = plans[plan.toLowerCase()].price.month;
 
-  useEffect(() => {
-    getTeams(accessToken).then((data) => {
-      setTeams(data);
-      setSelectedTeam(data[0]);
-    });
-
-    return () => setTeams([]);
-  }, []);
-
   return (
     <>
-      <div className="border-b px-4 py-2 sticky top-0 bg-background">
+      <div className="border-b px-4 py-2 sticky top-0 bg-background z-[999]">
         <div className="flex justify-between items-center max-w-[1000px] mx-auto">
           <Link href="/" passHref>
             <ThemedLogo />
@@ -80,8 +57,9 @@ export const Subscribe = ({ accessToken, plan, billing }) => {
                 be charged on either a monthly or annual basis, depending on
                 your selection. You can cancel anytime.
               </p>
+              <PaymentProvider accessToken={accessToken} />
             </div>
-            <div className="w-1/2 min-w-[340px]">
+            <div className="w-1/2 min-w-[320px]">
               <Tabs
                 value={billingCycle}
                 onValueChange={setBillingCycle}
@@ -118,7 +96,8 @@ export const Subscribe = ({ accessToken, plan, billing }) => {
                   </CardDescription>
                 </CardHeader>
                 <div className="px-6">
-                  <Separator />
+                  {/*<Separator />*/}
+                  <div className="w-full border-b border-dashed"></div>
                 </div>
                 <CardContent className="py-3">
                   <p className="text-sm font-medium mb-2">Plan details</p>
@@ -136,16 +115,15 @@ export const Subscribe = ({ accessToken, plan, billing }) => {
                   )}
                 </CardContent>
                 <div className="px-6">
-                  <Separator />
+                  {/*<Separator decorative="dashed" />*/}
+                  <div className="w-full border-b border-dashed"></div>
                 </div>
                 <CardFooter className="pt-3">
                   <div className="flex items-center justify-between w-full">
                     <p className="text-sm font-medium">Billed now</p>
                     {billingCycle === "month" ? (
                       <p className="text-sm font-medium">
-                        {plans[plan.toLowerCase()].price[
-                          billingCycle
-                        ].toLocaleString("en-us", {
+                        {totalMonthlyPrice.toLocaleString("en-us", {
                           maximumFractionDigits: 2,
                           minimumFractionDigits: 2,
                           currency: "usd",
@@ -154,9 +132,7 @@ export const Subscribe = ({ accessToken, plan, billing }) => {
                       </p>
                     ) : (
                       <p className="text-sm font-medium">
-                        {(
-                          plans[plan.toLowerCase()].price[billingCycle] * 12
-                        ).toLocaleString("en-us", {
+                        {totalAnnualPrice.toLocaleString("en-us", {
                           maximumFractionDigits: 2,
                           minimumFractionDigits: 2,
                           currency: "usd",
@@ -168,12 +144,27 @@ export const Subscribe = ({ accessToken, plan, billing }) => {
                 </CardFooter>
               </Card>
               <div className="mt-4">
-                <TeamPicker label={"Assign to..."} />
+                <TeamSelector
+                  accessToken={accessToken}
+                  setSelectedTeam={setSelectedTeam}
+                />
               </div>
               <Button className="mt-4 w-full">Complete purchase</Button>
-              <p className="text-xs text-muted-foreground text-center leading-5">
-                You will be charged
-                {} annualy. You can cancel anytime.
+              <p className="text-xs text-muted-foreground text-center leading-5 mt-4">
+                You will be charged{" "}
+                {billingCycle === "month"
+                  ? `${totalMonthlyPrice.toLocaleString("en-us", {
+                      maximumFractionDigits: 2,
+                      minimumFractionDigits: 2,
+                      currency: "usd",
+                      style: "currency",
+                    })} monthly. You can canel anytime.`
+                  : `${totalAnnualPrice.toLocaleString("en-us", {
+                      maximumFractionDigits: 2,
+                      minimumFractionDigits: 2,
+                      currency: "usd",
+                      style: "currency",
+                    })} annually. You can canel anytime.`}
               </p>
             </div>
           </div>

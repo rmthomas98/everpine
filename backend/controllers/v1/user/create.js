@@ -46,6 +46,14 @@ const create = async (req, res) => {
     // create customer in stripe
     const customer = await stripe.customers.create({ email });
 
+    // generate random avatar for the user
+    const avatar = `https://api.dicebear.com/9.x/lorelei/png?seed=${email}`;
+
+    // generate random avatar for the team
+    // generate random number from 1 to 5
+    const random = Math.floor(Math.random() * 5) + 1;
+    const teamAvatar = `/images/avatars/${random}.webp`;
+
     let user;
     let team;
     let role;
@@ -56,8 +64,9 @@ const create = async (req, res) => {
         data: {
           name,
           email,
+          avatar,
           password: hashedPassword || null,
-          stipeCustomerId: customer?.id,
+          stripeCustomerId: customer?.id,
           emailVerificationToken: emailVerificationToken || null,
           isEmailVerified: provider === "google" ? true : false,
         },
@@ -67,6 +76,7 @@ const create = async (req, res) => {
       team = await prisma.team.create({
         data: {
           name: name ? name : email.split("@")[0],
+          avatar: teamAvatar,
           users: { connect: { id: user.id } },
         },
       });

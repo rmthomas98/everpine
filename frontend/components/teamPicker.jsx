@@ -20,21 +20,21 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { FiPlusCircle } from "react-icons/fi";
 
 const frameworks = [
-  // {
-  //   avatar: "https://github.com/shadcn.png",
-  //   value: "next.js",
-  //   label: "Next.js",
-  // },
-  // {
-  //   avatar: "https://github.com/shadcn.png",
-  //   value: "sveltekit",
-  //   label: "SvelteKit",
-  // },
-  // {
-  //   avatar: "https://github.com/shadcn.png",
-  //   value: "nuxt.js",
-  //   label: "Nuxt.js",
-  // },
+  {
+    avatar: "https://github.com/shadcn.png",
+    value: "next.js",
+    label: "Next.js",
+  },
+  {
+    avatar: "https://github.com/shadcn.png",
+    value: "sveltekit",
+    label: "SvelteKit",
+  },
+  {
+    avatar: "https://github.com/shadcn.png",
+    value: "nuxt.js",
+    label: "Nuxt.js",
+  },
 ];
 
 export const TeamPicker = ({ label }) => {

@@ -20,9 +20,9 @@ model User {
   name                   String?
   email                  String         @unique
   password               String?
-  sub                    String?        @unique // if google login, this will be the google sub
-  isEmailVerified         Boolean        @default(false)
-  emailVerificationToken  String?        @unique
+  avatar                 String?
+  isEmailVerified        Boolean        @default(false)
+  emailVerificationToken String?        @unique
   stripeCustomerId       String?
   defaultTeamId          String?
   teams                  Team[]

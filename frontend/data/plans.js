@@ -57,6 +57,14 @@ export const plans = {
       "Campaigns",
       "Priority support",
     ],
+    planDetails: [
+      "20 QR codes per month",
+      "400 links per month",
+      "3 landing pages",
+      "5 platform seats",
+      "3 months historical data",
+      "1 custom domain",
+    ],
   },
   enterprise: {
     name: "enterprise",
