@@ -21,8 +21,8 @@ model User {
   email                  String         @unique
   password               String?
   sub                    String?        @unique // if google login, this will be the google sub
-  isEmailVerified        Boolean        @default(false)
-  emailVerificationToken String?        @unique
+  isEmailVerified         Boolean        @default(false)
+  emailVerificationToken  String?        @unique
   stripeCustomerId       String?
   defaultTeamId          String?
   teams                  Team[]
@@ -65,6 +65,7 @@ model Team {
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
   name           String
+  avatar         String?
   plan           Plan          @default(FREE)
   subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
   subscriptionId String?       @unique

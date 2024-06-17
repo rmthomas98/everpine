@@ -5,8 +5,10 @@ const router = express.Router();
 const userRouter = require("./user");
 const authRouter = require("./auth");
 const subscribeRouter = require("./subscribe");
+const teamRouter = require("./team");
 router.use("/user", userRouter);
 router.use("/auth", authRouter);
 router.use("/subscribe", subscribeRouter);
+router.use("/team", teamRouter);
 
 module.exports = router;

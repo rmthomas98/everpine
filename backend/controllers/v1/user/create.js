@@ -2,6 +2,7 @@ const prisma = require("../../../db/prisma");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const sendVerificationEmail = require("../../../services/v1/user/sendVerificationEmail");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const create = async (req, res) => {
   try {
@@ -42,6 +43,9 @@ const create = async (req, res) => {
       emailVerificationToken = crypto.randomBytes(32).toString("hex");
     }
 
+    // create customer in stripe
+    const customer = await stripe.customers.create({ email });
+
     let user;
     let team;
     let role;
@@ -53,6 +57,7 @@ const create = async (req, res) => {
           name,
           email,
           password: hashedPassword || null,
+          stipeCustomerId: customer?.id,
           emailVerificationToken: emailVerificationToken || null,
           isEmailVerified: provider === "google" ? true : false,
         },

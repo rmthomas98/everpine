@@ -1,11 +1,14 @@
 import { SideNav } from "@/components/dashboardLayout/sideNav";
 import { AppNav } from "@/components/dashboardLayout/appNav";
-import { getUser } from "@/lib/dal";
 import NextTopLoader from "nextjs-toploader";
 
 const DashboardLayout = async ({ children }) => {
-  const user = await getUser();
-  const { role, email, subscriptionStatus: status } = user;
+  // const user = await getUser();
+  // const { role, email, subscriptionStatus: status } = user;
+
+  const role = "admin";
+  const email = " [email protected]";
+  const status = "active";
 
   return (
     <>

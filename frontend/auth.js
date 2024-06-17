@@ -2,19 +2,9 @@ import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import WorkOs from "next-auth/providers/workos";
 import Credentials from "next-auth/providers/credentials";
-import { SignJWT, jwtVerify } from "jose";
+import { issueToken } from "@/lib/token";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-const secretKey = process.env.AUTH_SECRET;
-const encodedKey = new TextEncoder().encode(secretKey);
-
-const issueToken = async (payload, exp) => {
-  return new SignJWT(payload)
-    .setProtectedHeader({ alg: "HS256" })
-    .setIssuedAt()
-    .setExpirationTime(exp)
-    .sign(encodedKey);
-};
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [
@@ -65,9 +55,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       }
       return true;
     },
-    jwt: async ({ token, user, trigger, account, profile }) => {
+    jwt: async ({ token, user, account, profile }) => {
+      // initial signin
       if (account) {
         const { provider } = account;
+        let userId = user?.id;
         // handle google signin
         if (provider === "google") {
           // need to query the database to get the user id and attach it to the token
@@ -79,80 +71,35 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           // need to stop the token from being issued if user not found
           if (!res.ok) throw new Error("User not found");
 
-          // get user if from response and issue tokens
-          const userId = await res.json();
-          const accessToken = await issueToken({ userId }, "7d");
-          const refreshToken = await issueToken({ userId }, "90d");
-
-          return {
-            user_id: userId,
-            access_token: accessToken,
-            refresh_token: refreshToken,
-            access_token_expires_at: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days,
-            refresh_token_expires_at: Date.now() + 90 * 24 * 60 * 60 * 1000, // 90 days
-          };
+          // get user id from response and issue tokens
+          userId = await res.json();
         }
 
-        // handle credentials signin
-        if (provider === "credentials") {
-          // need to issue tokens here
-          const accessToken = await issueToken({ userId: user.id }, "7d");
-          const refreshToken = await issueToken({ userId: user.id }, "90d");
+        // issue an access token with user id
+        const accessToken = await issueToken({ user_id: userId }, "1d");
+        const refreshToken = await issueToken({ user_id: userId }, "90d");
 
-          return {
-            user_id: user.id,
-            access_token: accessToken,
-            refresh_token: refreshToken,
-            access_token_expires_at: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days,
-            refresh_token_expires_at: Date.now() + 90 * 24 * 60 * 60 * 1000, // 90 days
-          };
-        }
-      } else if (Date.now() < token.access_token_expires_at) {
-        // subsequent requests, access token is still valid
-        console.log("access token is still valid");
-        return token;
-      } else {
-        // access token is expired, attempt to refresh it
-        // if refresh token is expired, throw an error
-        if (Date.now() >= token.refresh_token_expires_at) {
-          throw new Error("Tokens expired");
-        }
+        return {
+          user_id: userId,
+          access_token: accessToken,
+          refresh_token: refreshToken,
+          expires_at: Date.now() + 1000 * 60 * 60 * 24, // 1 day
+        };
       }
 
-      // // handle refreshing access token
-      // if (token.accessToken && trigger !== "signIn") {
-      //   console.log(token.accessToken);
-      //   // decrypt the token
-      //   try {
-      //     // we do not need to do this, we can just set the expiration date in the token
-      //     const { payload } = await jwtVerify(token.accessToken, encodedKey, {
-      //       algorithms: ["HS256"],
-      //     });
-      //     console.log(new Date(payload.exp * 1000));
-      //   } catch (e) {
-      //     if (e.code === "ERR_JWT_EXPIRED") {
-      //       console.log(token);
-      //       // refresh token
-      //       token.accessToken = await issueAccessToken({
-      //         userId: token.id,
-      //       });
-      //     }
-      //   }
-      // }
+      // we will handle token refresh in middleware instead
 
-      // if refresh token is expired, throw an error
-      // throw new Error("Token expired");
       return token;
     },
     session: async ({ token, session }) => {
       // attach user id and access token to the session
-      // so we can use it in the frontend
       if (token) {
-        session.accessToken = token.access_token;
+        session.access_token = token.access_token;
         session.user_id = token.user_id;
       }
       return session;
     },
   },
+  secret: process.env.AUTH_SECRET,
   pages: { signIn: "/signin", error: "/signup" },
 });

@@ -1,6 +1,6 @@
 const prisma = require("../../db/prisma");
 const bcrypt = require("bcrypt");
-const { createSession } = require("../../lib/session");
+const { createSession } = require("../../lib/token");
 
 const signIn = async (req, res) => {
   try {

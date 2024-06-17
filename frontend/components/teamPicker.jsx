@@ -20,24 +20,24 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { FiPlusCircle } from "react-icons/fi";
 
 const frameworks = [
-  {
-    avatar: "https://github.com/shadcn.png",
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    avatar: "https://github.com/shadcn.png",
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    avatar: "https://github.com/shadcn.png",
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
+  // {
+  //   avatar: "https://github.com/shadcn.png",
+  //   value: "next.js",
+  //   label: "Next.js",
+  // },
+  // {
+  //   avatar: "https://github.com/shadcn.png",
+  //   value: "sveltekit",
+  //   label: "SvelteKit",
+  // },
+  // {
+  //   avatar: "https://github.com/shadcn.png",
+  //   value: "nuxt.js",
+  //   label: "Nuxt.js",
+  // },
 ];
 
-export const TeamPicker = () => {
+export const TeamPicker = ({ label }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
@@ -48,7 +48,7 @@ export const TeamPicker = () => {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between min-h-[32px]"
+          className="w-full justify-between min-h-[36px]"
           size="sm"
         >
           {value ? (
@@ -73,7 +73,7 @@ export const TeamPicker = () => {
               </span>
             </div>
           ) : (
-            "Select framework..."
+            <p>{label ? label : "Select team..."}</p>
           )}
           <HiMiniChevronUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>

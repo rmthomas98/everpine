@@ -1,7 +1,7 @@
 import "server-only";
 
 import { cookies } from "next/headers";
-import { decrypt } from "@/lib/session";
+import { decrypt } from "@/lib/token";
 import { ofetch } from "ofetch";
 
 export const getSession = async () => {
