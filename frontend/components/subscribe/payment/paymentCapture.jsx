@@ -56,13 +56,34 @@ export const PaymentCapture = ({
 
     // send data to backend to create subscription
     try {
-      const res = await fetch(`${baseUrl}/subscription/create`);
+      const res = await fetch(`${baseUrl}/subscription/create`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ team, billing, plan, paymentMethod, company }),
+      });
+
+      if (res.ok) {
+        setIsLoading(false);
+        // redirect to dashboard
+        return;
+      }
+
+      const data = await res.json();
+      setIsLoading(false);
+      toast({
+        variant: "destructive",
+        title: "Error creating subscription",
+        description: data,
+      });
     } catch (e) {
       setIsLoading(false);
       toast({
         variant: "destructive",
         title: "Error creating subscription",
-        description: e.message,
+        description: "Something went wrong, please try again.",
       });
       return;
     }

@@ -2,6 +2,7 @@ const prisma = require("../../../db/prisma");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const sendVerificationEmail = require("../../../services/v1/user/sendVerificationEmail");
+const { createTeam } = require("../../../services/v1/subscription/team");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const create = async (req, res) => {
@@ -77,14 +78,7 @@ const create = async (req, res) => {
       });
 
       // create a default team for the user
-      team = await prisma.team.create({
-        data: {
-          name: name ? name : email.split("@")[0],
-          avatar: teamAvatar,
-          stripeCustomerId: customer?.id,
-          users: { connect: { id: user.id } },
-        },
-      });
+      team = await createTeam(name, null, teamAvatar, user);
 
       // create a role for the user
       role = await prisma.role.create({

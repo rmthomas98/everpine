@@ -20,10 +20,11 @@ import { TeamSelector } from "@/components/subscribe/teamSelector/teamSelector";
 import { PaymentProvider } from "@/components/subscribe/payment/paymentProvider";
 import { CgSpinner } from "react-icons/cg";
 
-export const Subscribe = ({ accessToken, plan, billing }) => {
+export const Subscribe = ({ accessToken, plan: initialPlan, billing }) => {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [billingCycle, setBillingCycle] = useState(billing);
   const [isLoading, setIsLoading] = useState(false);
+  const [plan, setPlan] = useState(initialPlan);
 
   const totalAnnualPrice = plans[plan].price.annual * 12;
   const totalMonthlyPrice = plans[plan].price.month;
