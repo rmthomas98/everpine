@@ -18,15 +18,15 @@ import { plans } from "@/data/plans";
 import { HiMiniCheckCircle } from "react-icons/hi2";
 import { TeamSelector } from "@/components/subscribe/teamSelector/teamSelector";
 import { PaymentProvider } from "@/components/subscribe/payment/paymentProvider";
+import { CgSpinner } from "react-icons/cg";
 
 export const Subscribe = ({ accessToken, plan, billing }) => {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [billingCycle, setBillingCycle] = useState(billing);
+  const [isLoading, setIsLoading] = useState(false);
 
-  console.log(selectedTeam);
-
-  const totalAnnualPrice = plans[plan.toLowerCase()].price.annual * 12;
-  const totalMonthlyPrice = plans[plan.toLowerCase()].price.month;
+  const totalAnnualPrice = plans[plan].price.annual * 12;
+  const totalMonthlyPrice = plans[plan].price.month;
 
   return (
     <>
@@ -43,10 +43,10 @@ export const Subscribe = ({ accessToken, plan, billing }) => {
           </Button>
         </div>
       </div>
-      <div className="p-4">
+      <div className="p-4 pb-12">
         <div className="max-w-[1000px] mx-auto">
-          <div className="w-full flex mt-4">
-            <div className="w-3/4 mr-10">
+          <div className="w-full flex mt-4 max-[750px]:flex-col">
+            <div className="w-3/4 min-[750px]:mr-10 max-[750px]:w-full">
               <p className="text-xl font-bold">
                 Get started with{" "}
                 {plan.slice(0, 1).toUpperCase() + plan.slice(1)}
@@ -57,9 +57,19 @@ export const Subscribe = ({ accessToken, plan, billing }) => {
                 be charged on either a monthly or annual basis, depending on
                 your selection. You can cancel anytime.
               </p>
-              <PaymentProvider accessToken={accessToken} />
+              <p className="font-semibold mt-8">Billing information</p>
+              <p className="text-muted-foreground mt-1 text-sm">
+                Enter your billing info to complete the subscription.
+              </p>
+              <PaymentProvider
+                accessToken={accessToken}
+                team={selectedTeam}
+                plan={plan}
+                billing={billing}
+                setIsLoading={setIsLoading}
+              />
             </div>
-            <div className="w-1/2 min-w-[320px]">
+            <div className="w-1/2 min-w-[320px] max-[750px]:w-full max-[750px]:mt-8">
               <Tabs
                 value={billingCycle}
                 onValueChange={setBillingCycle}
@@ -149,7 +159,18 @@ export const Subscribe = ({ accessToken, plan, billing }) => {
                   setSelectedTeam={setSelectedTeam}
                 />
               </div>
-              <Button className="mt-4 w-full">Complete purchase</Button>
+              <Button
+                className="mt-4 w-full"
+                disabled={isLoading}
+                form="billing-form"
+                type="submit"
+              >
+                {isLoading ? (
+                  <CgSpinner className="animate-spin" />
+                ) : (
+                  "Complete purchase"
+                )}
+              </Button>
               <p className="text-xs text-muted-foreground text-center leading-5 mt-4">
                 You will be charged{" "}
                 {billingCycle === "month"

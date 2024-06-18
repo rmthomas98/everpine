@@ -6,14 +6,17 @@ const SubscribePage = async ({ searchParams }) => {
   const session = await auth();
   if (!session) redirect("/signin");
 
-  const { plan, billing } = searchParams;
+  let { plan, billing } = searchParams;
+
+  plan = plan.toLowerCase();
   if (!plan) redirect("/dashboard");
   if (plan === "free") redirect("/dashboard");
-  if (plan !== "professional" && plan !== "business" && plan !== "enterprise")
+  if (plan !== "professional" && plan !== "business" && plan !== "enterprise") {
     redirect("/dashboard");
+  }
 
   const billingOptions = ["month", "annual"];
-  let billingOption = billing;
+  let billingOption = billing?.toLowerCase();
   if (!billingOptions.includes(billing)) {
     billingOption = "annual";
   }

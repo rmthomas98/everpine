@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
 export const CreateTeamDialog = ({
   isDialogOpen,
@@ -26,6 +27,13 @@ export const CreateTeamDialog = ({
     reset,
     formState: { errors },
   } = useForm();
+
+  const searchParams = useSearchParams();
+  const createNewTeam = searchParams.get("create") === "true";
+
+  useEffect(() => {
+    if (createNewTeam) setIsDialogOpen(true);
+  }, []);
 
   useEffect(() => {
     if (isDialogOpen) reset();
@@ -42,6 +50,7 @@ export const CreateTeamDialog = ({
       role: "OWNER",
       name: teamName.trim(),
       avatar: `/images/avatars/${Math.floor(Math.random() * 5) + 1}.webp`,
+      plan: "FREE",
       create: true,
     };
 

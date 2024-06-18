@@ -42,6 +42,7 @@ export const middleware = async (req) => {
       return response;
     }
 
+    console.log("token expired, refreshing it");
     // token is expired, try to refresh it
     const newToken = await refreshAccessToken(token);
     if (newToken) {

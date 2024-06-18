@@ -23,6 +23,7 @@ model User {
   avatar                 String?
   isEmailVerified        Boolean        @default(false)
   emailVerificationToken String?        @unique
+  stripeCustomerId       String?
   defaultTeamId          String?
   teams                  Team[]
   roles                  Role[]
@@ -63,9 +64,9 @@ model Team {
   id               String        @id @default(cuid())
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
-  name             String // will be used in the invoice if no company name is provided
-  companyName      String? // optional, will be used in the invoice if provided
-  emailInvoiceTo   String? // optional, will be used in the invoice if provided, if not provided, the person who set up the team will receive the invoice
+  name             String
+  company          String?
+  emailInvoiceTo   String?
   avatar           String?
   plan             Plan          @default(FREE)
   stripeCustomerId String?

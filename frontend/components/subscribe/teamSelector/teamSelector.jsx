@@ -69,6 +69,8 @@ export const TeamSelector = ({ accessToken, setSelectedTeam }) => {
   const getTeams = async () => {
     const data = await fetchTeams(accessToken);
     setTeams(data);
+    setSelectedTeam(data[0] || null);
+    setValue(data[0]);
     setIsLoading(false);
   };
 
