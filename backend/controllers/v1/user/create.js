@@ -43,8 +43,13 @@ const create = async (req, res) => {
       emailVerificationToken = crypto.randomBytes(32).toString("hex");
     }
 
-    // create customer in stripe
-    const customer = await stripe.customers.create({ email });
+    // create customer in stripe for the team
+    // we will use this to create subscriptions for the team
+    // only teams will have subscriptions, not individual users
+    const customer = await stripe.customers.create({
+      email,
+      name: name ? name : email.split("@")[0],
+    });
 
     // generate random avatar for the user
     const avatar = `https://api.dicebear.com/9.x/lorelei/png?seed=${email}`;
@@ -66,7 +71,6 @@ const create = async (req, res) => {
           email,
           avatar,
           password: hashedPassword || null,
-          stripeCustomerId: customer?.id,
           emailVerificationToken: emailVerificationToken || null,
           isEmailVerified: provider === "google" ? true : false,
         },
@@ -77,6 +81,7 @@ const create = async (req, res) => {
         data: {
           name: name ? name : email.split("@")[0],
           avatar: teamAvatar,
+          stripeCustomerId: customer?.id,
           users: { connect: { id: user.id } },
         },
       });

@@ -48,11 +48,11 @@ export const PaymentProvider = ({ accessToken }) => {
 
   if (!clientSecret) {
     // return skeleton loader
-    return <div>loading...</div>;
+    return <div className="mt-8">loading...</div>;
   }
 
   return (
-    <div className="mt-8">
+    <div>
       <Elements stripe={stripePromise} options={options}>
         <PaymentCapture />
       </Elements>

@@ -85,7 +85,7 @@ export const TeamSelector = ({ accessToken, setSelectedTeam }) => {
   if (isLoading) return <Skeleton className="h-[36px] w-full" />;
 
   return (
-    <>
+    <div className="fade-in-short-delayed opacity-0">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -185,6 +185,6 @@ export const TeamSelector = ({ accessToken, setSelectedTeam }) => {
         setSelectedTeam={setSelectedTeam}
         setValue={setValue}
       />
-    </>
+    </div>
   );
 };
