@@ -1,9 +1,9 @@
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const prisma = require("../../../db/prisma");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const createTeam = async (name, company, avatar, user) => {
   try {
-    const email = user.email;
+    const { email } = user;
     // create customer in stripe for the team
     const customer = await stripe.customers.create({
       email,
@@ -18,7 +18,7 @@ const createTeam = async (name, company, avatar, user) => {
     const team = await prisma.team.create({
       data: {
         name: name || email.split("@")[0],
-        company: company.trim() || null,
+        company: company ? company.trim() : null,
         avatar: avatar || teamAvatar,
         stripeCustomerId: customer?.id,
         users: { connect: { id: user.id } },
@@ -32,7 +32,8 @@ const createTeam = async (name, company, avatar, user) => {
 
     // set default team for user
     await prisma.user.update({
-      where: { id: user.id, defaultTeamId: team.id },
+      where: { id: user.id },
+      data: { defaultTeamId: team.id },
     });
 
     // return new team
