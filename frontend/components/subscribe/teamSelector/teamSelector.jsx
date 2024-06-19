@@ -9,11 +9,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import {
-  HiMiniCheck,
-  HiMiniChevronUpDown,
-  HiMiniPlusCircle,
-} from "react-icons/hi2";
+import { HiMiniCheck, HiMiniChevronUpDown } from "react-icons/hi2";
 import {
   Command,
   CommandEmpty,
@@ -38,8 +34,8 @@ const fetchTeams = async (accessToken) => {
     });
 
     if (!res.ok) return [];
-    const data = await res.json();
-    const filterdData = data.map((item) => {
+    const { roles: data, defaultTeamId } = await res.json();
+    let filteredData = data.map((item) => {
       if (item.role === "SUPER_ADMIN" || item.role === "OWNER") {
         if (item.team.plan === "FREE") {
           return {
@@ -52,7 +48,8 @@ const fetchTeams = async (accessToken) => {
         }
       }
     });
-    return filterdData.filter((item) => item !== undefined);
+    filteredData = filteredData.filter((item) => item !== undefined);
+    return { data: filteredData, defaultTeamId };
   } catch {
     return [];
   }
@@ -68,9 +65,9 @@ export const TeamSelector = ({ accessToken, setSelectedTeam }) => {
 
   const getTeams = async () => {
     const data = await fetchTeams(accessToken);
-    setTeams(data);
-    setSelectedTeam(data[0] || null);
-    setValue(data[0]);
+    setTeams(data?.data);
+    setSelectedTeam(data?.data.find((team) => team.id === data?.defaultTeamId));
+    setValue(data?.data.find((team) => team.id === data?.defaultTeamId));
     setIsLoading(false);
   };
 
@@ -81,6 +78,8 @@ export const TeamSelector = ({ accessToken, setSelectedTeam }) => {
     return () => {
       setIsLoading(true);
       setTeams([]);
+      setSelectedTeam(null);
+      setValue(null);
     };
   }, []);
 

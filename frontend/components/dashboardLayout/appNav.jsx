@@ -32,18 +32,18 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useEffect, useState, useRef } from "react";
-import { signOut } from "@/app/actions/signout";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
+import { signOut } from "next-auth/react";
 
-export const AppNav = ({ email, subscriptionStatus, role }) => {
+export const AppNav = ({ user }) => {
   const [isAccountTooltipOpen, setIsAccountTooltipOpen] = useState(false);
   const [isCreateTooltipOpen, setIsCreateTooltipOpen] = useState(false);
   const [isHelpTooltipOpen, setIsHelpTooltipOpen] = useState(false);
@@ -58,23 +58,9 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const router = useRouter();
+  console.log(user);
 
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // useEffect(() => {
-  //   fetch("/api/is-authenticated")
-  //     .then((res) => {
-  //       if (res.ok) {
-  //         res.json().then((data) => {
-  //           setEmail(data.email);
-  //         });
-  //       } else {
-  //         setEmail("");
-  //       }
-  //     })
-  //     .catch(() => setEmail(""));
-  // }, []);
 
   useEffect(() => {
     setIsAnyMenuOpen(
@@ -90,17 +76,6 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
   const searchRef = useRef(null);
   const dropdownRef = useRef(null);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted)
-    return (
-      <nav className="px-4 py-3 backdrop-blur h-[54px]">
-        <div className="flex justify-between"></div>
-      </nav>
-    );
-
   return (
     <nav className="px-4 py-3 backdrop-blur fade-in-short-delayed opacity-0">
       <TooltipProvider delayDuration={100}>
@@ -109,26 +84,6 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
           id="nav-container"
           ref={ref}
         >
-          {/*<Link href="/dashboard" passHref>*/}
-          {/*  <Image*/}
-          {/*    src="/images/logos/full-dark-text.png"*/}
-          {/*    width={100}*/}
-          {/*    height={24}*/}
-          {/*    quality={100}*/}
-          {/*    alt="Charmify"*/}
-          {/*  />*/}
-          {/*</Link>*/}
-          {/*<div*/}
-          {/*  onClick={() => setIsSearchOpen(true)}*/}
-          {/*  className="mr-4 h-7 max-w-[400px] w-full rounded-md border border-neutral-200 bg-transparent px-3 py-1 text-sm shadow-sm file:border-0 file:bg-transparent cursor-pointer file:text-sm file:font-medium placeholder:text-neutral-500 hover:border-neutral-300 hover:outline-none hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:placeholder:text-neutral-400 dark:focus-visible:ring-neutral-300 transition-colors"*/}
-          {/*>*/}
-          {/*  <div className="flex items-center h-full">*/}
-          {/*    <FiSearch size={14} className="text-neutral-600" />*/}
-          {/*    <p className="text-xs text-neutral-600 ml-2 font-medium">*/}
-          {/*      Search...*/}
-          {/*    </p>*/}
-          {/*  </div>*/}
-          {/*</div>*/}
           <div className="w-full flex mr-4 max-w-[400px]">
             <DropdownMenu
               open={isSearchOpen}
@@ -180,20 +135,30 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
             </DropdownMenu>
           </div>
           <div className="flex items-center space-x-2">
+            {user.team.plan === "FREE" && user.role === "OWNER" && (
+              <Button size="sm" className="h-[30px]" asChild>
+                <Link href="/subscribe?plan=enterprise" passHref>
+                  Upgrade
+                </Link>
+              </Button>
+            )}
             <div>
               <Button
                 size="icon"
                 variant="ghost"
-                className="rounded-full"
+                className="rounded-full relative flex items-center justify-center"
                 onClick={() =>
                   setTheme(resolvedTheme === "dark" ? "light" : "dark")
                 }
               >
-                {resolvedTheme === "dark" ? (
-                  <FiSun size={15} className="text-muted-foreground" />
-                ) : (
-                  <FiMoon size={15} className="text-muted-foreground" />
-                )}
+                <FiSun
+                  size={15}
+                  className="text-muted-foreground absolute transition-all opacity-0 dark:opacity-100 transition-all"
+                />
+                <FiMoon
+                  size={15}
+                  className="text-muted-foreground absolute transition-all opacity-100 dark:opacity-0 transition-all"
+                />
               </Button>
             </div>
             <div>
@@ -306,11 +271,14 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
                     onMouseLeave={() => setIsAccountTooltipOpen(false)}
                   >
                     <DropdownMenuTrigger asChild>
-                      {/*<Button size="icon" variant="ghost">*/}
-                      {/*  <FiUser size={15} className="text-muted-foreground" />*/}
-                      {/*</Button>*/}
                       <Avatar className="cursor-pointer">
-                        <AvatarImage src="https://github.com/shadcn.png" />
+                        <AvatarImage
+                          className="bg-foreground"
+                          src={user?.avatar}
+                        />
+                        <AvatarFallback>
+                          <div className="h-full w-full bg-foreground"></div>
+                        </AvatarFallback>
                       </Avatar>
                     </DropdownMenuTrigger>
                   </TooltipTrigger>
@@ -325,7 +293,9 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
                 >
                   <DropdownMenuLabel>
                     <p className="text-[13px]">Signed in as</p>
-                    <p className="text-xs text-muted-foreground">{email}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {user?.email}
+                    </p>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
@@ -345,23 +315,14 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
                       setTheme(resolvedTheme === "dark" ? "light" : "dark");
                     }}
                   >
-                    {/*{resolvedTheme === "dark" ? (*/}
-                    {/*  <div className="flex items-center">*/}
-                    {/*    <FiSun size={14} className="mr-2" />*/}
-                    {/*    <span>Light mode</span>*/}
-                    {/*  </div>*/}
-                    {/*) : (*/}
-                    {/*  <div className="flex items-center">*/}
-                    {/*    <FiMoon size={14} className="mr-2" />*/}
-                    {/*    <span>Dark mode</span>*/}
-                    {/*  </div>*/}
-                    {/*)}*/}
-                    {resolvedTheme === "dark" ? (
+                    <div className="hidden dark:flex flex items-center w-full">
                       <FiSun size={14} className="mr-2" />
-                    ) : (
+                      <span>Light mode</span>
+                    </div>
+                    <div className="dark:hidden flex items-center w-full">
                       <FiMoon size={14} className="mr-2" />
-                    )}
-                    {resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
+                      <span>Dark mode</span>
+                    </div>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
@@ -374,61 +335,16 @@ export const AppNav = ({ email, subscriptionStatus, role }) => {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={async () => {
-                      await signOut();
+                      signOut();
                       router.push("/signin");
                     }}
                   >
                     <FiLogOut size={14} className="mr-2" />
-                    Log out
+                    Sign out
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            {/*{role !== "READ_ONLY" && (*/}
-            {/*  <div>*/}
-            {/*    <DropdownMenu*/}
-            {/*      modal={false}*/}
-            {/*      onOpenChange={(open) => setIsCreateMenuOpen(open)}*/}
-            {/*    >*/}
-            {/*      <Tooltip open={isCreateTooltipOpen && !isAnyMenuOpen}>*/}
-            {/*        <TooltipTrigger*/}
-            {/*          asChild*/}
-            {/*          onMouseEnter={() => setIsCreateTooltipOpen(true)}*/}
-            {/*          onMouseLeave={() => setIsCreateTooltipOpen(false)}*/}
-            {/*        >*/}
-            {/*          <DropdownMenuTrigger asChild>*/}
-            {/*            <Button size="icon">*/}
-            {/*              <FiPlus size={15} />*/}
-            {/*            </Button>*/}
-            {/*          </DropdownMenuTrigger>*/}
-            {/*        </TooltipTrigger>*/}
-            {/*        <TooltipContent side="bottom" align={"end"} sideOffset={8}>*/}
-            {/*          <p>Create</p>*/}
-            {/*        </TooltipContent>*/}
-            {/*      </Tooltip>*/}
-            {/*      <DropdownMenuContent*/}
-            {/*        onCloseAutoFocus={(e) => e.preventDefault()}*/}
-            {/*        collisionBoundary={ref?.current}*/}
-            {/*      >*/}
-            {/*        <DropdownMenuLabel className="py-1">*/}
-            {/*          /!*<p className="text-[13px]">Create new</p>*!/*/}
-            {/*          <p className="text-xs text-muted-foreground">*/}
-            {/*            Create new*/}
-            {/*          </p>*/}
-            {/*        </DropdownMenuLabel>*/}
-            {/*        /!*<DropdownMenuSeparator />*!/*/}
-            {/*        <DropdownMenuItem>*/}
-            {/*          <FiZap size={14} className="mr-2" />*/}
-            {/*          QR Code*/}
-            {/*        </DropdownMenuItem>*/}
-            {/*        <DropdownMenuItem>*/}
-            {/*          <FiLink2 size={14} className="mr-2 -rotate-45" />*/}
-            {/*          Link*/}
-            {/*        </DropdownMenuItem>*/}
-            {/*      </DropdownMenuContent>*/}
-            {/*    </DropdownMenu>*/}
-            {/*  </div>*/}
-            {/*)}*/}
           </div>
         </div>
       </TooltipProvider>

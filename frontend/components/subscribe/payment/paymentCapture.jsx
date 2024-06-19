@@ -7,6 +7,7 @@ import { FiInfo, FiLock } from "react-icons/fi";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -23,6 +24,7 @@ export const PaymentCapture = ({
   const elements = useElements();
   const { handleSubmit, register } = useForm();
   const { toast } = useToast();
+  const router = useRouter();
 
   const onSubmit = async ({ company }) => {
     if (!stripe || !elements) return;
@@ -66,8 +68,9 @@ export const PaymentCapture = ({
       });
 
       if (res.ok) {
-        setIsLoading(false);
         // redirect to dashboard
+        router.push("/dashboard");
+        router.refresh();
         return;
       }
 

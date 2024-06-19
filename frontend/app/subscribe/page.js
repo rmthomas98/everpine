@@ -8,7 +8,7 @@ const SubscribePage = async ({ searchParams }) => {
 
   let { plan, billing } = searchParams;
 
-  plan = plan.toLowerCase();
+  plan = plan?.toLowerCase();
   if (!plan) redirect("/dashboard");
   if (plan === "free") redirect("/dashboard");
   if (plan !== "professional" && plan !== "business" && plan !== "enterprise") {

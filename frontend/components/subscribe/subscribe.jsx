@@ -66,7 +66,7 @@ export const Subscribe = ({ accessToken, plan: initialPlan, billing }) => {
                 accessToken={accessToken}
                 team={selectedTeam}
                 plan={plan}
-                billing={billing}
+                billing={billingCycle}
                 setIsLoading={setIsLoading}
               />
             </div>

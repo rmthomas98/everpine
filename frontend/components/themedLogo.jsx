@@ -25,10 +25,10 @@ export const ThemedLogo = ({ isDashboard }) => {
       break;
   }
 
-  if (!mounted)
-    return (
-      <div className="h-[25px] max-h-[25px] w-[100px] max-w-[100px]"></div>
-    );
+  // if (!mounted)
+  //   return (
+  //     <div className="h-[25px] max-h-[25px] w-[100px] max-w-[100px]"></div>
+  //   );
 
   return (
     <div className="h-[25px] max-h-[25px] w-[100px] max-w-[100px] flex items-center">

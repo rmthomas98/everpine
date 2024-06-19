@@ -1,5 +1,5 @@
 const test = require("node:test");
-const { createTeam } = require("./team");
+const { createTeam } = require("../team");
 const assert = require("assert");
 
 test("CreateTeam should return an object", async () => {

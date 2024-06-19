@@ -14,114 +14,139 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { FiPlusCircle } from "react-icons/fi";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
-const frameworks = [
-  {
-    avatar: "https://github.com/shadcn.png",
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    avatar: "https://github.com/shadcn.png",
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    avatar: "https://github.com/shadcn.png",
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-];
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export const TeamPicker = ({ label }) => {
+export const TeamPicker = ({ teams, defaultTeam, accessToken }) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(defaultTeam);
+  const router = useRouter();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    setValue(defaultTeam);
+  }, [defaultTeam]);
+
+  const onTeamSelect = async (team) => {
+    setValue(teams.find((t) => t.id === team));
+    setOpen(false);
+    // make call to backend to set the selected team and reload the page
+    const res = await fetch(`${baseUrl}/team/default`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({ teamId: team }),
+    });
+
+    if (res.ok) {
+      window?.location.reload();
+      return;
+    }
+
+    toast({
+      title: "Error selecting team",
+      description: "Please try again",
+      variant: "destructive",
+    });
+    setOpen(false);
+  };
+
+  if (!teams?.length) return <Skeleton className="h-[36px] w-full" />;
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-full justify-between min-h-[36px]"
-          size="sm"
-        >
-          {value ? (
-            <div className="flex items-center space-x-2">
-              <Avatar className="h-[20px] w-[20px]">
-                <AvatarImage
-                  src={
-                    frameworks?.find((framework) => framework.value === value)
-                      ?.avatar
-                  }
-                  alt={
-                    frameworks?.find((framework) => framework.value === value)
-                      ?.label
-                  }
-                />
-              </Avatar>
-              <span>
-                {
-                  frameworks?.find((framework) => framework.value === value)
-                    ?.label
-                }
-              </span>
-            </div>
-          ) : (
-            <p>{label ? label : "Select team..."}</p>
-          )}
-          <HiMiniChevronUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[210px] p-0">
-        <Command>
-          <CommandInput
-            placeholder="Search teams..."
-            className="text-[13px] h-8"
-          />
-          <CommandEmpty>No teams found</CommandEmpty>
-          <CommandList>
-            <CommandGroup heading="My teams">
-              {frameworks?.map((framework) => (
+    <div className="fade-in-short-delayed opacity-0">
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="w-full justify-between min-h-[36px]"
+            size="sm"
+          >
+            {value ? (
+              <div className="flex items-center space-x-2">
+                <Avatar className="h-[20px] w-[20px]">
+                  <AvatarImage src={value.avatar} alt={value.name} />
+                </Avatar>
+                <span>{value.name}</span>
+              </div>
+            ) : (
+              <p>Select team...</p>
+            )}
+            <HiMiniChevronUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="p-0 w-[210px]">
+          <Command
+            filter={(value, search) => {
+              const teamName = teams.find((team) => team.id === value)?.name;
+              const searchNormalized = search.toLowerCase().trim();
+              if (!teamName?.toLowerCase().includes(searchNormalized)) {
+                return false;
+              }
+              return true;
+            }}
+          >
+            <CommandInput
+              placeholder="Search teams..."
+              className="text-[13px] h-8"
+            />
+            <CommandEmpty>
+              <p className="text-[13px] text-muted-foreground">
+                No teams found
+              </p>
+            </CommandEmpty>
+            <CommandList>
+              <CommandGroup heading="My teams">
+                {teams?.map((team) => (
+                  <CommandItem
+                    key={team.name}
+                    value={team.id}
+                    className={`text-[13px] flex w-full justify-between`}
+                    onSelect={(currValue) => onTeamSelect(currValue)}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <Avatar className="h-[20px] w-[20px]">
+                        <AvatarImage src={team.avatar} alt={team.name} />
+                      </Avatar>
+                      <span className="text-[13px] font-medium">
+                        {team.name}
+                      </span>
+                    </div>
+                    <HiMiniCheck
+                      size={13}
+                      className={`mr-2 ${
+                        team.id === value?.id ? "opacity-100" : "opacity-0"
+                      }`}
+                    />
+                  </CommandItem>
+                ))}
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
-                  className={`text-[13px] flex w-full justify-between`}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    setOpen(false);
+                  className="text-[13px] space-x-2 flex font-medium"
+                  onSelect={() => {
+                    // sned to select plan page
+                    // then send to payment page where they will create their team
+                    // and make payment
                   }}
                 >
-                  <div className="flex items-center space-x-2">
-                    <Avatar className="h-[20px] w-[20px]">
-                      <AvatarImage
-                        src={framework.avatar}
-                        alt={framework.label}
-                      />
-                    </Avatar>
-                    <span className="text-[13px]">{framework.label}</span>
-                  </div>
-                  <HiMiniCheck
-                    size={13}
-                    className={`mr-2 h-4 w-4 ${
-                      value === framework.value ? "opacity-100" : "opacity-0"
-                    }`}
-                  />
+                  <FiPlusCircle size={15} className="ml-0.5" />
+                  <span>Create new team</span>
                 </CommandItem>
-              ))}
-              <CommandItem className="text-[13px] space-x-2 flex">
-                <FiPlusCircle size={15} className="ml-0.5" />
-                <span className="text-muted-foreground">Create new team</span>
-              </CommandItem>
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
   );
 };

@@ -1,23 +1,26 @@
 import "server-only";
+import { auth } from "@/auth";
 
-import { cookies } from "next/headers";
-import { decrypt } from "@/lib/token";
-import { ofetch } from "ofetch";
-
-export const getSession = async () => {
-  const cookie = cookies().get("session")?.value;
-  return await decrypt(cookie);
-};
-
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 export const getUser = async () => {
-  const session = await getSession();
-  if (!session || !session.id) return null;
+  const token = await auth();
+  if (!token) return null;
 
   try {
-    return await ofetch(`/auth/me/${session.id}`, {
-      baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+    const res = await fetch(`${baseUrl}/auth/me`, {
+      headers: {
+        Authorization: `Bearer ${token.access_token}`,
+        "Content-Type": "application/json",
+      },
       cache: "no-store",
     });
+    if (res.ok) {
+      const data = await res.json();
+      data.access_token = token.access_token;
+      return data;
+    }
+    // destroy token if user is not found
+    return null;
   } catch (e) {
     console.log(e);
     return null;

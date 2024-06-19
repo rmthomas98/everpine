@@ -2,7 +2,7 @@ const prisma = require("../../../db/prisma");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const sendVerificationEmail = require("../../../services/v1/user/sendVerificationEmail");
-const { createTeam } = require("../../../services/v1/subscription/team");
+const { createTeam } = require("../../../services/v1/team");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const create = async (req, res) => {
@@ -44,21 +44,8 @@ const create = async (req, res) => {
       emailVerificationToken = crypto.randomBytes(32).toString("hex");
     }
 
-    // create customer in stripe for the team
-    // we will use this to create subscriptions for the team
-    // only teams will have subscriptions, not individual users
-    const customer = await stripe.customers.create({
-      email,
-      name: name ? name : email.split("@")[0],
-    });
-
     // generate random avatar for the user
-    const avatar = `https://api.dicebear.com/9.x/lorelei/png?seed=${email}`;
-
-    // generate random avatar for the team
-    // generate random number from 1 to 5
-    const random = Math.floor(Math.random() * 5) + 1;
-    const teamAvatar = `/images/avatars/${random}.webp`;
+    const avatar = `https://api.dicebear.com/9.x/pixel-art/png?seed=${email}`;
 
     let user;
     let team;
@@ -73,22 +60,21 @@ const create = async (req, res) => {
           avatar,
           password: hashedPassword || null,
           emailVerificationToken: emailVerificationToken || null,
-          isEmailVerified: provider === "google" ? true : false,
+          isEmailVerified: provider === "google",
         },
       });
 
       // create a default team for the user
-      team = await createTeam(name, null, teamAvatar, user);
-
-      // create a role for the user
-      role = await prisma.role.create({
-        data: { userId: user.id, teamId: team.id },
-      });
+      team = await createTeam(name, null, null, user);
 
       // set default team for user
       await prisma.user.update({
         where: { id: user.id },
         data: { defaultTeamId: team.id },
+      });
+
+      role = await prisma.role.findFirst({
+        where: { teamId: team.id, userId: user.id },
       });
     } catch (e) {
       console.log(e);

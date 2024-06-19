@@ -13,7 +13,8 @@ const publicRoutes = ["/signin", "/signup"];
 export const middleware = async (req) => {
   // check if the route is public
   const path = req.nextUrl.pathname;
-  const isProtected = protectedRoutes.includes(path);
+  const isProtected =
+    protectedRoutes.includes(path) || path.startsWith("/dashboard");
   const isPublic = publicRoutes.includes(path);
   let response = NextResponse.next();
 

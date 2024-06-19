@@ -1,13 +1,16 @@
-const prisma = require("../../../db/prisma");
+const prisma = require("../../db/prisma");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const createTeam = async (name, company, avatar, user) => {
   try {
-    const { email } = user;
     // create customer in stripe for the team
     const customer = await stripe.customers.create({
-      email,
-      name: company ? company.trim() : name ? name.trim() : email.split("@")[0],
+      email: user.email,
+      name: company
+        ? company.trim()
+        : name
+        ? name.trim()
+        : user.email.split("@")[0],
     });
 
     // generate random avatar for the team
@@ -17,7 +20,7 @@ const createTeam = async (name, company, avatar, user) => {
     // create team in the database
     const team = await prisma.team.create({
       data: {
-        name: name || email.split("@")[0],
+        name: name || user.email.split("@")[0],
         company: company ? company.trim() : null,
         avatar: avatar || teamAvatar,
         stripeCustomerId: customer?.id,
@@ -44,4 +47,33 @@ const createTeam = async (name, company, avatar, user) => {
   }
 };
 
-module.exports = { createTeam };
+const verifyOwnership = async (teamId, userId) => {
+  try {
+    const role = await prisma.role.findFirst({ where: { teamId, userId } });
+    if (!role) return null;
+    if (role.role !== "OWNER" && role.role !== "SUPER_ADMIN") return false;
+    return true;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+
+const updateCompanyName = async (teamId, company) => {
+  try {
+    const updatedTeam = await prisma.team.update({
+      where: { id: teamId },
+      data: { company: company.trim() },
+    });
+    if (!updatedTeam) return null;
+    await stripe.customers.update(updatedTeam.stripeCustomerId, {
+      name: company.trim(),
+    });
+    return updatedTeam;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+
+module.exports = { createTeam, verifyOwnership, updateCompanyName };
