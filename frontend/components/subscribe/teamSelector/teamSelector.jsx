@@ -151,7 +151,7 @@ export const TeamSelector = ({ accessToken, setSelectedTeam }) => {
                       <Avatar className="h-[20px] w-[20px]">
                         <AvatarImage src={team.avatar} alt={team.name} />
                       </Avatar>
-                      <span className="text-[13px] font-medium">
+                      <span className="text-[13px] font-medium max-w-[234px] truncate">
                         {team.name}
                       </span>
                     </div>

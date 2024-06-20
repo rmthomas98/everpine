@@ -24,6 +24,7 @@ import {
   FiSettings,
   FiBell,
   FiCheckCircle,
+  FiPlusCircle,
 } from "react-icons/fi";
 import {
   Tooltip,
@@ -136,7 +137,7 @@ export const AppNav = ({ user }) => {
           <div className="flex items-center space-x-2">
             {user.team.plan === "FREE" && user.role === "OWNER" && (
               <Button size="sm" className="h-[30px]" asChild>
-                <Link href="/subscribe?plan=enterprise" passHref>
+                <Link href="/subscribe?plan=professional" passHref>
                   Upgrade
                 </Link>
               </Button>
@@ -262,6 +263,7 @@ export const AppNav = ({ user }) => {
               <DropdownMenu
                 modal={false}
                 onOpenChange={(open) => setIsAccountMenuOpen(open)}
+                open={isAccountMenuOpen}
               >
                 <Tooltip open={isAccountTooltipOpen && !isAnyMenuOpen}>
                   <TooltipTrigger
@@ -297,10 +299,12 @@ export const AppNav = ({ user }) => {
                     </p>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <FiPlus size={14} className="mr-2" />
-                    Create team
-                  </DropdownMenuItem>
+                  <Link href="/subscribe?plan=professional" passHref>
+                    <DropdownMenuItem>
+                      <FiPlusCircle size={14} className="mr-2" />
+                      Create team
+                    </DropdownMenuItem>
+                  </Link>
                   <Link href="/dashboard/settings" passHref>
                     <DropdownMenuItem>
                       <FiSettings size={14} className="mr-2" />
@@ -333,7 +337,7 @@ export const AppNav = ({ user }) => {
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
-                    onClick={async () => {
+                    onClick={() => {
                       signOut();
                       router.push("/signin");
                     }}
@@ -341,6 +345,22 @@ export const AppNav = ({ user }) => {
                     <FiLogOut size={14} className="mr-2" />
                     Sign out
                   </DropdownMenuItem>
+                  {user.role === "OWNER" && user.team.plan === "FREE" && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <div className="py-1.5 px-2">
+                        <Button size="sm" className="w-full" asChild>
+                          <Link
+                            href="/subscribe?plan=professional"
+                            passHref
+                            onClick={() => setIsAccountMenuOpen(false)}
+                          >
+                            Upgrade
+                          </Link>
+                        </Button>
+                      </div>
+                    </>
+                  )}
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>

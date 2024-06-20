@@ -2,7 +2,13 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { FiBarChart2, FiPlus, FiUsers, FiFolder } from "react-icons/fi";
+import {
+  FiBarChart2,
+  FiPlus,
+  FiUsers,
+  FiFolder,
+  FiPlusCircle,
+} from "react-icons/fi";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -50,23 +56,6 @@ const fetchTeams = async (accessToken) => {
   }
 };
 
-const getUser = async (accessToken) => {
-  try {
-    const res = await fetch(`${baseUrl}/auth/me`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
-    });
-
-    if (!res.ok) return null;
-    return await res.json();
-  } catch (e) {
-    return null;
-  }
-};
-
 export const SideNav = ({ user }) => {
   const path = usePathname();
   const [teams, setTeams] = useState([]);
@@ -111,7 +100,7 @@ export const SideNav = ({ user }) => {
               <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
                   <Button className="w-full justify-start" size="sm">
-                    <FiPlus
+                    <FiPlusCircle
                       size={15}
                       className="mr-2 relative bottom-[0.5px]"
                     />

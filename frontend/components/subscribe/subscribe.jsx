@@ -29,8 +29,6 @@ export const Subscribe = ({ accessToken, plan: initialPlan, billing }) => {
   const totalAnnualPrice = plans[plan].price.annual * 12;
   const totalMonthlyPrice = plans[plan].price.month;
 
-  console.log(plan, billingCycle);
-
   return (
     <>
       <div className="border-b px-4 py-2 sticky top-0 bg-background z-[999]">
@@ -48,8 +46,8 @@ export const Subscribe = ({ accessToken, plan: initialPlan, billing }) => {
       </div>
       <div className="p-4 pb-12">
         <div className="max-w-[1000px] mx-auto">
-          <div className="w-full flex mt-4 max-[750px]:flex-col">
-            <div className="w-3/4 min-[750px]:mr-10 max-[750px]:w-full">
+          <div className="w-full flex mt-4 max-[850px]:flex-col">
+            <div className="w-3/4 min-[850px]:mr-10 max-[850px]:w-full">
               {/*<p className="text-xl font-bold">*/}
               {/*  Get started with{" "}*/}
               {/*  {plan.slice(0, 1).toUpperCase() + plan.slice(1)}*/}
@@ -71,11 +69,7 @@ export const Subscribe = ({ accessToken, plan: initialPlan, billing }) => {
               </p>
               <p className="text-muted-foreground mt-1 text-sm">
                 You can see the full feature comparison{" "}
-                <Link
-                  href="/pricing"
-                  target="_blank"
-                  className="text-blue-500 border-b border-transparent hover:underline"
-                >
+                <Link href="/pricing" target="_blank" className="underline">
                   here
                 </Link>
               </p>
@@ -93,114 +87,52 @@ export const Subscribe = ({ accessToken, plan: initialPlan, billing }) => {
                   </TabsTrigger>
                 </TabsList>
               </Tabs>
-              <div className="grid grid-cols-[1fr_1fr_1fr] gap-3 mt-4">
-                <Card
-                  onClick={() => setPlan("professional")}
-                  className={`cursor-pointer transition-all ${
-                    plan === "professional"
-                      ? "border-foreground"
-                      : "hover:border-foreground/30"
-                  }`}
-                >
-                  <CardHeader className="p-4">
-                    <div className="flex justify-between items-center">
-                      <CardTitle className="max-[750px]:text-sm">
-                        Professional
-                      </CardTitle>
-                      <div
-                        className={`h-4 w-4 rounded-full flex items-center justify-center border ${
-                          plan === "professional" && "shadow-inner"
-                        } transition-all`}
-                      >
-                        <div
-                          className={`bg-foreground rounded-full transition-all ${
-                            plan === "professional"
-                              ? "h-1.5 w-1.5 opacity-100"
-                              : "h-0 w-0 opacity-0"
-                          }`}
-                        ></div>
-                      </div>
-                    </div>
-                    <CardDescription>
-                      {billingCycle === "month" &&
-                        `$${plans["professional"].price[billingCycle]}/month`}
-                      {billingCycle === "annual" &&
-                        `$${
-                          plans["professional"].price[billingCycle] * 12
-                        }/year`}
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
-                <Card
-                  onClick={() => setPlan("business")}
-                  className={`cursor-pointer transition-all ${
-                    plan === "business"
-                      ? "border-foreground"
-                      : "hover:border-foreground/30"
-                  }`}
-                >
-                  <CardHeader className="p-4">
-                    <div className="flex justify-between items-center">
-                      <CardTitle>Business</CardTitle>
-                      <div
-                        className={`h-4 w-4 rounded-full flex items-center justify-center border ${
-                          plan === "business" && "shadow-inner"
-                        } transition-all`}
-                      >
-                        <div
-                          className={`bg-foreground rounded-full transition-all ${
-                            plan === "business"
-                              ? "h-1.5 w-1.5 opacity-100"
-                              : "h-0 w-0 opacity-0"
-                          }`}
-                        ></div>
-                      </div>
-                    </div>
-                    <CardDescription>
-                      {billingCycle === "month" &&
-                        `$${plans["business"].price[billingCycle]}/month`}
-                      {billingCycle === "annual" &&
-                        `$${plans["business"].price[billingCycle] * 12}/year`}
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
-                <Card
-                  onClick={() => setPlan("enterprise")}
-                  className={`cursor-pointer transition-all ${
-                    plan === "enterprise"
-                      ? "border-foreground"
-                      : "hover:border-foreground/30"
-                  }`}
-                >
-                  <CardHeader className="p-4">
-                    <div className="flex justify-between items-center">
-                      <CardTitle>Enterprise</CardTitle>
-                      <div
-                        className={`h-4 w-4 rounded-full flex items-center justify-center border ${
-                          plan === "enterprise" && "shadow-inner"
-                        } transition-all`}
-                      >
-                        <div
-                          className={`bg-foreground rounded-full transition-all ${
-                            plan === "enterprise"
-                              ? "h-1.5 w-1.5 opacity-100"
-                              : "h-0 w-0 opacity-0"
-                          }`}
-                        ></div>
-                      </div>
-                    </div>
-                    <CardDescription>
-                      {billingCycle === "month" &&
-                        `$${plans["enterprise"].price[billingCycle]}/month`}
-                      {billingCycle === "annual" &&
-                        `$${(
-                          plans["enterprise"].price[billingCycle] * 12
-                        ).toLocaleString("en-us", {
-                          maximumFractionDigits: 0,
-                        })}/year`}
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
+              <div className="grid grid-cols-[1fr_1fr_1fr] gap-3 mt-4 max-[600px]:grid-cols-1">
+                {Object.values(plans)
+                  .slice(1, 4)
+                  .map((item, index) => (
+                    <Card
+                      key={index}
+                      onClick={() => setPlan(item.name)}
+                      className={`cursor-pointer transition-all ${
+                        plan === item.name
+                          ? "border-foreground"
+                          : "hover:border-foreground/30"
+                      }`}
+                    >
+                      <CardHeader className="p-4">
+                        <div className="flex justify-between items-center">
+                          <CardTitle className="capitalize text-[15px]">
+                            {item.name}
+                          </CardTitle>
+                          <div
+                            className={`h-4 w-4 rounded-full flex items-center justify-center border ${
+                              plan === item.name && "shadow-inner"
+                            } transition-all`}
+                          >
+                            <div
+                              className={`bg-foreground rounded-full transition-all ${
+                                plan === item.name
+                                  ? "h-1.5 w-1.5 opacity-100"
+                                  : "h-0 w-0 opacity-0"
+                              }`}
+                            ></div>
+                          </div>
+                        </div>
+                        <CardDescription>
+                          {billingCycle === "month" &&
+                            `$${item.price[billingCycle]}/month`}
+                          {billingCycle === "annual" &&
+                            `$${(item.price[billingCycle] * 12).toLocaleString(
+                              "en-us",
+                              {
+                                maximumFractionDigits: 0,
+                              },
+                            )}/year`}
+                        </CardDescription>
+                      </CardHeader>
+                    </Card>
+                  ))}
               </div>
               <p className="font-semibold mt-8">Billing information</p>
               <p className="text-muted-foreground mt-1 text-sm">
@@ -214,124 +146,130 @@ export const Subscribe = ({ accessToken, plan: initialPlan, billing }) => {
                 setIsLoading={setIsLoading}
               />
             </div>
-            <div className="w-1/2 min-w-[320px] max-[750px]:w-full max-[750px]:mt-8">
-              {/*<Tabs*/}
-              {/*  value={billingCycle}*/}
-              {/*  onValueChange={setBillingCycle}*/}
-              {/*  className="w-full relative mb-4"*/}
-              {/*>*/}
-              {/*  <TabsList className="w-full relative">*/}
-              {/*    <TabsTrigger value="month" className="w-full text-[13px]">*/}
-              {/*      Monthly*/}
-              {/*    </TabsTrigger>*/}
-              {/*    <TabsTrigger value="annual" className="w-full text-[13px]">*/}
-              {/*      Annual (Save 20%)*/}
-              {/*    </TabsTrigger>*/}
-              {/*  </TabsList>*/}
-              {/*</Tabs>*/}
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle>Purchase summary</CardTitle>
-                  <CardDescription className="flex items-center justify-between mb-6">
-                    <span>
-                      {plan.slice(0, 1).toUpperCase() + plan.slice(1)} plan
-                    </span>
-                    {billingCycle === "month" ? (
-                      <span>${totalMonthlyPrice} / month</span>
-                    ) : (
+            <div>
+              <div className="w-1/2 min-w-[320px] max-[850px]:w-full max-[850px]:mt-8 sticky top-[81px]">
+                {/*<Tabs*/}
+                {/*  value={billingCycle}*/}
+                {/*  onValueChange={setBillingCycle}*/}
+                {/*  className="w-full relative mb-4"*/}
+                {/*>*/}
+                {/*  <TabsList className="w-full relative">*/}
+                {/*    <TabsTrigger value="month" className="w-full text-[13px]">*/}
+                {/*      Monthly*/}
+                {/*    </TabsTrigger>*/}
+                {/*    <TabsTrigger value="annual" className="w-full text-[13px]">*/}
+                {/*      Annual (Save 20%)*/}
+                {/*    </TabsTrigger>*/}
+                {/*  </TabsList>*/}
+                {/*</Tabs>*/}
+                <Card>
+                  <CardHeader className="pb-3">
+                    <CardTitle>Purchase summary</CardTitle>
+                    <CardDescription className="flex items-center justify-between mb-6">
                       <span>
-                        {totalAnnualPrice.toLocaleString("en-us", {
-                          maximumFractionDigits: 0,
-                          style: "currency",
-                          currency: "usd",
-                        })}{" "}
-                        / year
+                        {plan.slice(0, 1).toUpperCase() + plan.slice(1)} plan
                       </span>
-                    )}
-                  </CardDescription>
-                </CardHeader>
-                <div className="px-6">
-                  {/*<Separator />*/}
-                  <div className="w-full border-b border-dashed"></div>
-                </div>
-                <CardContent className="py-3">
-                  <p className="text-sm font-medium mb-2">Plan details</p>
-                  {plans[plan.toLowerCase()].planDetails.map(
-                    (feature, index) => (
-                      <div key={index} className="flex items-center mt-1">
-                        <HiMiniCheckCircle size={16} className={`relative`} />
-                        <p
-                          className={`text-[13px] ml-2 font-normal text-muted-foreground`}
-                        >
-                          {feature}
-                        </p>
-                      </div>
-                    ),
-                  )}
-                </CardContent>
-                <div className="px-6">
-                  {/*<Separator decorative="dashed" />*/}
-                  <div className="w-full border-b border-dashed"></div>
-                </div>
-                <CardFooter className="pt-3">
-                  <div className="flex items-center justify-between w-full">
-                    <p className="text-sm font-medium">Billed now</p>
-                    {billingCycle === "month" ? (
-                      <p className="text-sm font-medium">
-                        {totalMonthlyPrice.toLocaleString("en-us", {
-                          maximumFractionDigits: 2,
-                          minimumFractionDigits: 2,
-                          currency: "usd",
-                          style: "currency",
-                        })}
-                      </p>
-                    ) : (
-                      <p className="text-sm font-medium">
-                        {totalAnnualPrice.toLocaleString("en-us", {
-                          maximumFractionDigits: 2,
-                          minimumFractionDigits: 2,
-                          currency: "usd",
-                          style: "currency",
-                        })}
-                      </p>
-                    )}
+                      {billingCycle === "month" ? (
+                        <span>${totalMonthlyPrice} / month</span>
+                      ) : (
+                        <span>
+                          {totalAnnualPrice.toLocaleString("en-us", {
+                            maximumFractionDigits: 0,
+                            style: "currency",
+                            currency: "usd",
+                          })}{" "}
+                          / year
+                        </span>
+                      )}
+                    </CardDescription>
+                  </CardHeader>
+                  <div className="px-6">
+                    {/*<Separator />*/}
+                    <div className="w-full border-b border-dashed"></div>
                   </div>
-                </CardFooter>
-              </Card>
-              <div className="mt-4">
-                <TeamSelector
-                  accessToken={accessToken}
-                  setSelectedTeam={setSelectedTeam}
-                />
+                  <CardContent
+                    className={`py-3 transition-all ${
+                      plan === "enterprise" ? "h-[212.5px]" : "h-[189px]"
+                    }`}
+                  >
+                    <p className="text-sm font-medium mb-2">Plan details</p>
+                    {plans[plan.toLowerCase()].planDetails.map(
+                      (feature, index) => (
+                        <div key={index} className="flex items-center mt-1">
+                          <HiMiniCheckCircle size={16} className={`relative`} />
+                          <p
+                            className={`text-[13px] ml-2 font-normal text-muted-foreground`}
+                          >
+                            {feature}
+                          </p>
+                        </div>
+                      ),
+                    )}
+                  </CardContent>
+                  <div className="px-6">
+                    {/*<Separator decorative="dashed" />*/}
+                    <div className="w-full border-b border-dashed"></div>
+                  </div>
+                  <CardFooter className="pt-3">
+                    <div className="flex items-center justify-between w-full">
+                      <p className="text-sm font-medium">Billed now</p>
+                      {billingCycle === "month" ? (
+                        <p className="text-sm font-medium">
+                          {totalMonthlyPrice.toLocaleString("en-us", {
+                            maximumFractionDigits: 2,
+                            minimumFractionDigits: 2,
+                            currency: "usd",
+                            style: "currency",
+                          })}
+                        </p>
+                      ) : (
+                        <p className="text-sm font-medium">
+                          {totalAnnualPrice.toLocaleString("en-us", {
+                            maximumFractionDigits: 2,
+                            minimumFractionDigits: 2,
+                            currency: "usd",
+                            style: "currency",
+                          })}
+                        </p>
+                      )}
+                    </div>
+                  </CardFooter>
+                </Card>
+                <div className="mt-4">
+                  <TeamSelector
+                    accessToken={accessToken}
+                    setSelectedTeam={setSelectedTeam}
+                  />
+                </div>
+                <Button
+                  className="mt-4 w-full"
+                  disabled={isLoading}
+                  form="billing-form"
+                  type="submit"
+                >
+                  {isLoading ? (
+                    <CgSpinner className="animate-spin" />
+                  ) : (
+                    "Complete purchase"
+                  )}
+                </Button>
+                <p className="text-xs text-muted-foreground text-center leading-5 mt-4">
+                  You will be charged{" "}
+                  {billingCycle === "month"
+                    ? `${totalMonthlyPrice.toLocaleString("en-us", {
+                        maximumFractionDigits: 2,
+                        minimumFractionDigits: 2,
+                        currency: "usd",
+                        style: "currency",
+                      })} monthly. You can canel anytime.`
+                    : `${totalAnnualPrice.toLocaleString("en-us", {
+                        maximumFractionDigits: 2,
+                        minimumFractionDigits: 2,
+                        currency: "usd",
+                        style: "currency",
+                      })} annually. You can cancel anytime.`}
+                </p>
               </div>
-              <Button
-                className="mt-4 w-full"
-                disabled={isLoading}
-                form="billing-form"
-                type="submit"
-              >
-                {isLoading ? (
-                  <CgSpinner className="animate-spin" />
-                ) : (
-                  "Complete purchase"
-                )}
-              </Button>
-              <p className="text-xs text-muted-foreground text-center leading-5 mt-4">
-                You will be charged{" "}
-                {billingCycle === "month"
-                  ? `${totalMonthlyPrice.toLocaleString("en-us", {
-                      maximumFractionDigits: 2,
-                      minimumFractionDigits: 2,
-                      currency: "usd",
-                      style: "currency",
-                    })} monthly. You can canel anytime.`
-                  : `${totalAnnualPrice.toLocaleString("en-us", {
-                      maximumFractionDigits: 2,
-                      minimumFractionDigits: 2,
-                      currency: "usd",
-                      style: "currency",
-                    })} annually. You can cancel anytime.`}
-              </p>
             </div>
           </div>
         </div>

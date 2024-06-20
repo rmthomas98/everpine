@@ -21,6 +21,7 @@ import { FiPlusCircle } from "react-icons/fi";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -78,7 +79,7 @@ export const TeamPicker = ({ teams, defaultTeam, accessToken }) => {
                 <Avatar className="h-[20px] w-[20px]">
                   <AvatarImage src={value.avatar} alt={value.name} />
                 </Avatar>
-                <span>{value.name}</span>
+                <span className="max-w-[142px] truncate">{value.name}</span>
               </div>
             ) : (
               <p>Select team...</p>
@@ -119,7 +120,7 @@ export const TeamPicker = ({ teams, defaultTeam, accessToken }) => {
                       <Avatar className="h-[20px] w-[20px]">
                         <AvatarImage src={team.avatar} alt={team.name} />
                       </Avatar>
-                      <span className="text-[13px] font-medium">
+                      <span className="text-[13px] font-medium truncate max-w-[156px]">
                         {team.name}
                       </span>
                     </div>
@@ -131,17 +132,16 @@ export const TeamPicker = ({ teams, defaultTeam, accessToken }) => {
                     />
                   </CommandItem>
                 ))}
-                <CommandItem
-                  className="text-[13px] space-x-2 flex font-medium"
-                  onSelect={() => {
-                    // sned to select plan page
-                    // then send to payment page where they will create their team
-                    // and make payment
-                  }}
+                <Link
+                  href="/subscribe?plan=professional&create=true"
+                  passHref
+                  onClick={() => setOpen(false)}
                 >
-                  <FiPlusCircle size={15} className="ml-0.5" />
-                  <span>Create new team</span>
-                </CommandItem>
+                  <CommandItem className="text-[13px] space-x-2 flex font-medium">
+                    <FiPlusCircle size={15} className="ml-0.5" />
+                    <span>Create new team</span>
+                  </CommandItem>
+                </Link>
               </CommandGroup>
             </CommandList>
           </Command>

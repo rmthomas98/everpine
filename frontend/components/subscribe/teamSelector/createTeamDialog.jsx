@@ -80,7 +80,7 @@ export const CreateTeamDialog = ({
               }`}
               {...register("teamName", {
                 required: true,
-                maxLength: 20,
+                maxLength: 50,
                 minLength: 2,
               })}
             />
@@ -96,7 +96,7 @@ export const CreateTeamDialog = ({
             )}
             {errors.teamName?.type === "maxLength" && (
               <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
-                Team name cannot be more than 20 characters
+                Team name cannot be more than 50 characters
               </p>
             )}
           </div>

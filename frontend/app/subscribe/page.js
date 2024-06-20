@@ -4,7 +4,7 @@ import { Subscribe } from "@/components/subscribe/subscribe";
 
 const SubscribePage = async ({ searchParams }) => {
   const token = await auth();
-  if (!token) redirect("/signin");
+  if (!token?.access_token) redirect("/signin");
 
   let { plan, billing } = searchParams;
 
