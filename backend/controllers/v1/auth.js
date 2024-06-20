@@ -1,7 +1,6 @@
 const prisma = require("../../db/prisma");
 const bcrypt = require("bcrypt");
-const { createSession } = require("../../lib/token");
-const { createTeam } = require("../../services/v1/team");
+const getUserInfo = require("../../services/v1/auth/getUserInfo");
 
 const signIn = async (req, res) => {
   try {
@@ -13,6 +12,11 @@ const signIn = async (req, res) => {
     email = email.toLowerCase().trim();
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) return res.status(404).json("User not found");
+
+    // check if user has password, if not, they signed up with google
+    if (!user.password) {
+      return res.status(401).json("Please use Google to sign in");
+    }
 
     // compare password with hash
     const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -59,96 +63,7 @@ const me = async (req, res) => {
   try {
     const { userId } = req;
     if (!userId) return res.status(401).json("Unauthorized");
-
-    let user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        avatar: true,
-        isEmailVerified: true,
-        defaultTeamId: true,
-        roles: {
-          select: {
-            role: true,
-            team: {
-              select: {
-                id: true,
-                name: true,
-                plan: true,
-                subscription: {
-                  select: { id: true, status: true, cancelAtPeriodEnd: true },
-                },
-              },
-            },
-          },
-        },
-      },
-    });
-
-    // get role for default team
-    let role = user?.roles.find((role) => role.team.id === user.defaultTeamId);
-
-    // make sure user has default team
-    if (!role) {
-      // check if user has any roles
-      if (user.roles.length === 0) {
-        // create a default team for the user
-        const newTeam = await createTeam(user.name, null, null, user);
-        // set default team for user
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { defaultTeamId: newTeam.id },
-        });
-
-        // re-query the user
-        user = await prisma.user.findUnique({
-          where: { id: userId },
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            avatar: true,
-            isEmailVerified: true,
-            defaultTeamId: true,
-            roles: {
-              select: {
-                role: true,
-                team: {
-                  select: {
-                    id: true,
-                    name: true,
-                    plan: true,
-                    subscription: {
-                      select: {
-                        id: true,
-                        status: true,
-                        cancelAtPeriodEnd: true,
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        });
-
-        // get role for default team
-        role = user?.roles.find((role) => role.team.id === user.defaultTeamId);
-      } else {
-        // set the first role as default team
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { defaultTeamId: user.roles[0].team.id },
-        });
-      }
-    }
-
-    user.team = role.team;
-    user.role = role.role;
-    delete user.roles;
-
+    const user = await getUserInfo(userId);
     if (!user) return res.status(404).json("User not found");
     res.json(user);
   } catch (e) {

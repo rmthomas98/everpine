@@ -36,7 +36,7 @@ const fetchTeams = async (accessToken) => {
     if (!res.ok) return [];
     const { roles: data, defaultTeamId } = await res.json();
     let filteredData = data.map((item) => {
-      if (item.role === "SUPER_ADMIN" || item.role === "OWNER") {
+      if (item.role === "OWNER") {
         if (item.team.plan === "FREE") {
           return {
             role: item.role,

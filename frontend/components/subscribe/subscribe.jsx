@@ -29,6 +29,8 @@ export const Subscribe = ({ accessToken, plan: initialPlan, billing }) => {
   const totalAnnualPrice = plans[plan].price.annual * 12;
   const totalMonthlyPrice = plans[plan].price.month;
 
+  console.log(plan, billingCycle);
+
   return (
     <>
       <div className="border-b px-4 py-2 sticky top-0 bg-background z-[999]">
@@ -48,16 +50,158 @@ export const Subscribe = ({ accessToken, plan: initialPlan, billing }) => {
         <div className="max-w-[1000px] mx-auto">
           <div className="w-full flex mt-4 max-[750px]:flex-col">
             <div className="w-3/4 min-[750px]:mr-10 max-[750px]:w-full">
-              <p className="text-xl font-bold">
-                Get started with{" "}
-                {plan.slice(0, 1).toUpperCase() + plan.slice(1)}
-              </p>
+              {/*<p className="text-xl font-bold">*/}
+              {/*  Get started with{" "}*/}
+              {/*  {plan.slice(0, 1).toUpperCase() + plan.slice(1)}*/}
+              {/*</p>*/}
+              {/*<p className="text-muted-foreground mt-2 text-sm">*/}
+              {/*  You are about to subscribe to the{" "}*/}
+              {/*  {plan.slice(0, 1).toUpperCase() + plan.slice(1)} plan. You will*/}
+              {/*  be charged on either a monthly or annual basis, depending on*/}
+              {/*  your selection. You can cancel anytime.*/}
+              {/*</p>*/}
+              <p className="text-xl font-bold">Get started with Spacemon</p>
               <p className="text-muted-foreground mt-2 text-sm">
-                You are about to subscribe to the{" "}
-                {plan.slice(0, 1).toUpperCase() + plan.slice(1)} plan. You will
-                be charged on either a monthly or annual basis, depending on
-                your selection. You can cancel anytime.
+                Start collaborating with increased limits and features. Choose
+                the plan that suits your needs and get started with your
+                subscription. You can cancel anytime.
               </p>
+              <p className="font-semibold mt-8">
+                Choose a plan and billing cycle
+              </p>
+              <p className="text-muted-foreground mt-1 text-sm">
+                You can see the full feature comparison{" "}
+                <Link
+                  href="/pricing"
+                  target="_blank"
+                  className="text-blue-500 border-b border-transparent hover:underline"
+                >
+                  here
+                </Link>
+              </p>
+              <Tabs
+                value={billingCycle}
+                onValueChange={setBillingCycle}
+                className="w-full relative mt-4"
+              >
+                <TabsList className="w-full relative">
+                  <TabsTrigger value="month" className="w-full text-[13px]">
+                    Monthly
+                  </TabsTrigger>
+                  <TabsTrigger value="annual" className="w-full text-[13px]">
+                    Annual (Save 20%)
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+              <div className="grid grid-cols-[1fr_1fr_1fr] gap-3 mt-4">
+                <Card
+                  onClick={() => setPlan("professional")}
+                  className={`cursor-pointer transition-all ${
+                    plan === "professional"
+                      ? "border-foreground"
+                      : "hover:border-foreground/30"
+                  }`}
+                >
+                  <CardHeader className="p-4">
+                    <div className="flex justify-between items-center">
+                      <CardTitle className="max-[750px]:text-sm">
+                        Professional
+                      </CardTitle>
+                      <div
+                        className={`h-4 w-4 rounded-full flex items-center justify-center border ${
+                          plan === "professional" && "shadow-inner"
+                        } transition-all`}
+                      >
+                        <div
+                          className={`bg-foreground rounded-full transition-all ${
+                            plan === "professional"
+                              ? "h-1.5 w-1.5 opacity-100"
+                              : "h-0 w-0 opacity-0"
+                          }`}
+                        ></div>
+                      </div>
+                    </div>
+                    <CardDescription>
+                      {billingCycle === "month" &&
+                        `$${plans["professional"].price[billingCycle]}/month`}
+                      {billingCycle === "annual" &&
+                        `$${
+                          plans["professional"].price[billingCycle] * 12
+                        }/year`}
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+                <Card
+                  onClick={() => setPlan("business")}
+                  className={`cursor-pointer transition-all ${
+                    plan === "business"
+                      ? "border-foreground"
+                      : "hover:border-foreground/30"
+                  }`}
+                >
+                  <CardHeader className="p-4">
+                    <div className="flex justify-between items-center">
+                      <CardTitle>Business</CardTitle>
+                      <div
+                        className={`h-4 w-4 rounded-full flex items-center justify-center border ${
+                          plan === "business" && "shadow-inner"
+                        } transition-all`}
+                      >
+                        <div
+                          className={`bg-foreground rounded-full transition-all ${
+                            plan === "business"
+                              ? "h-1.5 w-1.5 opacity-100"
+                              : "h-0 w-0 opacity-0"
+                          }`}
+                        ></div>
+                      </div>
+                    </div>
+                    <CardDescription>
+                      {billingCycle === "month" &&
+                        `$${plans["business"].price[billingCycle]}/month`}
+                      {billingCycle === "annual" &&
+                        `$${plans["business"].price[billingCycle] * 12}/year`}
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+                <Card
+                  onClick={() => setPlan("enterprise")}
+                  className={`cursor-pointer transition-all ${
+                    plan === "enterprise"
+                      ? "border-foreground"
+                      : "hover:border-foreground/30"
+                  }`}
+                >
+                  <CardHeader className="p-4">
+                    <div className="flex justify-between items-center">
+                      <CardTitle>Enterprise</CardTitle>
+                      <div
+                        className={`h-4 w-4 rounded-full flex items-center justify-center border ${
+                          plan === "enterprise" && "shadow-inner"
+                        } transition-all`}
+                      >
+                        <div
+                          className={`bg-foreground rounded-full transition-all ${
+                            plan === "enterprise"
+                              ? "h-1.5 w-1.5 opacity-100"
+                              : "h-0 w-0 opacity-0"
+                          }`}
+                        ></div>
+                      </div>
+                    </div>
+                    <CardDescription>
+                      {billingCycle === "month" &&
+                        `$${plans["enterprise"].price[billingCycle]}/month`}
+                      {billingCycle === "annual" &&
+                        `$${(
+                          plans["enterprise"].price[billingCycle] * 12
+                        ).toLocaleString("en-us", {
+                          maximumFractionDigits: 0,
+                        })}/year`}
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </div>
               <p className="font-semibold mt-8">Billing information</p>
               <p className="text-muted-foreground mt-1 text-sm">
                 Enter your billing info to complete the subscription.
@@ -71,20 +215,20 @@ export const Subscribe = ({ accessToken, plan: initialPlan, billing }) => {
               />
             </div>
             <div className="w-1/2 min-w-[320px] max-[750px]:w-full max-[750px]:mt-8">
-              <Tabs
-                value={billingCycle}
-                onValueChange={setBillingCycle}
-                className="w-full relative mb-4"
-              >
-                <TabsList className="w-full relative">
-                  <TabsTrigger value="month" className="w-full text-[13px]">
-                    Monthly
-                  </TabsTrigger>
-                  <TabsTrigger value="annual" className="w-full text-[13px]">
-                    Annual (Save 20%)
-                  </TabsTrigger>
-                </TabsList>
-              </Tabs>
+              {/*<Tabs*/}
+              {/*  value={billingCycle}*/}
+              {/*  onValueChange={setBillingCycle}*/}
+              {/*  className="w-full relative mb-4"*/}
+              {/*>*/}
+              {/*  <TabsList className="w-full relative">*/}
+              {/*    <TabsTrigger value="month" className="w-full text-[13px]">*/}
+              {/*      Monthly*/}
+              {/*    </TabsTrigger>*/}
+              {/*    <TabsTrigger value="annual" className="w-full text-[13px]">*/}
+              {/*      Annual (Save 20%)*/}
+              {/*    </TabsTrigger>*/}
+              {/*  </TabsList>*/}
+              {/*</Tabs>*/}
               <Card>
                 <CardHeader className="pb-3">
                   <CardTitle>Purchase summary</CardTitle>
@@ -186,7 +330,7 @@ export const Subscribe = ({ accessToken, plan: initialPlan, billing }) => {
                       minimumFractionDigits: 2,
                       currency: "usd",
                       style: "currency",
-                    })} annually. You can canel anytime.`}
+                    })} annually. You can cancel anytime.`}
               </p>
             </div>
           </div>

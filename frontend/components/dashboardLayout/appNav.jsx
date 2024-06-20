@@ -58,7 +58,6 @@ export const AppNav = ({ user }) => {
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const router = useRouter();
-  console.log(user);
 
   const { resolvedTheme, setTheme } = useTheme();
 
@@ -273,7 +272,7 @@ export const AppNav = ({ user }) => {
                     <DropdownMenuTrigger asChild>
                       <Avatar className="cursor-pointer">
                         <AvatarImage
-                          className="bg-foreground"
+                          className="bg-foreground transition-all"
                           src={user?.avatar}
                         />
                         <AvatarFallback>

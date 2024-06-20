@@ -1,10 +1,10 @@
-import { auth, signIn } from "@/auth";
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { Subscribe } from "@/components/subscribe/subscribe";
 
 const SubscribePage = async ({ searchParams }) => {
-  const session = await auth();
-  if (!session) redirect("/signin");
+  const token = await auth();
+  if (!token) redirect("/signin");
 
   let { plan, billing } = searchParams;
 
@@ -24,7 +24,7 @@ const SubscribePage = async ({ searchParams }) => {
   return (
     <div className="opacity-0 fade-in-short-delayed">
       <Subscribe
-        accessToken={session.access_token}
+        accessToken={token.access_token}
         plan={plan}
         billing={billingOption}
       />

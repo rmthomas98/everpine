@@ -99,6 +99,8 @@ const createSubscription = async (req, res) => {
       data: {
         createdById: userId,
         stripeSubscriptionId: subscription.id,
+        plan: plan.toUpperCase(),
+        billingCycle: billingCycle === "month" ? "MONTH" : "ANNUAL",
         team: { connect: { id: newTeam?.id || teamId } },
       },
     });
