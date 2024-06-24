@@ -308,7 +308,7 @@ export const AppNav = ({ user }) => {
                       Create team
                     </DropdownMenuItem>
                   </Link>
-                  <Link href="/dashboard/settings" passHref>
+                  <Link href="/dashboard/settings/profile" passHref>
                     <DropdownMenuItem>
                       <FiSettings size={14} className="mr-2" />
                       Account settings

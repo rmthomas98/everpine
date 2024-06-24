@@ -70,6 +70,7 @@ export const SideNav = ({ user }) => {
 
   useEffect(() => {
     getTeams();
+    return () => setTeams([]);
   }, []);
 
   return (
@@ -82,25 +83,14 @@ export const SideNav = ({ user }) => {
       >
         <div className="w-full">
           <Link href="/dashboard" passHref>
-            {/*<Image*/}
-            {/*  src="/images/logos/full-dark-text.png"*/}
-            {/*  width={100}*/}
-            {/*  height={24}*/}
-            {/*  quality={100}*/}
-            {/*  alt="Charmify"*/}
-            {/*/>*/}
-            {/*<Link href="/" passHref>*/}
-            {/*<p className="font-semibold text-neutral-900">dreamist</p>*/}
             <ThemedLogo isDashboard={true} />
-            {/*</Link>*/}
           </Link>
-
           <div className="mt-7">
             {user.role !== "VIEWER" && (
               <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
                   <Button className="w-full justify-start" size="sm">
-                    <FiPlusCircle
+                    <FiPlus
                       size={15}
                       className="mr-2 relative bottom-[0.5px]"
                     />

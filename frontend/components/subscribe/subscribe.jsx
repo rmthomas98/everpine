@@ -261,13 +261,13 @@ export const Subscribe = ({ accessToken, plan: initialPlan, billing }) => {
                         minimumFractionDigits: 2,
                         currency: "usd",
                         style: "currency",
-                      })} monthly. You can canel anytime.`
+                      })} monthly.`
                     : `${totalAnnualPrice.toLocaleString("en-us", {
                         maximumFractionDigits: 2,
                         minimumFractionDigits: 2,
                         currency: "usd",
                         style: "currency",
-                      })} annually. You can cancel anytime.`}
+                      })} annually. `}
                 </p>
               </div>
             </div>

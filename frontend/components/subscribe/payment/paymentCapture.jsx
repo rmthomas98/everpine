@@ -69,7 +69,7 @@ export const PaymentCapture = ({
 
       if (res.ok) {
         // redirect to dashboard
-        router.push("/dashboard");
+        router.push("/payment-success");
         router.refresh();
         return;
       }
