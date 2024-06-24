@@ -299,7 +299,10 @@ export const AppNav = ({ user }) => {
                     </p>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <Link href="/subscribe?plan=professional" passHref>
+                  <Link
+                    href="/subscribe?plan=professional&create=true"
+                    passHref
+                  >
                     <DropdownMenuItem>
                       <FiPlusCircle size={14} className="mr-2" />
                       Create team
