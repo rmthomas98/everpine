@@ -385,7 +385,7 @@ const support = [
 
 const security = [
   {
-    label: "Multi-factor authentication (MFA)",
+    label: "Multi-factor auth (MFA)",
     data: [
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,
       <HiMiniCheckCircle className="mx-auto text-foreground" size={20} />,

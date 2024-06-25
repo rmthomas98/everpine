@@ -16,7 +16,7 @@ const DashboardLayout = async ({ children }) => {
           <SideNav user={user} />
           <div className="w-full">
             <AppNav user={user} />
-            <div className="py-4 px-4">
+            <div>
               <div>{children}</div>
             </div>
           </div>

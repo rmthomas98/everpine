@@ -92,7 +92,7 @@ body {
 
 .fade-in-short-delayed {
   animation: fadeIn 500ms ease;
-  animation-delay: 250ms;
+  animation-delay: 100ms;
   animation-fill-mode: forwards;
 }
 

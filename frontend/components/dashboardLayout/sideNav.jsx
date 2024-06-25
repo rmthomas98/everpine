@@ -82,46 +82,48 @@ export const SideNav = ({ user }) => {
         className={`py-3 px-4 h-[100vh] flex flex-col justify-between w-[242px] overflow-y-auto`}
       >
         <div className="w-full">
-          <Link href="/dashboard" passHref>
-            <ThemedLogo isDashboard={true} />
-          </Link>
+          <div className="ml-2.5">
+            <Link href="/dashboard" passHref>
+              <ThemedLogo isDashboard={true} />
+            </Link>
+          </div>
           <div className="mt-7">
-            {user.role !== "VIEWER" && (
-              <DropdownMenu modal={false}>
-                <DropdownMenuTrigger asChild>
-                  <Button className="w-full justify-start" size="sm">
-                    <FiPlus
-                      size={15}
-                      className="mr-2 relative bottom-[0.5px]"
-                    />
-                    Create new
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="start"
-                  side="right"
-                  onCloseAutoFocus={(e) => e.preventDefault()}
-                >
-                  <DropdownMenuLabel className="py-1">
-                    {/*<p className="text-[13px]">Create new</p>*/}
-                    <p className="text-xs text-muted-foreground">Create new</p>
-                  </DropdownMenuLabel>
-                  {/*<DropdownMenuSeparator />*/}
-                  <DropdownMenuItem>
-                    <BiLinkAlt size={15} className="mr-2" />
-                    Link
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <HiMiniQrCode size={15} className="mr-2" />
-                    QR Code
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <BiGlobe size={15} className="mr-2" />
-                    Page
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )}
+            {/*{user.role !== "VIEWER" && (*/}
+            {/*  <DropdownMenu modal={false}>*/}
+            {/*    <DropdownMenuTrigger asChild>*/}
+            {/*      <Button className="w-full justify-start" size="sm">*/}
+            {/*        <FiPlus*/}
+            {/*          size={15}*/}
+            {/*          className="mr-2 relative bottom-[0.5px]"*/}
+            {/*        />*/}
+            {/*        Create new*/}
+            {/*      </Button>*/}
+            {/*    </DropdownMenuTrigger>*/}
+            {/*    <DropdownMenuContent*/}
+            {/*      align="start"*/}
+            {/*      side="right"*/}
+            {/*      onCloseAutoFocus={(e) => e.preventDefault()}*/}
+            {/*    >*/}
+            {/*      <DropdownMenuLabel className="py-1">*/}
+            {/*        /!*<p className="text-[13px]">Create new</p>*!/*/}
+            {/*        <p className="text-xs text-muted-foreground">Create new</p>*/}
+            {/*      </DropdownMenuLabel>*/}
+            {/*      /!*<DropdownMenuSeparator />*!/*/}
+            {/*      <DropdownMenuItem>*/}
+            {/*        <BiLinkAlt size={15} className="mr-2" />*/}
+            {/*        Link*/}
+            {/*      </DropdownMenuItem>*/}
+            {/*      <DropdownMenuItem>*/}
+            {/*        <HiMiniQrCode size={15} className="mr-2" />*/}
+            {/*        QR Code*/}
+            {/*      </DropdownMenuItem>*/}
+            {/*      <DropdownMenuItem>*/}
+            {/*        <BiGlobe size={15} className="mr-2" />*/}
+            {/*        Page*/}
+            {/*      </DropdownMenuItem>*/}
+            {/*    </DropdownMenuContent>*/}
+            {/*  </DropdownMenu>*/}
+            {/*)}*/}
             <div className="mt-7 pb-7">
               <div>
                 <Button

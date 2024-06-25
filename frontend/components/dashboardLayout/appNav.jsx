@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
   FiHelpCircle,
-  FiPlus,
   FiMessageSquare,
   FiThumbsUp,
   FiLogOut,
@@ -77,7 +76,7 @@ export const AppNav = ({ user }) => {
   const dropdownRef = useRef(null);
 
   return (
-    <nav className="px-4 py-3 backdrop-blur fade-in-short-delayed opacity-0">
+    <nav className="px-4 py-3 backdrop-blur fade-in-short-delayed opacity-0 border-b">
       <TooltipProvider delayDuration={100}>
         <div
           className="flex justify-between items-center"
@@ -308,7 +307,7 @@ export const AppNav = ({ user }) => {
                       Create team
                     </DropdownMenuItem>
                   </Link>
-                  <Link href="/dashboard/settings/profile" passHref>
+                  <Link href="/dashboard/settings/general" passHref>
                     <DropdownMenuItem>
                       <FiSettings size={14} className="mr-2" />
                       Account settings

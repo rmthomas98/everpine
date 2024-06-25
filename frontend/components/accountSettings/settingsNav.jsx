@@ -8,20 +8,20 @@ export const SettingsNav = () => {
   const path = usePathname();
 
   return (
-    <div className="opacity-0 fade-in-short-delayed">
+    <div className="opacity-0 fade-in-short-delayed w-[160px]">
       <div>
         <Button
           asChild
           variant="ghost"
-          className={`w-[120px] justify-start hover:accent-background ${
-            path === "/dashboard/settings/profile"
+          className={`w-full justify-start hover:accent-background ${
+            path === "/dashboard/settings/general"
               ? "text-foreground"
               : "text-muted-foreground hover:text-muted-foreground"
           }`}
           size="sm"
         >
-          <Link href="/dashboard/settings/profile" passHref>
-            Profile
+          <Link href="/dashboard/settings/general" passHref>
+            General
           </Link>
         </Button>
       </div>
@@ -29,15 +29,47 @@ export const SettingsNav = () => {
         <Button
           asChild
           variant="ghost"
-          className={`w-[120px] justify-start hover:accent-background ${
-            path === "/dashboard/settings/authentication"
+          className={`w-full justify-start hover:accent-background ${
+            path === "/dashboard/settings/auth"
               ? "text-foreground"
               : "text-muted-foreground hover:text-muted-foreground"
           }`}
           size="sm"
         >
-          <Link href="/dashboard/settings/profile" passHref>
+          <Link href="/dashboard/settings/auth" passHref>
             Authentication
+          </Link>
+        </Button>
+      </div>
+      <div>
+        <Button
+          asChild
+          variant="ghost"
+          className={`w-full justify-start hover:accent-background ${
+            path === "/dashboard/settings/teams"
+              ? "text-foreground"
+              : "text-muted-foreground hover:text-muted-foreground"
+          }`}
+          size="sm"
+        >
+          <Link href="/dashboard/settings/teams" passHref>
+            Teams
+          </Link>
+        </Button>
+      </div>
+      <div>
+        <Button
+          asChild
+          variant="ghost"
+          className={`w-full justify-start hover:accent-background ${
+            path === "/dashboard/settings/auth"
+              ? "text-foreground"
+              : "text-muted-foreground hover:text-muted-foreground"
+          }`}
+          size="sm"
+        >
+          <Link href="/dashboard/settings/auth" passHref>
+            Notifications
           </Link>
         </Button>
       </div>
