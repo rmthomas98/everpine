@@ -13,6 +13,7 @@ const publicRoutes = ["/signin", "/signup"];
 export const middleware = async (req) => {
   // check if the route is public
   const path = req.nextUrl.pathname;
+  console.log(path);
   const isProtected =
     protectedRoutes.includes(path) || path.startsWith("/dashboard");
   const isPublic = publicRoutes.includes(path);
@@ -78,5 +79,5 @@ export const middleware = async (req) => {
 
 // Routes Middleware should not run on
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\.png$).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico))", "/"],
 };
