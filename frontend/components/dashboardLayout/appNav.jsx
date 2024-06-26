@@ -76,7 +76,7 @@ export const AppNav = ({ user }) => {
   const dropdownRef = useRef(null);
 
   return (
-    <nav className="px-4 py-3 backdrop-blur fade-in-short-delayed opacity-0 border-b">
+    <nav className="px-4 py-3 backdrop-blur fade-in-short-delayed opacity-0 border-b sticky top-0 z-10 bg-background/80">
       <TooltipProvider delayDuration={100}>
         <div
           className="flex justify-between items-center"

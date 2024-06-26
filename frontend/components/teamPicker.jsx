@@ -111,7 +111,7 @@ export const TeamPicker = ({ teams, defaultTeam, accessToken }) => {
               <CommandGroup heading="My teams">
                 {teams?.map((team) => (
                   <CommandItem
-                    key={team.name}
+                    key={team.slug}
                     value={team.id}
                     className={`text-[13px] flex w-full justify-between`}
                     onSelect={(currValue) => onTeamSelect(currValue)}

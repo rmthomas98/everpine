@@ -1,10 +1,6 @@
 import { SettingsNav } from "@/components/accountSettings/settingsNav";
-import { auth } from "@/auth";
 
 const SettingsLayout = async ({ children }) => {
-  const token = await auth();
-  if (!token) redirect("/signin");
-
   return (
     <div>
       <div className="px-4 py-6 border-b opacity-0 fade-in-short-delayed">

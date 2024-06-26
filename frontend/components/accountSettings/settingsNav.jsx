@@ -8,7 +8,7 @@ export const SettingsNav = () => {
   const path = usePathname();
 
   return (
-    <div className="opacity-0 fade-in-short-delayed w-[160px]">
+    <div className="opacity-0 fade-in-short-delayed w-[160px] min-w-[160px]">
       <div>
         <Button
           asChild
@@ -62,13 +62,13 @@ export const SettingsNav = () => {
           asChild
           variant="ghost"
           className={`w-full justify-start hover:accent-background ${
-            path === "/dashboard/settings/auth"
+            path === "/dashboard/settings/notifs"
               ? "text-foreground"
               : "text-muted-foreground hover:text-muted-foreground"
           }`}
           size="sm"
         >
-          <Link href="/dashboard/settings/auth" passHref>
+          <Link href="/dashboard/settings/notifs" passHref>
             Notifications
           </Link>
         </Button>

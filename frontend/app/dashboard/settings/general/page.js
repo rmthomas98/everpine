@@ -1,25 +1,16 @@
-import { getUser } from "@/lib/dal";
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import {
-  Card,
-  CardTitle,
-  CardHeader,
-  CardDescription,
-} from "@/components/ui/card";
+import { GeneralSettings } from "@/components/accountSettings/general/general";
 
-const Profile = async () => {
+const General = async () => {
+  const token = await auth();
+  if (!token) redirect("/signin");
+
   return (
-    <div className="fade-in-short-delayed opacity-0">
-      <Card>
-        <CardHeader>
-          <CardTitle>Your name</CardTitle>
-          <CardDescription>
-            This will be displayed on your profile.
-          </CardDescription>
-        </CardHeader>
-      </Card>
+    <div className="fade-in-short-delayed opacity-0 w-full flex flex-col space-y-6">
+      <GeneralSettings accessToken={token.access_token} />
     </div>
   );
 };
 
-export default Profile;
+export default General;

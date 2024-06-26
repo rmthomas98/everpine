@@ -71,6 +71,7 @@ model Team {
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
   name             String
+  slug             String        @unique
   company          String?
   emailInvoiceTo   String?
   avatar           String?

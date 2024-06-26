@@ -44,6 +44,7 @@ const fetchTeams = async (accessToken) => {
             name: item.team.name,
             avatar: item.team.avatar,
             create: false,
+            slug: item.team.slug,
           };
         }
       }
@@ -137,7 +138,7 @@ export const TeamSelector = ({ accessToken, setSelectedTeam }) => {
               <CommandGroup heading="My teams">
                 {teams?.map((team) => (
                   <CommandItem
-                    key={team.name}
+                    key={team.id}
                     value={team.id}
                     className={`text-[13px] flex w-full justify-between`}
                     onSelect={(currValue) => {

@@ -1,5 +1,6 @@
 const prisma = require("../../db/prisma");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const crypto = require("crypto");
 
 const createTeam = async (name, company, avatar, user) => {
   try {
@@ -17,11 +18,22 @@ const createTeam = async (name, company, avatar, user) => {
     const random = Math.floor(Math.random() * 5) + 1;
     const teamAvatar = `/images/avatars/${random}.webp`;
 
+    // generate slug for the team based on the name
+    let slug = name
+      ? name.toLowerCase().replace(" ", "-")
+      : user.email.split("@")[0].toLowerCase();
+
+    // check if slug already exists
+    // and if it does, add a hyphen followed by a random string
+    const teamSlug = await prisma.team.findUnique({ where: { slug } });
+    if (teamSlug) slug += `-${crypto.randomBytes(4).toString("hex")}`;
+
     // create team in the database
     const team = await prisma.team.create({
       data: {
         name: name || user.email.split("@")[0],
         company: company ? company.trim() : null,
+        slug,
         avatar: avatar || teamAvatar,
         stripeCustomerId: customer?.id,
         users: { connect: { id: user.id } },

@@ -33,6 +33,7 @@ const getRoles = async (req, res) => {
             company: true,
             avatar: true,
             plan: true,
+            slug: true,
           },
         },
       },

@@ -47,6 +47,7 @@ const fetchTeams = async (accessToken) => {
         name: item.team.name,
         avatar: item.team.avatar,
         plan: item.team.plan,
+        slug: item.team.slug,
       };
     });
 

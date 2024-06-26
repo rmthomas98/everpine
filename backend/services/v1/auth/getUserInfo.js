@@ -20,6 +20,7 @@ const getUserInfo = async (userId) => {
                 id: true,
                 name: true,
                 plan: true,
+                slug: true,
                 subscription: {
                   select: { id: true, status: true, cancelAtPeriodEnd: true },
                 },
@@ -65,6 +66,7 @@ const getUserInfo = async (userId) => {
                     id: true,
                     name: true,
                     plan: true,
+                    slug: true,
                     subscription: {
                       select: {
                         id: true,
@@ -106,6 +108,7 @@ const getUserInfo = async (userId) => {
                     id: true,
                     name: true,
                     plan: true,
+                    slug: true,
                     subscription: {
                       select: {
                         id: true,
@@ -127,6 +130,7 @@ const getUserInfo = async (userId) => {
 
     user.team = role.team;
     user.role = role.role;
+    user.name = user.name ? user.name : "";
     delete user.roles;
 
     return user;
