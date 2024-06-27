@@ -128,6 +128,11 @@
   animation: animateBg 8s ease infinite;
 }
 
+#nprogress {
+  position: fixed;
+  z-index: 9999999;
+}
+
 @keyframes animateBg {
   0%,
   100% {

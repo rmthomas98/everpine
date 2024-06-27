@@ -10,19 +10,12 @@ const DashboardLayout = async ({ children }) => {
 
   return (
     <>
-      <NextTopLoader
-        showSpinner={false}
-        color="#6366f1"
-        height={2}
-        initialPosition={0.01}
-        zIndex={99}
-        template='<div class="bar transition-none" role="bar"><div class="peg"></div></div>'
-      />
-      <div className="max-w-[1374px] mx-auto">
+      <NextTopLoader showSpinner={false} color="#6366f1" height={2} />
+      <AppNav user={user} />
+      <div className="max-w-[1400px] mx-auto">
         <div className="w-full flex">
           <SideNav user={user} />
           <div className="w-full">
-            <AppNav user={user} />
             <div>
               <div>{children}</div>
             </div>

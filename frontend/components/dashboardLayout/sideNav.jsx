@@ -20,12 +20,20 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { HiMiniQrCode } from "react-icons/hi2";
 import { usePathname } from "next/navigation";
-import { ThemedLogo } from "@/components/themedLogo";
 import { useState, useEffect } from "react";
 import { TeamPicker } from "@/components/teamPicker";
 import { BiGlobe, BiHomeAlt, BiLinkAlt } from "react-icons/bi";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+const navItems = [
+  {
+    key: 1,
+    label: "Home",
+    route: "/dashboard",
+    icon: <BiHomeAlt size={15} className="mr-2.5 relative bottom-[1px]" />,
+  },
+];
 
 const fetchTeams = async (accessToken) => {
   try {
@@ -76,61 +84,61 @@ export const SideNav = ({ user }) => {
 
   return (
     <div
-      style={{ marginLeft: "-100vw", paddingLeft: "100vw" }}
-      className={`border-r fade-in-short-delayed opacity-0 bg-neutral-50 dark:bg-neutral-900`}
+      // style={{ marginLeft: "-100vw", paddingLeft: "100vw" }}
+      className={`border-r fade-in-short-delayed opacity-0`}
     >
       <div
-        className={`py-3 px-4 h-screen flex flex-col justify-between w-[242px] overflow-y-auto sticky top-0`}
+        className={`py-6 px-4 h-[calc(100vh-55px)] flex flex-col justify-between w-[242px] sticky top-[55px] overflow-y-auto`}
       >
         <div className="w-full">
-          <div className="ml-2.5">
-            <Link href="/dashboard" passHref>
-              <ThemedLogo isDashboard={true} />
-            </Link>
-          </div>
-          <div className="mt-7">
-            {/*{user.role !== "VIEWER" && (*/}
-            {/*  <DropdownMenu modal={false}>*/}
-            {/*    <DropdownMenuTrigger asChild>*/}
-            {/*      <Button className="w-full justify-start" size="sm">*/}
-            {/*        <FiPlus*/}
-            {/*          size={15}*/}
-            {/*          className="mr-2 relative bottom-[0.5px]"*/}
-            {/*        />*/}
-            {/*        Create new*/}
-            {/*      </Button>*/}
-            {/*    </DropdownMenuTrigger>*/}
-            {/*    <DropdownMenuContent*/}
-            {/*      align="start"*/}
-            {/*      side="right"*/}
-            {/*      onCloseAutoFocus={(e) => e.preventDefault()}*/}
-            {/*    >*/}
-            {/*      <DropdownMenuLabel className="py-1">*/}
-            {/*        /!*<p className="text-[13px]">Create new</p>*!/*/}
-            {/*        <p className="text-xs text-muted-foreground">Create new</p>*/}
-            {/*      </DropdownMenuLabel>*/}
-            {/*      /!*<DropdownMenuSeparator />*!/*/}
-            {/*      <DropdownMenuItem>*/}
-            {/*        <BiLinkAlt size={15} className="mr-2" />*/}
-            {/*        Link*/}
-            {/*      </DropdownMenuItem>*/}
-            {/*      <DropdownMenuItem>*/}
-            {/*        <HiMiniQrCode size={15} className="mr-2" />*/}
-            {/*        QR Code*/}
-            {/*      </DropdownMenuItem>*/}
-            {/*      <DropdownMenuItem>*/}
-            {/*        <BiGlobe size={15} className="mr-2" />*/}
-            {/*        Page*/}
-            {/*      </DropdownMenuItem>*/}
-            {/*    </DropdownMenuContent>*/}
-            {/*  </DropdownMenu>*/}
-            {/*)}*/}
-            <div className="mt-7 pb-7">
+          {/*<div className="ml-2.5">*/}
+          {/*  <Link href="/dashboard" passHref>*/}
+          {/*    <ThemedLogo isDashboard={true} />*/}
+          {/*  </Link>*/}
+          {/*</div>*/}
+          <div>
+            {user.role !== "VIEWER" && (
+              <DropdownMenu modal={false}>
+                <DropdownMenuTrigger asChild>
+                  <Button className="w-full justify-start" size="sm">
+                    <FiPlus
+                      size={15}
+                      className="mr-2 relative bottom-[0.5px]"
+                    />
+                    Create new
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="start"
+                  side="right"
+                  onCloseAutoFocus={(e) => e.preventDefault()}
+                >
+                  <DropdownMenuLabel className="py-1">
+                    {/*<p className="text-[13px]">Create new</p>*/}
+                    <p className="text-xs text-muted-foreground">Create new</p>
+                  </DropdownMenuLabel>
+                  {/*<DropdownMenuSeparator />*/}
+                  <DropdownMenuItem>
+                    <BiLinkAlt size={15} className="mr-2" />
+                    Link
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <HiMiniQrCode size={15} className="mr-2" />
+                    QR Code
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <BiGlobe size={15} className="mr-2" />
+                    Page
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+            <div className="mt-6 pb-7">
               <div>
                 <Button
                   asChild
                   variant="ghost"
-                  className={`w-full justify-start hover:accent-background ${
+                  className={`w-full justify-start hover:bg-zinc-50 dark:hover:bg-zinc-900 ${
                     path === "/dashboard"
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-muted-foreground"

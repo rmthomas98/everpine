@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const createUserController = require("../../controllers/v1/user/create");
+const updateUserController = require("../../controllers/v1/user/update");
+const infoController = require("../../controllers/v1/user/info");
+const auth = require("../../middleware/auth");
 
 // middleware to check referrer
 // check referrer to make sure the request is coming from the frontend
@@ -8,6 +11,12 @@ const createUserController = require("../../controllers/v1/user/create");
 
 // create user
 router.post("/create", createUserController.create);
+
+// update user name
+router.put("/update-name", auth, updateUserController.updateName);
+
+// get general info for user settings
+router.get("/info/general", auth, infoController.getGeneral);
 
 // verify user email
 

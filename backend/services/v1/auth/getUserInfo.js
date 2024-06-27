@@ -130,7 +130,6 @@ const getUserInfo = async (userId) => {
 
     user.team = role.team;
     user.role = role.role;
-    user.name = user.name ? user.name : "";
     delete user.roles;
 
     return user;

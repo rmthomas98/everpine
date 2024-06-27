@@ -24,6 +24,7 @@ model User {
   isEmailVerified        Boolean        @default(false)
   emailVerificationToken String?        @unique
   defaultTeamId          String?
+  stripeCustomerId       String?
   teams                  Team[]
   roles                  Role[]
   subscriptions          Subscription[]
