@@ -76,11 +76,11 @@ export const SideNav = ({ user }) => {
 
   return (
     <div
-      style={{ marginLeft: "-100%", paddingLeft: "100%" }}
+      style={{ marginLeft: "-100vw", paddingLeft: "100vw" }}
       className={`border-r fade-in-short-delayed opacity-0 bg-neutral-50 dark:bg-neutral-900`}
     >
       <div
-        className={`py-3 px-4 h-[100vh] flex flex-col justify-between w-[242px] overflow-y-auto`}
+        className={`py-3 px-4 h-screen flex flex-col justify-between w-[242px] overflow-y-auto sticky top-0`}
       >
         <div className="w-full">
           <div className="ml-2.5">

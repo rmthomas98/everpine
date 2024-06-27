@@ -55,7 +55,6 @@ const create = async (req, res) => {
       // create the user
       user = await prisma.user.create({
         data: {
-          name,
           email,
           avatar,
           password: hashedPassword || null,
@@ -65,7 +64,7 @@ const create = async (req, res) => {
       });
 
       // create a default team for the user
-      team = await createTeam(name, null, null, user);
+      team = await createTeam(null, null, null, user);
 
       // set default team for user
       await prisma.user.update({

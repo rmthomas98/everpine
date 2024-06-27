@@ -103,7 +103,9 @@ export const TeamSelector = ({ accessToken, setSelectedTeam }) => {
                 <Avatar className="h-[20px] w-[20px]">
                   <AvatarImage src={value.avatar} alt={value.name} />
                 </Avatar>
-                <span>{value.name}</span>
+                <span className="text-[13px] font-medium max-w-[234px] truncate">
+                  {value.name}
+                </span>
               </div>
             ) : (
               <p>Assign plan to...</p>

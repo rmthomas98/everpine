@@ -76,13 +76,13 @@
   }
 }
 
-html,
-body {
-  transition:
-    border 250ms,
-    background 250ms,
-    background-color 250ms;
-}
+/*html,*/
+/*body {*/
+/*  transition:*/
+/*    border 250ms,*/
+/*    background 250ms,*/
+/*    background-color 250ms;*/
+/*}*/
 
 .fade-in-delayed {
   animation: fadeIn 500ms ease;

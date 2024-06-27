@@ -76,7 +76,11 @@ export const AppNav = ({ user }) => {
   const dropdownRef = useRef(null);
 
   return (
-    <nav className="px-4 py-3 backdrop-blur fade-in-short-delayed opacity-0 border-b sticky top-0 z-10 bg-background/80">
+    <nav
+      // style={{ marginRight: "-100vw", paddingRight: "100vw" }}
+      className="px-4 pb-3 pt-[10px] backdrop-blur bg-background/80 fade-in-short-delayed opacity-0 sticky top-[2px] z-10"
+    >
+      {/*<div className="px-4 py-3">*/}
       <TooltipProvider delayDuration={100}>
         <div
           className="flex justify-between items-center"
@@ -369,6 +373,7 @@ export const AppNav = ({ user }) => {
           </div>
         </div>
       </TooltipProvider>
+      {/*</div>*/}
     </nav>
   );
 };
