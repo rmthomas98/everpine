@@ -63,9 +63,7 @@ export const StartForFree = () => {
           className={`p-[1px] bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 background-animate rounded-[7px] w-fit`}
         >
           <Button
-            className={`bg-background/90 hover:bg-transparent text-foreground w-[200px] ${
-              resolvedTheme === "light" && "hover:text-background"
-            }`}
+            className={`bg-background/90 hover:bg-transparent text-foreground hover:text-background w-[200px] dark:hover:text-foreground`}
           >
             Start for free
           </Button>

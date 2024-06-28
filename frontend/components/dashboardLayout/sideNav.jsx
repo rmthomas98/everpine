@@ -2,13 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  FiBarChart2,
-  FiPlus,
-  FiUsers,
-  FiFolder,
-  FiPlusCircle,
-} from "react-icons/fi";
+import { FiBarChart2, FiPlus, FiUsers, FiFolder } from "react-icons/fi";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -22,47 +16,80 @@ import { HiMiniQrCode } from "react-icons/hi2";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { TeamPicker } from "@/components/teamPicker";
-import { BiGlobe, BiHomeAlt, BiLinkAlt } from "react-icons/bi";
+import {
+  BiBarChart,
+  BiFolder,
+  BiGlobe,
+  BiGroup,
+  BiHomeAlt,
+  BiLinkAlt,
+} from "react-icons/bi";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const navItems = [
   {
-    key: 1,
     label: "Home",
     route: "/dashboard",
     icon: <BiHomeAlt size={15} className="mr-2.5 relative bottom-[1px]" />,
   },
+  {
+    label: "Links",
+    route: "/dashboard/links",
+    icon: <BiLinkAlt size={15} className="mr-2.5 relative bottom-[1px]" />,
+  },
+  {
+    label: "QR Codes",
+    route: "/dashboard/qr",
+    icon: <HiMiniQrCode size={15} className="mr-2.5 relative bottom-[1px]" />,
+  },
+  {
+    label: "Pages",
+    route: "/dashboard/pages",
+    icon: <BiGlobe size={15} className="mr-2.5 relative bottom-[1px]" />,
+  },
+  {
+    label: "Analytics",
+    route: "/dashboard/analytics",
+    icon: <BiBarChart size={15} className="mr-2.5 relative bottom-[1px]" />,
+  },
+  {
+    label: "Campaigns",
+    route: "/dashboard/campaigns",
+    icon: <BiFolder size={15} className="mr-2.5 relative bottom-[1px]" />,
+  },
+  {
+    label: "My Team",
+    route: "/dashboard/team",
+    icon: <BiGroup size={15} className="mr-2.5 relative bottom-[1px]" />,
+  },
 ];
 
 const fetchTeams = async (accessToken) => {
-  try {
-    const res = await fetch(`${baseUrl}/team/roles`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
-    });
+  const res = await fetch(`${baseUrl}/team/roles`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    cache: "no-store",
+  });
 
-    if (!res.ok) return [];
-    const { roles: data, defaultTeamId } = await res.json();
-    let filteredData = data.map((item) => {
-      return {
-        role: item.role,
-        id: item.teamId,
-        name: item.team.name,
-        avatar: item.team.avatar,
-        plan: item.team.plan,
-        slug: item.team.slug,
-      };
-    });
+  if (!res.ok) return [];
 
-    return { teams: filteredData, defaultTeam: defaultTeamId };
-  } catch (e) {
-    return [];
-  }
+  const { roles: data, defaultTeamId } = await res.json();
+  let filteredData = data.map((item) => {
+    return {
+      role: item.role,
+      id: item.teamId,
+      name: item.team.name,
+      avatar: item.team.avatar,
+      plan: item.team.plan,
+      slug: item.team.slug,
+    };
+  });
+
+  return { teams: filteredData, defaultTeam: defaultTeamId };
 };
 
 export const SideNav = ({ user }) => {
@@ -91,11 +118,6 @@ export const SideNav = ({ user }) => {
         className={`py-6 px-4 h-[calc(100vh-55px)] flex flex-col justify-between w-[242px] sticky top-[55px] overflow-y-auto`}
       >
         <div className="w-full">
-          {/*<div className="ml-2.5">*/}
-          {/*  <Link href="/dashboard" passHref>*/}
-          {/*    <ThemedLogo isDashboard={true} />*/}
-          {/*  </Link>*/}
-          {/*</div>*/}
           <div>
             {user.role !== "VIEWER" && (
               <DropdownMenu modal={false}>
@@ -133,147 +155,26 @@ export const SideNav = ({ user }) => {
                 </DropdownMenuContent>
               </DropdownMenu>
             )}
-            <div className="mt-6 pb-7">
-              <div>
-                <Button
-                  asChild
-                  variant="ghost"
-                  className={`w-full justify-start hover:bg-zinc-50 dark:hover:bg-zinc-900 ${
-                    path === "/dashboard"
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-muted-foreground"
-                  }`}
-                  size="sm"
-                >
-                  <Link href="/dashboard" passHref>
-                    <BiHomeAlt
-                      size={15}
-                      className="mr-2.5 relative bottom-[1px]"
-                    />
-                    Home
-                  </Link>
-                </Button>
-              </div>
-              <div>
-                <Button
-                  asChild
-                  variant="ghost"
-                  className={`w-full justify-start hover:accent-background ${
-                    path === "/dashboard/links"
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-muted-foreground"
-                  }`}
-                  size="sm"
-                >
-                  <Link href="/dashboard/links" passHref>
-                    <BiLinkAlt
-                      size={15}
-                      className="mr-2.5 relative bottom-[1px]"
-                    />
-                    Links
-                  </Link>
-                </Button>
-              </div>
-              <div>
-                <Button
-                  asChild
-                  variant="ghost"
-                  className={`w-full justify-start hover:accent-background ${
-                    path === "/dashboard/qr"
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-muted-foreground"
-                  }`}
-                  size="sm"
-                >
-                  <Link href="/dashboard/qr" passHref>
-                    <HiMiniQrCode
-                      size={15}
-                      className="mr-2.5 relative bottom-[1px]"
-                    />
-                    QR Codes
-                  </Link>
-                </Button>
-              </div>
-              <div>
-                <Button
-                  asChild
-                  variant="ghost"
-                  className={`w-full justify-start hover:accent-background ${
-                    path === "/dashboard/pages"
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-muted-foreground"
-                  }`}
-                  size="sm"
-                >
-                  <Link href="/dashboard/pages" passHref>
-                    <BiGlobe
-                      size={15}
-                      className="mr-2.5 relative bottom-[1px]"
-                    />
-                    Pages
-                  </Link>
-                </Button>
-              </div>
-              <div>
-                <Button
-                  asChild
-                  variant="ghost"
-                  className={`w-full justify-start hover:accent-background ${
-                    path === "/dashboard/analytics"
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-muted-foreground"
-                  }`}
-                  size="sm"
-                >
-                  <Link href="/dashboard/analytics" passHref>
-                    <FiBarChart2
-                      size={15}
-                      className="mr-2.5 relative bottom-[1px]"
-                    />
-                    Analytics
-                  </Link>
-                </Button>
-              </div>
-              <div>
-                <Button
-                  asChild
-                  variant="ghost"
-                  className={`w-full justify-start hover:accent-background ${
-                    path === "/dashboard/analytics"
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-muted-foreground"
-                  }`}
-                  size="sm"
-                >
-                  <Link href="/dashboard/series" passHref>
-                    <FiFolder
-                      size={15}
-                      className="mr-2.5 relative bottom-[1px]"
-                    />
-                    Campaigns
-                  </Link>
-                </Button>
-              </div>
-              <div>
-                <Button
-                  asChild
-                  variant="ghost"
-                  className={`w-full justify-start hover:accent-background ${
-                    path === "/dashboard/team"
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-muted-foreground"
-                  }`}
-                  size="sm"
-                >
-                  <Link href="/dashboard/team" passHref>
-                    <FiUsers
-                      size={14}
-                      className="mr-2.5 relative bottom-[1px]"
-                    />
-                    My Team
-                  </Link>
-                </Button>
-              </div>
+            <div className="my-6">
+              {navItems.map((item) => (
+                <div key={item.route}>
+                  <Button
+                    asChild
+                    variant="ghost"
+                    className={`w-full justify-start hover:bg-zinc-50 dark:hover:bg-zinc-900 ${
+                      path === item.route
+                        ? "text-foreground"
+                        : "text-muted-foreground hover:text-muted-foreground"
+                    }`}
+                    size="sm"
+                  >
+                    <Link href={item.route} passHref>
+                      {item.icon}
+                      {item.label}
+                    </Link>
+                  </Button>
+                </div>
+              ))}
             </div>
           </div>
         </div>

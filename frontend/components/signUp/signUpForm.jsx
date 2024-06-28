@@ -7,10 +7,10 @@ import { BiLogoGoogle } from "react-icons/bi";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
 import { CgSpinner } from "react-icons/cg";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const planMap = {
   professional: "Professional",
@@ -27,7 +27,6 @@ export const SignUpForm = ({ plan, billing }) => {
     formState: { errors },
   } = useForm();
 
-  const { toast } = useToast();
   const router = useRouter();
 
   const [isLoadingEmail, setIsLoadingEmail] = useState(false);
@@ -49,14 +48,7 @@ export const SignUpForm = ({ plan, billing }) => {
       const res = await signIn("credentials", options);
 
       // check if error signing in
-      if (res.error) {
-        toast({
-          title: "Error signing in",
-          description: "Invalid credentials",
-          variant: "destructive",
-        });
-        return;
-      }
+      if (res.error) return toast.error("Error signing in");
 
       // redirect to subsription page
       return router.push(`/subscribe?plan=${plan}&billing=${billing}`);
@@ -64,12 +56,8 @@ export const SignUpForm = ({ plan, billing }) => {
 
     // handle the signup error here
     const data = await res.json();
-    toast({
-      title: "Error creating account",
-      description: data,
-      variant: "destructive",
-    });
     setIsLoadingEmail(false);
+    toast.error(data);
   };
 
   return (

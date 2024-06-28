@@ -13,23 +13,27 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
+import { CgSpinner } from "react-icons/cg";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const NameCard = ({ user, accessToken }) => {
   const [name, setName] = useState(user?.name || "");
   const [isLoading, setIsLoading] = useState(false);
-  // const { toast } = useToast();
+
+  console.log(user);
 
   useEffect(() => {
     setName(user?.name || "");
+    return () => setName("");
   }, [user]);
 
   const onUpdate = async () => {
     if (name?.length > 36) return;
+
     setIsLoading(true);
     const res = await fetch(`${baseUrl}/user/update-name`, {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
@@ -39,22 +43,14 @@ export const NameCard = ({ user, accessToken }) => {
     });
 
     setIsLoading(false);
-    if (res.ok) {
-      // toast({
-      //   variant: "primary",
-      //   title: "Your name has been updated",
-      // });
-      toast.success("Your name has been updated");
-      return;
-    }
-    // handle error
+    if (res.ok) return toast.success("Your name has been updated");
     toast.error("Failed to update your name");
   };
 
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Your name</CardTitle>
+        <CardTitle>Display name</CardTitle>
         <CardDescription>
           This will be shown when collaborating with others.
         </CardDescription>
@@ -80,8 +76,13 @@ export const NameCard = ({ user, accessToken }) => {
         <p className="text-[13px] text-muted-foreground">
           36 characters maximum
         </p>
-        <Button size="sm" disabled={isLoading} onClick={onUpdate}>
-          Confirm
+        <Button
+          size="sm"
+          className="w-[74px]"
+          disabled={isLoading || !user}
+          onClick={onUpdate}
+        >
+          {isLoading ? <CgSpinner className="animate-spin" /> : "Confirm"}
         </Button>
       </CardFooter>
     </Card>

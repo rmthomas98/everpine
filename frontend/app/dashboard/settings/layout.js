@@ -10,7 +10,7 @@ const SettingsLayout = async ({ children }) => {
           <h1 className="text-xl font-bold">Account settings</h1>
         </div>
       </div>
-      <div className="pr-4">
+      <div className="pr-4 opacity-0 fade-in-short-delayed">
         <Separator />
       </div>
       <div className="flex space-x-8 py-6 px-4">

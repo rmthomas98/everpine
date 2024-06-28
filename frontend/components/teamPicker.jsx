@@ -19,9 +19,9 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { FiPlusCircle } from "react-icons/fi";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { toast } from "sonner";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -29,7 +29,6 @@ export const TeamPicker = ({ teams, defaultTeam, accessToken }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(defaultTeam);
   const router = useRouter();
-  const { toast } = useToast();
 
   useEffect(() => {
     setValue(defaultTeam);
@@ -48,16 +47,8 @@ export const TeamPicker = ({ teams, defaultTeam, accessToken }) => {
       body: JSON.stringify({ teamId: team }),
     });
 
-    if (res.ok) {
-      window?.location.reload();
-      return;
-    }
-
-    toast({
-      title: "Error selecting team",
-      description: "Please try again",
-      variant: "destructive",
-    });
+    if (res.ok) return window?.location.reload();
+    toast.error("Failed to select team");
     setOpen(false);
   };
 

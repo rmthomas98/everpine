@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
           <Nav />
           {children}
           <Footer />
-          <Toaster />
+          <Toaster richColors closeButton />
         </ThemeProvider>
       </body>
     </html>

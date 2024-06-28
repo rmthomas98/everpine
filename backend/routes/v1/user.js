@@ -13,7 +13,7 @@ const auth = require("../../middleware/auth");
 router.post("/create", createUserController.create);
 
 // update user name
-router.put("/update-name", auth, updateUserController.updateName);
+router.patch("/update-name", auth, updateUserController.updateName);
 
 // get general info for user settings
 router.get("/info/general", auth, infoController.getGeneral);

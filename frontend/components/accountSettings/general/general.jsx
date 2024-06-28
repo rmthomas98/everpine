@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { NameCard } from "@/components/accountSettings/general/name";
+import { DeleteAccountCard } from "@/components/accountSettings/general/delete";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -36,8 +37,6 @@ export const GeneralSettings = ({ accessToken }) => {
     return () => setUser(null);
   }, []);
 
-  console.log(user);
-
   return (
     <>
       <NameCard user={user} accessToken={accessToken} />
@@ -56,6 +55,7 @@ export const GeneralSettings = ({ accessToken }) => {
           <Button size="sm">Confirm</Button>
         </CardFooter>
       </Card>
+      <DeleteAccountCard />
     </>
   );
 };

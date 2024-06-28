@@ -7,7 +7,7 @@ const getGeneral = async (req, res) => {
     // only need to get name, email, and avatar
     const user = await prisma.user.findFirst({
       where: { id: req.userId },
-      select: { name: true, email: true, avatar: true },
+      select: { name: true, email: true, avatar: true, isEmailVerified: true },
     });
     if (!user) return res.status(400).json("Invalid request");
     res.json(user);

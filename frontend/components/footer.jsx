@@ -16,6 +16,7 @@ import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { HiMiniChevronUpDown } from "react-icons/hi2";
 import { FiCheck, FiMoon, FiSave, FiSun } from "react-icons/fi";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const showNavRoutes = ["/", "/pricing"];
 
@@ -167,66 +168,69 @@ export const Footer = () => {
           <p className="text-xs text-muted-foreground">
             © 2024 Spacemon. All rights reserved.
           </p>
+          {!isMounted && <Skeleton className="w-[120px] h-[32px] rounded-md" />}
           {isMounted && (
-            <DropdownMenu modal={false}>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex w-[120px] justify-between"
-                >
-                  {theme === "dark" ? (
-                    <span className="flex items-center">
-                      <FiMoon className="mr-2" />
-                      <span>Dark</span>
-                    </span>
-                  ) : theme === "light" ? (
-                    <span className="flex items-center">
+            <div className="fade-in-short-delayed opacity-0">
+              <DropdownMenu modal={false}>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex w-[120px] justify-between"
+                  >
+                    {theme === "dark" ? (
+                      <span className="flex items-center">
+                        <FiMoon className="mr-2" />
+                        <span>Dark</span>
+                      </span>
+                    ) : theme === "light" ? (
+                      <span className="flex items-center">
+                        <FiSun className="mr-2" />
+                        <span>Light</span>
+                      </span>
+                    ) : (
+                      <span className="flex items-center">
+                        <FiSave className="mr-2" />
+                        <span>System</span>
+                      </span>
+                    )}
+                    <HiMiniChevronUpDown className="text-muted-foreground" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-[120px] min-w-[120px]">
+                  <DropdownMenuItem
+                    className="flex justify-between items-center"
+                    onSelect={() => setTheme("light")}
+                  >
+                    <div className="flex items-center">
                       <FiSun className="mr-2" />
                       <span>Light</span>
-                    </span>
-                  ) : (
-                    <span className="flex items-center">
+                    </div>
+                    {theme === "light" && <FiCheck />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="flex justify-between items-center"
+                    onSelect={() => setTheme("dark")}
+                  >
+                    <div className="flex items-center">
+                      <FiMoon className="mr-2" />
+                      <span>Dark</span>
+                    </div>
+                    {theme === "dark" && <FiCheck />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="flex justify-between items-center"
+                    onSelect={() => setTheme("system")}
+                  >
+                    <div className="flex items-center">
                       <FiSave className="mr-2" />
                       <span>System</span>
-                    </span>
-                  )}
-                  <HiMiniChevronUpDown className="text-muted-foreground" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-[120px] min-w-[120px]">
-                <DropdownMenuItem
-                  className="flex justify-between items-center"
-                  onSelect={() => setTheme("light")}
-                >
-                  <div className="flex items-center">
-                    <FiSun className="mr-2" />
-                    <span>Light</span>
-                  </div>
-                  {theme === "light" && <FiCheck />}
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="flex justify-between items-center"
-                  onSelect={() => setTheme("dark")}
-                >
-                  <div className="flex items-center">
-                    <FiMoon className="mr-2" />
-                    <span>Dark</span>
-                  </div>
-                  {theme === "dark" && <FiCheck />}
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="flex justify-between items-center"
-                  onSelect={() => setTheme("system")}
-                >
-                  <div className="flex items-center">
-                    <FiSave className="mr-2" />
-                    <span>System</span>
-                  </div>
-                  {theme === "system" && <FiCheck />}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                    </div>
+                    {theme === "system" && <FiCheck />}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           )}
         </div>
       </div>

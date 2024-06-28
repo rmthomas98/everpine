@@ -262,7 +262,7 @@ export const Nav = () => {
                           <Card className="w-[190px] flex h-full flex-col justify-end p-4 rounded-md no-underline outline-none shadow-none border-none bg-background/90">
                             <ThemedIconLogo />
                             <div className="mb-2 mt-3.5 font-medium">
-                              Spacemon AI
+                              Airtoken AI
                             </div>
                             <p className="text-[13px] leading-tight">
                               Bring your QR codes to life with the power of AI.

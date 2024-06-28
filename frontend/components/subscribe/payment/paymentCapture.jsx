@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import { FiInfo, FiLock } from "react-icons/fi";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { useForm } from "react-hook-form";
-import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -23,18 +23,13 @@ export const PaymentCapture = ({
   const stripe = useStripe();
   const elements = useElements();
   const { handleSubmit, register } = useForm();
-  const { toast } = useToast();
   const router = useRouter();
 
   const onSubmit = async ({ company }) => {
     if (!stripe || !elements) return;
 
     if (!team) {
-      toast({
-        variant: "destructive",
-        title: "No team selected",
-        description: "Please select a team to assign plan to",
-      });
+      toast.info("Please select a team to assign plan to");
       return;
     }
 
@@ -46,50 +41,32 @@ export const PaymentCapture = ({
     const { error, setupIntent } = result;
     if (error) {
       setIsLoading(false);
-      toast({
-        variant: "destructive",
-        title: "Card error",
-        description: error.message,
-      });
+      toast.error(error.message);
       return;
     }
 
     const paymentMethod = setupIntent.payment_method;
 
     // send data to backend to create subscription
-    try {
-      const res = await fetch(`${baseUrl}/subscription/create`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ team, billing, plan, paymentMethod, company }),
-      });
+    const res = await fetch(`${baseUrl}/subscription/create`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ team, billing, plan, paymentMethod, company }),
+    });
 
-      if (res.ok) {
-        // redirect to dashboard
-        router.push("/payment-success");
-        router.refresh();
-        return;
-      }
-
-      const data = await res.json();
-      setIsLoading(false);
-      toast({
-        variant: "destructive",
-        title: "Error creating subscription",
-        description: data,
-      });
-    } catch (e) {
-      setIsLoading(false);
-      toast({
-        variant: "destructive",
-        title: "Error creating subscription",
-        description: "Something went wrong, please try again.",
-      });
+    if (res.ok) {
+      // redirect to dashboard
+      router.push("/payment-success");
+      router.refresh();
       return;
     }
+
+    const data = await res.json();
+    setIsLoading(false);
+    toast.error(data);
   };
 
   return (
