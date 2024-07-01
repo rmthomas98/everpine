@@ -374,8 +374,8 @@ export const AppNav = ({ user }) => {
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
-                      onClick={() => {
-                        signOut();
+                      onClick={async () => {
+                        await signOut();
                         router.push("/signin");
                       }}
                     >

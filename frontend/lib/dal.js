@@ -11,7 +11,6 @@ export const getUser = async () => {
       Authorization: `Bearer ${token.access_token}`,
       "Content-Type": "application/json",
     },
-    cache: "no-store",
   });
 
   if (!res.ok) return null;

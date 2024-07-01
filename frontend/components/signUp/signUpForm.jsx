@@ -50,8 +50,9 @@ export const SignUpForm = ({ plan, billing }) => {
       // check if error signing in
       if (res.error) return toast.error("Error signing in");
 
-      // redirect to subsription page
-      return router.push(`/subscribe?plan=${plan}&billing=${billing}`);
+      // redirect to subsription page if selected plan
+      if (!plan) return router.push("/dashboard");
+      router.push(`/subscribe?plan=${plan}&billing=${billing}`);
     }
 
     // handle the signup error here

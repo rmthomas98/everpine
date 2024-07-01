@@ -21,8 +21,6 @@ export const NameCard = ({ user, accessToken }) => {
   const [name, setName] = useState(user?.name || "");
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(user);
-
   useEffect(() => {
     setName(user?.name || "");
     return () => setName("");

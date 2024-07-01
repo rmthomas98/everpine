@@ -13,12 +13,10 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 const fetchClientSecret = async (accessToken) => {
   try {
     const res = await fetch(`${baseUrl}/subscription/get-client-secret`, {
-      method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
-      cache: "no-store",
     });
 
     if (!res.ok) return null;

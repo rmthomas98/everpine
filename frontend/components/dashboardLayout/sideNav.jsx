@@ -67,12 +67,10 @@ const navItems = [
 
 const fetchTeams = async (accessToken) => {
   const res = await fetch(`${baseUrl}/team/roles`, {
-    method: "GET",
     headers: {
       Authorization: `Bearer ${accessToken}`,
       "Content-Type": "application/json",
     },
-    cache: "no-store",
   });
 
   if (!res.ok) return [];

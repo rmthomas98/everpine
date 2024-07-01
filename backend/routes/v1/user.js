@@ -3,6 +3,7 @@ const router = express.Router();
 const createUserController = require("../../controllers/v1/user/create");
 const updateUserController = require("../../controllers/v1/user/update");
 const infoController = require("../../controllers/v1/user/info");
+const deleteController = require("../../controllers/v1/user/delete");
 const auth = require("../../middleware/auth");
 
 // middleware to check referrer
@@ -18,7 +19,8 @@ router.patch("/update-name", auth, updateUserController.updateName);
 // get general info for user settings
 router.get("/info/general", auth, infoController.getGeneral);
 
-// verify user email
+// delete user account
+router.delete("/delete", auth, deleteController.deleteUser);
 
 // Get all users
 // Path: /api/v1/user
