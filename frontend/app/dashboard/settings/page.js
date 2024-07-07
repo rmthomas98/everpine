@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 const Settings = () => {
-  redirect("/dashboard/settings/profile");
+  redirect("/dashboard/settings/general");
   return <div></div>;
 };
 
