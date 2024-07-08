@@ -37,7 +37,6 @@ export const NameCard = ({ user, accessToken }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ name }),
-      cache: "no-store",
     });
 
     setIsLoading(false);
