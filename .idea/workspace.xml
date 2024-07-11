@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bdb33b99-5677-4179-b21b-f3b40a5bde1d" name="Changes" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/components/accountSettings/general/email.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/accountSettings/general/email.jsx" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+>>>>>>> 8349a70d24780fa543d86a41c47fedfa699457bf
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,8 +59,13 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "prettierjs.PrettierConfiguration.Package": "C:\\Users\\ryanm\\AppData\\Roaming\\npm\\node_modules\\prettier",
+<<<<<<< HEAD
     "settings.editor.selected.configurable": "editor.preferences.fonts.default",
     "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+=======
+    "settings.editor.selected.configurable": "actions.on.save",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.2.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+>>>>>>> 8349a70d24780fa543d86a41c47fedfa699457bf
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
