@@ -26,8 +26,7 @@ export const EmailCard = ({ user, accessToken }) => {
         </CardHeader>
         <CardContent>
           {user ? (
-
-          <div className="w-full px-4 py-3 rounded-lg border flex justify-between items-center">
+          <div className="w-full px-4 py-3 rounded-lg border flex justify-between items-center opacity-0 fade-in-short-delayed">
             <div className="flex items-center space-x-4">
               <p className="text-[13px]">{user?.email}</p>
               <Badge variant={user?.isEmailVerified ? "primary" : "warning"}>
@@ -48,7 +47,7 @@ export const EmailCard = ({ user, accessToken }) => {
           <p className="text-[13px] text-muted-foreground">
             Update your email address here
           </p>
-          <Button size="sm">Update</Button>
+          <Button size="sm" disabled={!user}>Update</Button>
         </CardFooter>
       </Card>
     </>
