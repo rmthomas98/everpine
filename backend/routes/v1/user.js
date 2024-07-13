@@ -4,6 +4,7 @@ const createUserController = require("../../controllers/v1/user/create");
 const updateUserController = require("../../controllers/v1/user/update");
 const infoController = require("../../controllers/v1/user/info");
 const deleteController = require("../../controllers/v1/user/delete");
+const emailController = require("../../controllers/v1/user/email");
 const auth = require("../../middleware/auth");
 
 // middleware to check referrer
@@ -12,6 +13,15 @@ const auth = require("../../middleware/auth");
 
 // create user
 router.post("/create", createUserController.create);
+
+// resend email verification
+router.patch("/resend-verification", auth, emailController.resendVerification);
+
+// verify email
+router.patch("/verify-email", emailController.verifyEmail);
+
+// update user email
+router.patch("/update-email", auth, updateUserController.updateEmail);
 
 // update user name
 router.patch("/update-name", auth, updateUserController.updateName);

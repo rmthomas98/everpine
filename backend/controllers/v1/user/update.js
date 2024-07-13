@@ -1,4 +1,6 @@
 const prisma = require("../../../db/prisma");
+const sendVerificationEmail = require("../../../services/v1/user/sendVerificationEmail");
+const crypto = require("crypto");
 
 const updateName = async (req, res) => {
   try {
@@ -23,4 +25,45 @@ const updateName = async (req, res) => {
   }
 };
 
-module.exports = { updateName };
+const updateEmail = async (req, res) => {
+  try {
+    const { userId } = req;
+    let { email } = req.body;
+
+    if (!email) return res.status(400).json("Invalid request");
+    email = email.toLowerCase().trim();
+
+    // check if email already exists
+    const isUser = await prisma.user.findUnique({ where: { email } });
+    if (isUser) return res.status(400).json("Email is already in use");
+
+    // make sure email is valid
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!isValid) return res.status(400).json("Invalid email");
+
+    // create new email verification token
+    const emailToken = crypto.randomBytes(32).toString("hex");
+
+    // update user email and emailVerificationToken and set email verified to false
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: {
+        email,
+        emailVerificationToken: emailToken,
+        isEmailVerified: false,
+      },
+    });
+
+    if (!updatedUser) return res.status(400).json("Error updating email");
+
+    // send email
+    await sendVerificationEmail(email, emailToken);
+
+    res.json({});
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Internal server error");
+  }
+};
+
+module.exports = { updateName, updateEmail };

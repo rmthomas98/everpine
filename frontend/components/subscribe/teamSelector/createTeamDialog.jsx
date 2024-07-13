@@ -62,59 +62,56 @@ export const CreateTeamDialog = ({
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <form onSubmit={handleSubmit(onsubmit)}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Create a new team</DialogTitle>
-            <DialogDescription>
-              Continue to start collaborating with increased limits and
-              features.
-            </DialogDescription>
-          </DialogHeader>
-          <div>
-            <Input
-              placeholder="Team name..."
-              className={`w-full ${
-                errors.teamName &&
-                "border-destructive focus-visible:ring-destructive/20 focus-visible:border-destructive dark:focus-visible:border-destructive dark:focus-visible:ring-destructive/50"
-              }`}
-              {...register("teamName", {
-                required: true,
-                maxLength: 50,
-                minLength: 2,
-              })}
-            />
-            {errors.teamName?.type === "required" && (
-              <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
-                Please enter a team name
-              </p>
-            )}
-            {errors.teamName?.type === "minLength" && (
-              <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
-                Team name must be at least 2 characters
-              </p>
-            )}
-            {errors.teamName?.type === "maxLength" && (
-              <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
-                Team name cannot be more than 50 characters
-              </p>
-            )}
-          </div>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setIsDialogOpen(false)}
-              type="button"
-            >
-              Cancel
-            </Button>
-            <Button size="sm" onClick={handleSubmit(onSubmit)}>
-              Continue
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </form>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Create a new team</DialogTitle>
+          <DialogDescription>
+            Continue to start collaborating with increased limits and features.
+          </DialogDescription>
+        </DialogHeader>
+        <div>
+          <Input
+            placeholder="Team name..."
+            className={`w-full ${
+              errors.teamName &&
+              "border-destructive focus-visible:ring-destructive/20 focus-visible:border-destructive dark:focus-visible:border-destructive dark:focus-visible:ring-destructive/50"
+            }`}
+            {...register("teamName", {
+              required: true,
+              maxLength: 50,
+              minLength: 2,
+            })}
+          />
+          {errors.teamName?.type === "required" && (
+            <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
+              Please enter a team name
+            </p>
+          )}
+          {errors.teamName?.type === "minLength" && (
+            <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
+              Team name must be at least 2 characters
+            </p>
+          )}
+          {errors.teamName?.type === "maxLength" && (
+            <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
+              Team name cannot be more than 50 characters
+            </p>
+          )}
+        </div>
+        <DialogFooter>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setIsDialogOpen(false)}
+            type="button"
+          >
+            Cancel
+          </Button>
+          <Button size="sm" onClick={handleSubmit(onSubmit)}>
+            Continue
+          </Button>
+        </DialogFooter>
+      </DialogContent>
     </Dialog>
   );
 };
