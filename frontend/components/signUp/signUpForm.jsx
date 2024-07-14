@@ -11,6 +11,7 @@ import { CgSpinner } from "react-icons/cg";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { ThemedLogo } from "@/components/themedLogo";
 
 const planMap = {
   professional: "Professional",
@@ -63,103 +64,117 @@ export const SignUpForm = ({ plan, billing }) => {
   };
 
   return (
-    <div className="max-w-[400px] w-full mx-auto">
-      <p className="font-semibold text-lg text-center">Create your account</p>
-      <p className="text-muted-foreground mt-1 text-sm text-center">
-        {`Enter your details to get started ${
-          planMap[plan] ? `with ${planMap[plan]}` : "for free"
-        }`}
-      </p>
-      <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          placeholder="Work email"
-          className={`w-full ${
-            errors.email &&
-            "border-destructive focus-visible:ring-destructive/20 focus-visible:border-destructive dark:focus-visible:border-destructive dark:focus-visible:ring-destructive/50"
-          }`}
-          type="email"
-          {...register("email", {
-            required: true,
-            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-          })}
-        />
-        {errors.email && (
-          <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
-            Please enter a valid email address
-          </p>
-        )}
-        <Input
-          placeholder="Password"
-          className={`w-full mt-4 ${
-            errors.password &&
-            "border-destructive focus-visible:ring-destructive/20 focus-visible:border-destructive dark:focus-visible:border-destructive dark:focus-visible:ring-destructive/50"
-          }`}
-          type="password"
-          {...register("password", { required: true, minLength: 8 })}
-        />
-        {errors.password?.type === "required" && (
-          <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
-            Please enter a password
-          </p>
-        )}
-        {errors.password?.type === "minLength" && (
-          <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
-            Password must be at least 8 characters
-          </p>
-        )}
-        <Button
-          className="mt-6 w-full"
-          disabled={isLoadingEmail || isLoadingGoogle}
-        >
-          {isLoadingEmail ? (
-            <CgSpinner className="animate-spin" />
-          ) : (
-            "Sign up with email"
-          )}
-        </Button>
-      </form>
-      <div className="my-4 flex items-center space-x-4">
-        <Separator className="my-6" />
-        <p className="text-muted-foreground text-[11px] font-semibold min-w-fit tracking-wide">
-          OR
-        </p>
-        <Separator className="my-6" />
-      </div>
-      <div>
-        <Button
-          variant="outline"
-          className="w-full"
-          disabled={isLoadingGoogle || isLoadingEmail}
-          onClick={async () => {
-            setIsLoadingGoogle(true);
-            const res = await signIn("google", {
-              callbackUrl: `http://localhost:3000/subscribe?plan=${plan}&billing=${billing}`,
-              redirect: false,
-            });
-          }}
-        >
-          {isLoadingGoogle ? (
-            <CgSpinner className="animate-spin" />
-          ) : (
-            <>
-              <BiLogoGoogle size={20} className="mr-2" />
-              Sign up with Google
-            </>
-          )}
+    <>
+      <div className="relative z-10 flex justify-between items-center max-[860px]:mx-[-16px] border-b border-transparent max-[860px]:border-border max-[860px]:px-4 pb-2">
+        <Link href="/" passHref>
+          <ThemedLogo />
+        </Link>
+        <Button size="sm" variant="outline" asChild>
+          <Link href="/signin">Sign in</Link>
         </Button>
       </div>
-      <div className="mt-6 max-w-[340px] mx-auto">
-        <p className="text-xs text-muted-foreground text-center leading-5">
-          By creating an account, you agree to our{" "}
-          <Link href="/terms" className="underline">
-            Terms of service
-          </Link>{" "}
-          and{" "}
-          <Link href="/privacy" className="underline">
-            Privacy policy
-          </Link>
-        </p>
+      <div className="w-full h-full items-center flex relative top-[-41px]">
+        <div className="max-w-[400px] w-full mx-auto">
+          <p className="font-semibold text-lg text-center">
+            Create your account
+          </p>
+          <p className="text-muted-foreground mt-1 text-sm text-center">
+            {`Enter your details to get started ${
+              planMap[plan] ? `with ${planMap[plan]}` : "for free"
+            }`}
+          </p>
+          <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
+            <Input
+              placeholder="Work email"
+              className={`w-full ${
+                errors.email &&
+                "border-destructive focus-visible:ring-destructive/20 focus-visible:border-destructive dark:focus-visible:border-destructive dark:focus-visible:ring-destructive/50"
+              }`}
+              type="email"
+              {...register("email", {
+                required: true,
+                pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              })}
+            />
+            {errors.email && (
+              <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
+                Please enter a valid email address
+              </p>
+            )}
+            <Input
+              placeholder="Password"
+              className={`w-full mt-4 ${
+                errors.password &&
+                "border-destructive focus-visible:ring-destructive/20 focus-visible:border-destructive dark:focus-visible:border-destructive dark:focus-visible:ring-destructive/50"
+              }`}
+              type="password"
+              {...register("password", { required: true, minLength: 8 })}
+            />
+            {errors.password?.type === "required" && (
+              <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
+                Please enter a password
+              </p>
+            )}
+            {errors.password?.type === "minLength" && (
+              <p className="text-destructive text-xs mt-1.5 dark:text-red-600">
+                Password must be at least 8 characters
+              </p>
+            )}
+            <Button
+              className="mt-6 w-full"
+              disabled={isLoadingEmail || isLoadingGoogle}
+            >
+              {isLoadingEmail ? (
+                <CgSpinner className="animate-spin" />
+              ) : (
+                "Sign up with email"
+              )}
+            </Button>
+          </form>
+          <div className="my-4 flex items-center space-x-4">
+            <Separator className="my-6" />
+            <p className="text-muted-foreground text-[11px] font-semibold min-w-fit tracking-wide">
+              OR
+            </p>
+            <Separator className="my-6" />
+          </div>
+          <div>
+            <Button
+              variant="outline"
+              className="w-full"
+              disabled={isLoadingGoogle || isLoadingEmail}
+              onClick={async () => {
+                setIsLoadingGoogle(true);
+                const res = await signIn("google", {
+                  callbackUrl: `http://localhost:3000/subscribe?plan=${plan}&billing=${billing}`,
+                  redirect: false,
+                });
+              }}
+            >
+              {isLoadingGoogle ? (
+                <CgSpinner className="animate-spin" />
+              ) : (
+                <>
+                  <BiLogoGoogle size={18} className="mr-2" />
+                  Sign up with Google
+                </>
+              )}
+            </Button>
+          </div>
+          <div className="mt-6 max-w-[340px] mx-auto">
+            <p className="text-xs text-muted-foreground text-center leading-5">
+              By creating an account, you agree to our{" "}
+              <Link href="/terms" className="underline">
+                Terms of service
+              </Link>{" "}
+              and{" "}
+              <Link href="/privacy" className="underline">
+                Privacy policy
+              </Link>
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };

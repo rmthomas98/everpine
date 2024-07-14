@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CgSpinner } from "react-icons/cg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { UpdateEmailDialog } from "@/components/accountSettings/general/updateEmail";
 
@@ -22,6 +22,14 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 export const EmailCard = ({ user, accessToken }) => {
   const [isResending, setIsResending] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [email, setEmail] = useState(null);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
+
+  useEffect(() => {
+    if (!user) return;
+    setEmail(user.email);
+    setIsEmailVerified(user.isEmailVerified);
+  }, [user]);
 
   const onResendVerification = async () => {
     // make fetch request to resend verification email
@@ -50,12 +58,12 @@ export const EmailCard = ({ user, accessToken }) => {
           {user ? (
             <div className="w-full px-4 py-3 rounded-lg border flex justify-between items-center opacity-0 fade-in-short-delayed">
               <div className="flex items-center space-x-4">
-                <p className="text-[13px]">{user?.email}</p>
-                <Badge variant={user?.isEmailVerified ? "primary" : "warning"}>
-                  {user?.isEmailVerified ? "Verified" : "Unverified"}
+                <p className="text-[13px]">{email}</p>
+                <Badge variant={isEmailVerified ? "primary" : "warning"}>
+                  {isEmailVerified ? "Verified" : "Unverified"}
                 </Badge>
               </div>
-              {!user?.isEmailVerified && (
+              {!isEmailVerified && (
                 <Button
                   size="sm"
                   variant="outline"
@@ -93,6 +101,8 @@ export const EmailCard = ({ user, accessToken }) => {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         accessToken={accessToken}
+        setIsEmailVerified={setIsEmailVerified}
+        setEmail={setEmail}
       />
     </>
   );

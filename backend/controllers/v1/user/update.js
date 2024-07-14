@@ -35,7 +35,12 @@ const updateEmail = async (req, res) => {
 
     // check if email already exists
     const isUser = await prisma.user.findUnique({ where: { email } });
-    if (isUser) return res.status(400).json("Email is already in use");
+    if (isUser) {
+      if (isUser.id === userId) {
+        return res.status(400).json("You already have this email");
+      }
+      return res.status(400).json("Email is already in use");
+    }
 
     // make sure email is valid
     const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

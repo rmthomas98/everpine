@@ -15,7 +15,13 @@ import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { CgSpinner } from "react-icons/cg";
 
-export const UpdateEmailDialog = ({ isOpen, setIsOpen, accessToken }) => {
+export const UpdateEmailDialog = ({
+  isOpen,
+  setIsOpen,
+  accessToken,
+  setEmail,
+  setIsEmailVerified,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -50,6 +56,8 @@ export const UpdateEmailDialog = ({ isOpen, setIsOpen, accessToken }) => {
       return toast.error(data);
     }
     setIsOpen(false);
+    setEmail(values.email);
+    setIsEmailVerified(false);
     toast.success("Verification email sent!");
   };
 
