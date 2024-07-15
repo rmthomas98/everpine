@@ -48,7 +48,7 @@ export const EmailCard = ({ user, accessToken }) => {
   };
 
   return (
-    <>
+    <div>
       <Card className="w-full">
         <CardHeader>
           <CardTitle>Your email</CardTitle>
@@ -104,6 +104,6 @@ export const EmailCard = ({ user, accessToken }) => {
         setIsEmailVerified={setIsEmailVerified}
         setEmail={setEmail}
       />
-    </>
+    </div>
   );
 };

@@ -26,6 +26,9 @@ router.patch("/update-email", auth, updateUserController.updateEmail);
 // update user name
 router.patch("/update-name", auth, updateUserController.updateName);
 
+// update user password
+router.patch("/update-password", auth, updateUserController.updatePassword);
+
 // get general info for user settings
 router.get("/info/general", auth, infoController.getGeneral);
 

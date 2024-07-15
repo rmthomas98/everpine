@@ -63,16 +63,15 @@ const terms = [
 export const Footer = () => {
   const path = usePathname();
 
-  if (!showNavRoutes.includes(path)) return <div></div>;
-
   const [isMounted, setIsMounted] = useState(false);
-  const { setTheme, theme } = useTheme();
 
+  const { setTheme, theme } = useTheme();
   useEffect(() => {
     setIsMounted(true);
-
     return () => setIsMounted(false);
   }, []);
+
+  if (!showNavRoutes.includes(path)) return <div></div>;
 
   return (
     <div className="border-t px-4 py-12 fade-in-short-delayed opacity-0">

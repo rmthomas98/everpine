@@ -1,6 +1,7 @@
 const prisma = require("../../../db/prisma");
 const sendVerificationEmail = require("../../../services/v1/user/sendVerificationEmail");
 const crypto = require("crypto");
+const bcrypt = require("bcrypt");
 
 const updateName = async (req, res) => {
   try {
@@ -71,4 +72,48 @@ const updateEmail = async (req, res) => {
   }
 };
 
-module.exports = { updateName, updateEmail };
+const updatePassword = async (req, res) => {
+  try {
+    const { userId } = req;
+    const { currentPassword, newPassword } = req.body;
+
+    // get user
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) return res.status(400).json("Invalid request");
+
+    // check if new password is long enough
+    if (newPassword.length < 8) {
+      return res.status(400).json("Password must be at least 8 characters");
+    }
+
+    // check if user has password (social login users don't have password)
+    if (!user.password) {
+      // just update the password if one does not exist
+      const hashedPassword = await bcrypt.hashSync(newPassword, 10);
+      await prisma.user.update({
+        where: { id: userId },
+        data: { password: hashedPassword },
+      });
+    }
+
+    // compare hashed password
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) return res.status(401).json("Invalid password");
+
+    // hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // update the user's password in db
+    await prisma.user.update({
+      where: { id: userId },
+      data: { password: hashedPassword },
+    });
+
+    res.json({});
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Internal server error");
+  }
+};
+
+module.exports = { updateName, updateEmail, updatePassword };

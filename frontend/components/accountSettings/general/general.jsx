@@ -28,10 +28,10 @@ export const GeneralSettings = ({ accessToken }) => {
   }, []);
 
   return (
-    <>
+    <div className="w-full flex flex-col space-y-6">
       <NameCard user={user} accessToken={accessToken} />
       <EmailCard user={user} accessToken={accessToken} />
       <DeleteAccountCard user={user} accessToken={accessToken} />
-    </>
+    </div>
   );
 };

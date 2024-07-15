@@ -2,11 +2,9 @@ import { SideNav } from "@/components/dashboardLayout/sideNav";
 import { AppNav } from "@/components/dashboardLayout/appNav";
 import NextTopLoader from "nextjs-toploader";
 import { getUser } from "@/lib/dal";
-import { redirect } from "next/navigation";
 
 const DashboardLayout = async ({ children }) => {
   const user = await getUser();
-  if (!user) redirect("/signin");
 
   return (
     <>
