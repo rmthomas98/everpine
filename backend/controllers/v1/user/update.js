@@ -89,7 +89,7 @@ const updatePassword = async (req, res) => {
     // check if user has password (social login users don't have password)
     if (!user.password) {
       // just update the password if one does not exist
-      const hashedPassword = await bcrypt.hashSync(newPassword, 10);
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
       await prisma.user.update({
         where: { id: userId },
         data: { password: hashedPassword },
