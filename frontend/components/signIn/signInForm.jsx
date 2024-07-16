@@ -38,10 +38,7 @@ export const SignInForm = () => {
 
   const onGoogleSignIn = async () => {
     setIsGoogleLoading(true);
-    const options = {
-      callbackUrl: "http://localhost:3000/dashboard",
-      redirect: false,
-    };
+    const options = { callbackUrl: "http://localhost:3000/dashboard" };
     const { error } = await signIn("google", options);
     if (error) {
       setIsGoogleLoading(false);

@@ -43,7 +43,7 @@ export const PasswordCard = ({ accessToken }) => {
       return toast.error(data);
     }
 
-    reset();
+    reset({ currentPassword: "", newPassword: "" });
     toast.success("Your password have been updated");
   };
 
