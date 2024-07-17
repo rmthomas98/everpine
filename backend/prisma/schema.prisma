@@ -19,8 +19,13 @@ model User {
   updatedAt              DateTime       @updatedAt
   name                   String?
   email                  String         @unique
-  password               String?
   avatar                 String?
+  password               String?
+  resetPasswordToken     String?
+  allowGoogleAuth        Boolean        @default(true)
+  allowCredentialsAuth   Boolean        @default(true)
+  isTwoFactorAuthEnabled Boolean        @default(false)
+  twoFactorAuthSecret    String?
   isEmailVerified        Boolean        @default(false)
   emailVerificationToken String?        @unique
   defaultTeamId          String?

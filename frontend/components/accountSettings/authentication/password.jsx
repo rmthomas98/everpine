@@ -17,7 +17,7 @@ import { CgSpinner } from "react-icons/cg";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export const PasswordCard = ({ accessToken }) => {
+export const PasswordCard = ({ accessToken, user }) => {
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,

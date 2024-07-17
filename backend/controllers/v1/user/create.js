@@ -45,7 +45,8 @@ const create = async (req, res) => {
     }
 
     // generate random avatar for the user
-    const avatar = `https://api.dicebear.com/9.x/pixel-art/png?seed=${email}`;
+    // const avatar = `https://api.dicebear.com/9.x/pixel-art/png?seed=${email}`;
+    const avatar = `https://api.dicebear.com/9.x/lorelei/png?seed=${email}`;
 
     let user;
     let team;
@@ -60,6 +61,8 @@ const create = async (req, res) => {
           password: hashedPassword || null,
           emailVerificationToken: emailVerificationToken || null,
           isEmailVerified: provider === "google",
+          allowGoogleAuth: provider === "google",
+          allowCredentialsAuth: provider === "credentials",
         },
       });
 

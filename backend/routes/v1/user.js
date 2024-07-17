@@ -30,7 +30,7 @@ router.patch("/update-name", auth, updateUserController.updateName);
 router.patch("/update-password", auth, updateUserController.updatePassword);
 
 // get general info for user settings
-router.get("/info/general", auth, infoController.getGeneral);
+router.get("/info", auth, infoController.getInfo);
 
 // delete user account
 router.delete("/delete", auth, deleteController.deleteUser);

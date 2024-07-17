@@ -8,7 +8,7 @@ import { EmailCard } from "@/components/accountSettings/general/email";
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const getUserInfo = async (accessToken) => {
-  const res = await fetch(`${baseUrl}/user/info/general`, {
+  const res = await fetch(`${baseUrl}/user/info`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
       "Content-Type": "application/json",
