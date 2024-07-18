@@ -18,6 +18,9 @@ const signIn = async (req, res) => {
       return res.status(401).json("Please use Google to sign in");
     }
 
+    // check if user is allowed to sign in with credentials
+    if (!user.allowCredentialsAuth) return res.status(401).json("not allowed");
+
     // compare password with hash
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) return res.status(401).json("Invalid password");
@@ -36,9 +39,12 @@ const checkUser = async (req, res) => {
     let { email } = req.body;
     email = email.toLowerCase().trim();
     const user = await prisma.user.findUnique({ where: { email } });
-    if (!user) return res.status(404).json("User not found");
+    if (!user) return res.status(404).json("user not found");
 
-    res.json("User exists");
+    // check if user is allowed to login with google
+    if (!user.allowGoogleAuth) return res.status(401).json("not allowed");
+
+    res.json({});
   } catch (e) {
     console.log(e);
     res.status(500).json("Internal server error");

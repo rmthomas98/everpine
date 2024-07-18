@@ -7,17 +7,22 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { signIn } from "next-auth/react";
 import { CgSpinner } from "react-icons/cg";
-import { BiLogoGoogle } from "react-icons/bi";
-import { HiOutlineLockClosed } from "react-icons/hi";
+import { BiError, BiLogoGoogle } from "react-icons/bi";
+import {
+  HiExclamationCircle,
+  HiOutlineExclamationCircle,
+  HiOutlineLockClosed,
+} from "react-icons/hi";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export const SignInForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const {
     register,
@@ -27,7 +32,11 @@ export const SignInForm = () => {
 
   const onSubmit = async (values) => {
     setIsLoading(true);
-    const options = { ...values, redirect: false };
+    const options = {
+      ...values,
+      redirect: false,
+      callbackUrl: "http://localhost:3000/dashboard",
+    };
     const { error } = await signIn("credentials", options);
     if (error) {
       setIsLoading(false);
@@ -47,7 +56,7 @@ export const SignInForm = () => {
   };
 
   return (
-    <div className="h-screen min-h-[600px]">
+    <div className="h-screen min-h-[700px]">
       <div className="px-4 py-2 border-b relative z-10">
         <div className="w-full flex justify-between items-center max-w-[1200px] mx-auto">
           <Link href="/" passHref>
@@ -58,7 +67,7 @@ export const SignInForm = () => {
           </Button>
         </div>
       </div>
-      <div className="h-full w-full flex justify-center items-center p-4 relative top-[-49px]">
+      <div className="w-full flex justify-center items-center p-4 relative top-[-41px] h-full">
         <div className="max-w-[400px] mx-auto w-full">
           <p className="font-semibold text-lg text-center">
             Sign in to your account
@@ -154,6 +163,14 @@ export const SignInForm = () => {
               Sign in with SSO
             </Button>
           </div>
+          {searchParams.get("error") === "AccessDenied" && (
+            <div className="mt-4 border border-destructive bg-destructive/5 p-4 rounded-md mb-4 flex items-center space-x-1">
+              <HiOutlineExclamationCircle className="text-red-700 relative bottom-[1px]" />
+              <p className="text-[13px] text-red-700">
+                There was an error signing in to your account
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

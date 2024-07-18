@@ -89,11 +89,16 @@ const updatePassword = async (req, res) => {
     // check if user has password (social login users don't have password)
     if (!user.password) {
       // just update the password if one does not exist
+      // check if passwords match passed from the frontend
+      if (currentPassword !== newPassword) {
+        return res.status(400).json("Passwords do not match");
+      }
       const hashedPassword = await bcrypt.hash(newPassword, 10);
       await prisma.user.update({
         where: { id: userId },
-        data: { password: hashedPassword },
+        data: { password: hashedPassword, allowCredentialsAuth: true },
       });
+      return res.json({});
     }
 
     // compare hashed password
@@ -106,7 +111,7 @@ const updatePassword = async (req, res) => {
     // update the user's password in db
     await prisma.user.update({
       where: { id: userId },
-      data: { password: hashedPassword },
+      data: { password: hashedPassword, allowCredentialsAuth: true },
     });
 
     res.json({});
@@ -116,4 +121,49 @@ const updatePassword = async (req, res) => {
   }
 };
 
-module.exports = { updateName, updateEmail, updatePassword };
+const updateAuth = async (req, res) => {
+  try {
+    const { userId } = req;
+    const { credentials, google, twoFactorAuth } = req.body;
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) return res.status(400).json("Invalid request");
+
+    if (
+      typeof credentials !== "boolean" ||
+      typeof google !== "boolean" ||
+      typeof twoFactorAuth !== "boolean"
+    ) {
+      return res.status(400).json("Invalid request");
+    }
+
+    if (!credentials && !google) {
+      return res.status(400).json("Credentials or google auth must be enabled");
+    }
+
+    if (credentials && !user.password) {
+      return res.status(400).json("Create a password to enable credentials");
+    }
+
+    // update the user's auth settings
+    const updatedUser = await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        allowCredentialsAuth: credentials,
+        allowGoogleAuth: google,
+        isTwoFactorAuthEnabled: credentials && twoFactorAuth,
+      },
+    });
+
+    if (!updatedUser) {
+      return res.status(400).json("Error updating auth settings");
+    }
+
+    res.json({});
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Internal server error");
+  }
+};
+
+module.exports = { updateName, updateEmail, updatePassword, updateAuth };

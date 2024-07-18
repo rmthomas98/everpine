@@ -42,15 +42,16 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
         });
-        // create user if it doesn't exist
         if (!res.ok) {
-          const res = await fetch(`${baseUrl}/user/create`, {
+          const data = await res.json();
+          if (data !== "user not found") return false;
+          // create user if not found
+          const response = await fetch(`${baseUrl}/user/create`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, email, provider: "google" }),
           });
-          // return false if user creation fails
-          if (!res.ok) return false;
+          return response.ok;
         }
       }
       return true;

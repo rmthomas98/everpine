@@ -376,8 +376,9 @@ export const AppNav = ({ user }) => {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
                       onClick={async () => {
-                        await signOut();
-                        router.push("/signin");
+                        await signOut({
+                          callbackUrl: "http://localhost:3000/signin",
+                        });
                       }}
                     >
                       <FiLogOut size={14} className="mr-2" />

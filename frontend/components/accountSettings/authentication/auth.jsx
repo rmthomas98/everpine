@@ -19,6 +19,7 @@ const getUserInfo = async (accessToken) => {
 
 export const AuthSettings = ({ accessToken }) => {
   const [user, setUser] = useState(null);
+  const [credentials, setCredentials] = useState(false);
 
   useEffect(() => {
     getUserInfo(accessToken).then((data) => setUser(data));
@@ -27,8 +28,17 @@ export const AuthSettings = ({ accessToken }) => {
 
   return (
     <div className="flex flex-col space-y-6 w-full">
-      <PasswordCard accessToken={accessToken} user={user} />
-      <Security accessToken={accessToken} user={user} />
+      <PasswordCard
+        accessToken={accessToken}
+        user={user}
+        setCredentials={setCredentials}
+      />
+      <Security
+        accessToken={accessToken}
+        user={user}
+        credentials={credentials}
+        setCredentials={setCredentials}
+      />
     </div>
   );
 };

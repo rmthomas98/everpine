@@ -11,14 +11,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CgSpinner } from "react-icons/cg";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export const PasswordCard = ({ accessToken, user }) => {
+export const PasswordCard = ({ accessToken, user, setCredentials }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [password, setPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -26,7 +28,18 @@ export const PasswordCard = ({ accessToken, user }) => {
     reset,
   } = useForm();
 
+  useEffect(() => {
+    if (!user) return;
+    setPassword(user.password);
+  }, [user]);
+
   const onSubmit = async (values) => {
+    if (!password) {
+      if (values.currentPassword !== values.newPassword) {
+        return toast.error("Passwords do not match");
+      }
+    }
+
     setIsLoading(true);
     const res = await fetch(`${baseUrl}/user/update-password`, {
       method: "PATCH",
@@ -43,6 +56,8 @@ export const PasswordCard = ({ accessToken, user }) => {
       return toast.error(data);
     }
 
+    setPassword(true);
+    if (!user.password) setCredentials(true);
     reset({ currentPassword: "", newPassword: "" });
     toast.success("Your password have been updated");
   };
@@ -54,34 +69,51 @@ export const PasswordCard = ({ accessToken, user }) => {
         <CardDescription>You can update your password here.</CardDescription>
       </CardHeader>
       <CardContent>
-        <Input
-          className={`max-w-[400px] ${
-            errors.currentPassword
-              ? "border-destructive focus-visible:ring-destructive/20 focus-visible:border-destructive dark:focus-visible:border-destructive dark:focus-visible:ring-destructive/50"
-              : undefined
-          }`}
-          placeholder="Current password"
-          type="password"
-          {...register("currentPassword", { required: true })}
-        />
-        {errors.currentPassword && (
+        {user ? (
+          <Input
+            className={`max-w-[400px] fade-in-short-delayed opacity-0 ${
+              errors.currentPassword
+                ? "border-destructive focus-visible:ring-destructive/20 focus-visible:border-destructive dark:focus-visible:border-destructive dark:focus-visible:ring-destructive/50"
+                : undefined
+            }`}
+            placeholder={password ? "Current password" : "Create a password"}
+            type="password"
+            {...register("currentPassword", { required: true, minLength: 8 })}
+          />
+        ) : (
+          <Skeleton className="w-full max-w-[400px] rounded-md h-[36px]" />
+        )}
+        {errors.currentPassword?.type === "required" && (
           <p className="text-destructive text-xs dark:text-red-600 mt-1.5">
-            Please enter your password
+            {password
+              ? "Please enter your current password"
+              : "Please create a password"}
           </p>
         )}
-        <Input
-          className={`mt-4 max-w-[400px] ${
-            errors.newPassword
-              ? "border-destructive focus-visible:ring-destructive/20 focus-visible:border-destructive dark:focus-visible:border-destructive dark:focus-visible:ring-destructive/50"
-              : undefined
-          }`}
-          placeholder="New password"
-          type="password"
-          {...register("newPassword", { required: true, minLength: 8 })}
-        />
+        {errors.currentPassword?.type === "minLength" && (
+          <p className="text-destructive text-xs dark:text-red-600 mt-1.5">
+            Password must be at least 8 characters
+          </p>
+        )}
+        {user ? (
+          <Input
+            className={`mt-4 max-w-[400px] fade-in-short-delayed opacity-0 ${
+              errors.newPassword
+                ? "border-destructive focus-visible:ring-destructive/20 focus-visible:border-destructive dark:focus-visible:border-destructive dark:focus-visible:ring-destructive/50"
+                : undefined
+            }`}
+            placeholder={password ? "New password" : "Confirm password"}
+            type="password"
+            {...register("newPassword", { required: true, minLength: 8 })}
+          />
+        ) : (
+          <Skeleton className="w-full max-w-[400px] rounded-md h-[36px] mt-4" />
+        )}
         {errors.newPassword?.type === "required" && (
           <p className="text-destructive text-xs dark:text-red-600 mt-1.5">
-            Please enter your new password
+            {password
+              ? "Please enter your new password"
+              : "Please confirm your password"}
           </p>
         )}
         {errors.newPassword?.type === "minLength" && (
@@ -97,7 +129,7 @@ export const PasswordCard = ({ accessToken, user }) => {
         <Button
           size="sm"
           className="w-[74px]"
-          disabled={isLoading}
+          disabled={isLoading || !user}
           onClick={handleSubmit(onSubmit)}
         >
           {isLoading ? <CgSpinner className="animate-spin" /> : "Confirm"}
