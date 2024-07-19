@@ -17,10 +17,21 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import {
+  InputOTP,
+  InputOTPSlot,
+  InputOTPGroup,
+  InputOTPSeparator,
+} from "@/components/ui/input-otp";
+
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const SignInForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [isTwoFactor, setIsTwoFactor] = useState(false);
+  const [twoFactorCode, setTwoFactorCode] = useState("");
+  const [isResending, setIsResending] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -28,12 +39,75 @@ export const SignInForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm();
 
+  const onResend = async () => {
+    setIsResending(true);
+    const email = getValues("email");
+    const res = await fetch(`${baseUrl}/auth/resend-two-factor`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+
+    setIsResending(false);
+    if (!res.ok) {
+      const data = await res.json();
+      return toast.error("Error resending code");
+    }
+
+    toast.success("Your code has been resent!");
+  };
+
   const onSubmit = async (values) => {
-    setIsLoading(true);
+    // check if user has 2fa enabled on first sign in
+    if (!isTwoFactor) {
+      setIsLoading(true);
+      const res = await fetch(`${baseUrl}/auth/check-two-factor`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      if (!res.ok) {
+        setIsLoading(false);
+        const data = await res.json();
+        return toast.error(data);
+      }
+
+      // if 2fa is enabled, set state and return
+      const { isEnabled } = await res.json();
+      if (isEnabled) {
+        setIsLoading(false);
+        setIsTwoFactor(true);
+        return;
+      }
+    }
+
+    // if 2fa is enabled and code is entered, check code
+    if (isTwoFactor) {
+      if (twoFactorCode?.length < 6) {
+        return toast.error("Please enter your 2fa code");
+      }
+      setIsLoading(true);
+      const res = await fetch(`${baseUrl}/auth/verify-two-factor`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...values, twoFactorCode }),
+      });
+
+      if (!res.ok) {
+        setIsLoading(false);
+        const data = await res.json();
+        return toast.error(data);
+      }
+    }
+
+    // if 2fa is disabled or 2fa code passed, sign user in
     const options = {
       ...values,
+      twoFactorCode,
       redirect: false,
       callbackUrl: "http://localhost:3000/dashboard",
     };
@@ -56,7 +130,9 @@ export const SignInForm = () => {
   };
 
   return (
-    <div className="h-screen min-h-[700px]">
+    <div
+      className={`h-screen ${isTwoFactor ? "min-h-[500px]" : "min-h-[700px]"}`}
+    >
       <div className="px-4 py-2 border-b relative z-10">
         <div className="w-full flex justify-between items-center max-w-[1200px] mx-auto">
           <Link href="/" passHref>
@@ -67,15 +143,38 @@ export const SignInForm = () => {
           </Button>
         </div>
       </div>
-      <div className="w-full flex justify-center items-center p-4 relative top-[-41px] h-full">
+      <div className="w-full flex justify-center items-center p-4 relative top-[-49px] h-full">
         <div className="max-w-[400px] mx-auto w-full">
-          <p className="font-semibold text-lg text-center">
-            Sign in to your account
-          </p>
-          <p className="text-muted-foreground mt-1 text-sm text-center">
-            Enter your details to continue to your account
-          </p>
-          <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <p className="font-semibold text-lg text-center">
+              {isTwoFactor
+                ? "Two-factor authentication"
+                : "Sign in to your account"}
+            </p>
+            <p className="text-muted-foreground mt-1 text-sm text-center mb-6">
+              {!isTwoFactor
+                ? "Enter your details to continue to your account"
+                : "Enter the code that we sent to your email"}
+            </p>
+            <div className={`${!isTwoFactor && "hidden"} flex justify-center`}>
+              <InputOTP
+                maxLength={6}
+                value={twoFactorCode}
+                onChange={setTwoFactorCode}
+              >
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} />
+                  <InputOTPSlot index={1} />
+                  <InputOTPSlot index={2} />
+                </InputOTPGroup>
+                <InputOTPSeparator />
+                <InputOTPGroup>
+                  <InputOTPSlot index={3} />
+                  <InputOTPSlot index={4} />
+                  <InputOTPSlot index={5} />
+                </InputOTPGroup>
+              </InputOTP>
+            </div>
             <Input
               type="email"
               placeholder="Your email"
@@ -86,6 +185,8 @@ export const SignInForm = () => {
               className={
                 errors.email
                   ? "border-destructive focus-visible:ring-destructive/20 focus-visible:border-destructive dark:focus-visible:border-destructive dark:focus-visible:ring-destructive/50"
+                  : isTwoFactor
+                  ? "hidden"
                   : undefined
               }
             />
@@ -101,6 +202,8 @@ export const SignInForm = () => {
               className={`mt-4 ${
                 errors.password
                   ? "border-destructive focus-visible:ring-destructive/20 focus-visible:border-destructive dark:focus-visible:border-destructive dark:focus-visible:ring-destructive/50"
+                  : isTwoFactor
+                  ? "hidden"
                   : undefined
               }`}
             />
@@ -114,29 +217,60 @@ export const SignInForm = () => {
                   Please enter your password
                 </p>
               )}
-              <Link
-                className="text-xs text-muted-foreground hover:text-foreground transition-all"
-                href="forgot-password"
-              >
-                Forgot password?
-              </Link>
+              {!isTwoFactor && (
+                <Link
+                  className="text-xs text-muted-foreground hover:text-foreground transition-all"
+                  href="forgot-password"
+                >
+                  Forgot password?
+                </Link>
+              )}
             </div>
             <Button
               className="mt-6 w-full"
               type="submit"
-              disabled={isLoading || isGoogleLoading}
+              disabled={
+                isLoading ||
+                isGoogleLoading ||
+                (isTwoFactor && twoFactorCode?.length < 6)
+              }
             >
-              {isLoading ? <CgSpinner className="animate-spin" /> : "Sign in"}
+              {isLoading ? (
+                <CgSpinner className="animate-spin" />
+              ) : isTwoFactor ? (
+                "Verify"
+              ) : (
+                "Sign in"
+              )}
             </Button>
           </form>
-          <div className="my-4 flex items-center space-x-4">
+          <div className="flex justify-center">
+            <Button
+              size="sm"
+              variant="ghost"
+              className={`mt-2 ${!isTwoFactor && "hidden"}`}
+              onClick={onResend}
+              disabled={isResending}
+            >
+              {isResending ? (
+                <CgSpinner className="animate-spin" />
+              ) : (
+                "Resend code"
+              )}
+            </Button>
+          </div>
+          <div
+            className={`my-4 flex items-center space-x-4 ${
+              isTwoFactor && "hidden"
+            } transition-all`}
+          >
             <Separator className="my-6" />
             <p className="text-muted-foreground text-[11px] font-semibold min-w-fit tracking-wide">
               OR
             </p>
             <Separator className="my-6" />
           </div>
-          <div>
+          <div className={`${isTwoFactor && "hidden"}`}>
             <Button
               variant="outline"
               className="w-full"
@@ -153,7 +287,7 @@ export const SignInForm = () => {
               )}
             </Button>
           </div>
-          <div>
+          <div className={`${isTwoFactor && "hidden"}`}>
             <Button
               variant="outline"
               className="w-full mt-4"

@@ -25,7 +25,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(credentials),
         });
-
         if (!res.ok) return null;
         return (await res.json()) ?? null;
       },

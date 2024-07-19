@@ -11,7 +11,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useEffect, useState } from "react";
-import { BiLogoGoogle } from "react-icons/bi";
+import { BiInfoCircle, BiLogoGoogle } from "react-icons/bi";
 import { HiOutlineLockClosed, HiOutlineShieldCheck } from "react-icons/hi";
 import { Button } from "@/components/ui/button";
 import { CgSpinner } from "react-icons/cg";
@@ -112,12 +112,15 @@ export const Security = ({
                 checked={twoFactorAuth}
                 onCheckedChange={setTwoFactorAuth}
               />
-              <label
-                htmlFor="two-factor-auth"
-                className="text-[13px] font-medium"
-              >
-                Enable two-factor auth (2FA)
-              </label>
+              <div className="flex items-center space-x-1">
+                <label
+                  htmlFor="two-factor-auth"
+                  className="text-[13px] font-medium"
+                >
+                  Enable two-factor auth (2FA)
+                </label>
+                <BiInfoCircle size={16} className="text-muted-foreground" />
+              </div>
             </div>
           </div>
           <div className="flex items-center justify-between border rounded-lg p-4">
