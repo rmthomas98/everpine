@@ -6,5 +6,6 @@ const auth = require("../../middleware/auth");
 router.get("/", auth, teamController.getTeams);
 router.get("/roles", auth, teamController.getRoles);
 router.put("/default", auth, teamController.updateDefault);
+router.delete("/leave", auth, teamController.leaveTeam);
 
 module.exports = router;

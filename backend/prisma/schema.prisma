@@ -105,5 +105,5 @@ model Role {
   userId    String
   team      Team     @relation(fields: [teamId], references: [id])
   teamId    String
-  isActive  Boolean  @default(true) // if false, the user can't access the team
+  isActive  Boolean  @default(true) // if false, the user can't access the team. only to be used when the user can't be active because the subscription is canceled or limited to a certain number of users
 }

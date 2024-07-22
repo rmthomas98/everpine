@@ -17,6 +17,12 @@ import { Button } from "@/components/ui/button";
 import { CgSpinner } from "react-icons/cg";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -119,7 +125,24 @@ export const Security = ({
                 >
                   Enable two-factor auth (2FA)
                 </label>
-                <BiInfoCircle size={16} className="text-muted-foreground" />
+                <TooltipProvider delayDuration={100}>
+                  <Tooltip>
+                    <TooltipTrigger className="cursor-auto">
+                      <BiInfoCircle
+                        size={16}
+                        className="text-muted-foreground"
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent
+                      collisionPadding={20}
+                      side="bottom"
+                      sideOffset={8}
+                    >
+                      We will send you a code to verify your identity when
+                      signing in.
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
             </div>
           </div>
