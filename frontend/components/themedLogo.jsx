@@ -4,6 +4,9 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { PiPlanetFill } from "react-icons/pi";
+import { GiBurstBlob } from "react-icons/gi";
+import { TbBlobFilled } from "react-icons/tb";
+import { GiFallingBlob } from "react-icons/gi";
 
 export const ThemedLogo = ({ isDashboard }) => {
   const [mounted, setMounted] = useState(false);
@@ -40,8 +43,8 @@ export const ThemedLogo = ({ isDashboard }) => {
       {/*  alt="dreamist"*/}
       {/*  loading="eager"*/}
       {/*/>*/}
-      <PiPlanetFill size={24} />
-      <p className="text-[15px] font-medium ml-1.5">airtoken</p>
+      <PiPlanetFill size={20} />
+      <p className="text-[15px] font-medium ml-2">orb.io</p>
     </div>
   );
 };

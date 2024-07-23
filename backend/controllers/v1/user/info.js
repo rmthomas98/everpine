@@ -15,6 +15,9 @@ const getInfo = async (req, res) => {
         allowCredentialsAuth: true,
         allowGoogleAuth: true,
         isTwoFactorAuthEnabled: true,
+        allowCriticalNotifs: true,
+        allowProductNotifs: true,
+        allowMarketingNotifs: true,
       },
     });
     if (!user) return res.status(400).json("Invalid request");

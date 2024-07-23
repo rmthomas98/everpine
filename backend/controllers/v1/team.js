@@ -106,7 +106,12 @@ const leaveTeam = async (req, res) => {
     }
 
     // allow the user to leave the team
+    // delete role and disconnect user from team
     await prisma.role.delete({ where: { id: userRole.id } });
+    await prisma.team.update({
+      where: { id: teamId },
+      data: { users: { disconnect: { id: userId } } },
+    });
 
     // check if user is leaving the default team
     const user = await prisma.user.findUnique({
