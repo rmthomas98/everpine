@@ -99,7 +99,7 @@ export const AppNav = ({ user }) => {
               {/*  }}*/}
               {/*  className="bg-zinc-50 dark:bg-zinc-900/60 my-[-14.5px] py-[14.5px]"*/}
               {/*>*/}
-              <div className="min-w-[226px] flex items-center space-between">
+              <div className="min-w-[226px] flex items-center space-between space-x-2">
                 <Link href="/dashboard" passHref>
                   <ThemedLogo isDashboard={true} />
                 </Link>

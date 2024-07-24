@@ -166,4 +166,37 @@ const updateAuth = async (req, res) => {
   }
 };
 
-module.exports = { updateName, updateEmail, updatePassword, updateAuth };
+const updateNotifs = async (req, res) => {
+  try {
+    const { userId } = req;
+    const { allowCriticalNotifs, allowProductNotifs, allowMarketingNotifs } =
+      req.body;
+
+    if (
+      typeof allowCriticalNotifs !== "boolean" ||
+      typeof allowProductNotifs !== "boolean" ||
+      typeof allowMarketingNotifs !== "boolean"
+    ) {
+      return res.status(400).json("Invalid request");
+    }
+
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: { allowCriticalNotifs, allowProductNotifs, allowMarketingNotifs },
+    });
+
+    if (!user) return res.status(400).json("Invalid request");
+    res.json({});
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Internal server error");
+  }
+};
+
+module.exports = {
+  updateName,
+  updateEmail,
+  updatePassword,
+  updateAuth,
+  updateNotifs,
+};

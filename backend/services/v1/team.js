@@ -37,6 +37,7 @@ const createTeam = async (name, company, avatar, user) => {
         avatar: avatar || teamAvatar,
         stripeCustomerId: customer?.id,
         users: { connect: { id: user.id } },
+        createdById: user.id,
       },
     });
 

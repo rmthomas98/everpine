@@ -1,5 +1,5 @@
-const prisma = require("../../db/prisma");
-const { createTeam } = require("../../services/v1/team");
+const prisma = require("../../../db/prisma");
+const { createTeam } = require("../../../services/v1/team");
 
 const getTeams = async (req, res) => {
   try {
@@ -25,7 +25,7 @@ const getRoles = async (req, res) => {
     if (!userId) return res.status(401).json({ message: "Unauthorized" });
 
     const roles = await prisma.role.findMany({
-      where: { userId },
+      where: { userId, isActive: true },
       include: {
         team: {
           select: {
@@ -125,7 +125,8 @@ const leaveTeam = async (req, res) => {
       });
 
       // get the first team
-      const newDefaultTeam = roles[0]?.teamId;
+      const hasActiveRoles = roles.filter((role) => role.isActive);
+      const newDefaultTeam = hasActiveRoles[0]?.teamId;
 
       // if no team is found, then create a new team and set as default
       const teamName = user.email.split("@")[0];
@@ -148,7 +149,7 @@ const leaveTeam = async (req, res) => {
 
     // get all new roles for the user and return them to frontend
     const newRoles = await prisma.role.findMany({
-      where: { userId },
+      where: { userId, isActive: true },
       include: {
         team: {
           select: {

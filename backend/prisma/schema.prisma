@@ -79,6 +79,7 @@ model Team {
   id               String        @id @default(cuid())
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
+  createdById      String // user id of the person that created the team (used when subscription is canceld and we have to choose who to maek inactive)
   name             String
   slug             String        @unique
   company          String?

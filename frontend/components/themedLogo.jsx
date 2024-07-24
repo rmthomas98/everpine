@@ -44,7 +44,7 @@ export const ThemedLogo = ({ isDashboard }) => {
       {/*  loading="eager"*/}
       {/*/>*/}
       <PiPlanetFill size={20} />
-      <p className="text-[15px] font-medium ml-2">orb.io</p>
+      <p className="text-[15px] font-medium ml-1.5">spacemon</p>
     </div>
   );
 };

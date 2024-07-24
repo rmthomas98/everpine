@@ -7,8 +7,8 @@ const tokenName =
     ? "__Secure-authjs.session-token"
     : "authjs.session-token";
 
-const protectedRoutes = ["/dashboard", "/subscribe"];
-const publicRoutes = ["/signin", "/signup"];
+const protectedRoutes = ["/subscribe"]; // these wil be protected routes that we should redirect to signin
+const publicRoutes = ["/signin", "/signup"]; // these will be public routes that we should redirect from
 
 export const middleware = async (req) => {
   // check if the route is public
@@ -16,6 +16,7 @@ export const middleware = async (req) => {
   const isProtected =
     protectedRoutes.includes(path) || path.startsWith("/dashboard");
   const isPublic = publicRoutes.includes(path);
+  if (!isProtected && !isPublic) return NextResponse.next(); // continue
   let response = NextResponse.next();
 
   const token = await getToken({

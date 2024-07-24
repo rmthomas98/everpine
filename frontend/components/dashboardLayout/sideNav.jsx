@@ -32,36 +32,44 @@ const navItems = [
     label: "Home",
     route: "/dashboard",
     icon: <BiHomeAlt size={15} className="mr-2.5 relative bottom-[1px]" />,
+    roles: true,
   },
   {
     label: "Links",
     route: "/dashboard/links",
     icon: <BiLinkAlt size={15} className="mr-2.5 relative bottom-[1px]" />,
+    roles: true,
   },
   {
     label: "QR Codes",
     route: "/dashboard/qr",
     icon: <HiMiniQrCode size={15} className="mr-2.5 relative bottom-[1px]" />,
+    roles: true,
   },
   {
     label: "Pages",
     route: "/dashboard/pages",
     icon: <BiGlobe size={15} className="mr-2.5 relative bottom-[1px]" />,
+    roles: true,
   },
   {
     label: "Analytics",
     route: "/dashboard/analytics",
     icon: <BiBarChart size={15} className="mr-2.5 relative bottom-[1px]" />,
+    roles: true,
   },
   {
     label: "Campaigns",
     route: "/dashboard/campaigns",
     icon: <BiFolder size={15} className="mr-2.5 relative bottom-[1px]" />,
+    roles: true,
   },
   {
     label: "My Team",
-    route: "/dashboard/team",
+    route: "/dashboard/team/members",
+    actualRoute: "/dashboard/team/members",
     icon: <BiGroup size={15} className="mr-2.5 relative bottom-[1px]" />,
+    roles: ["OWNER", "ADMIN"],
   },
 ];
 
@@ -153,26 +161,35 @@ export const SideNav = ({ user }) => {
                 </DropdownMenuContent>
               </DropdownMenu>
             )}
-            <div className="my-6">
-              {navItems.map((item) => (
-                <div key={item.route}>
-                  <Button
-                    asChild
-                    variant="ghost"
-                    className={`w-full justify-start hover:bg-zinc-50 dark:hover:bg-zinc-900 ${
-                      path === item.route
-                        ? "text-foreground"
-                        : "text-muted-foreground hover:text-muted-foreground"
-                    }`}
-                    size="sm"
-                  >
-                    <Link href={item.route} passHref>
-                      {item.icon}
-                      {item.label}
-                    </Link>
-                  </Button>
-                </div>
-              ))}
+            <div className={user?.role !== "VIEWER" ? "my-6" : "mb-6"}>
+              {navItems
+                .filter((item) => {
+                  if (item.roles === true) return true;
+                  if (item.roles.includes(user.role)) return true;
+                  return false;
+                })
+                .map((item) => (
+                  <div key={item.route}>
+                    <Button
+                      asChild
+                      variant="ghost"
+                      className={`w-full justify-start hover:bg-zinc-50 dark:hover:bg-zinc-900 ${
+                        path.split("/")[2] === item.route.split("/")[2]
+                          ? "text-foreground"
+                          : "text-muted-foreground hover:text-muted-foreground"
+                      }`}
+                      size="sm"
+                    >
+                      <Link
+                        href={item.actualRoute ? item.actualRoute : item.route}
+                        passHref
+                      >
+                        {item.icon}
+                        {item.label}
+                      </Link>
+                    </Button>
+                  </div>
+                ))}
             </div>
           </div>
         </div>

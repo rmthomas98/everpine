@@ -32,6 +32,9 @@ router.patch("/update-password", auth, updateUserController.updatePassword);
 // update user auth settings
 router.patch("/update-auth", auth, updateUserController.updateAuth);
 
+// update user notification settings
+router.patch("/update-notifs", auth, updateUserController.updateNotifs);
+
 // get general info for user settings
 router.get("/info", auth, infoController.getInfo);
 

@@ -116,13 +116,13 @@ export const Teams = ({ accessToken }) => {
         Manage your existings teams or create a new one.
       </p>
       {!teams && (
-        <div className="mt-4 flex flex-col space-y-4">
+        <div className="mt-6 flex flex-col space-y-4">
           <Skeleton className="h-[73px] w-full rounded-xl" />
           <Skeleton className="h-[73px] w-full rounded-xl" />
         </div>
       )}
       {teams && (
-        <div className="mt-4 flex flex-col space-y-4 fade-in-short-delayed opacity-0">
+        <div className="mt-6 flex flex-col space-y-4 fade-in-short-delayed opacity-0">
           {teams.map((team) => (
             <div
               key={team.id}

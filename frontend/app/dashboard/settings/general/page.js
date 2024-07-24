@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-import { redirect } from "next/navigation";
 import { GeneralSettings } from "@/components/accountSettings/general/general";
 
 const General = async () => {
