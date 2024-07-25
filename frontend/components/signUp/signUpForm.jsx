@@ -11,7 +11,7 @@ import { CgSpinner } from "react-icons/cg";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { ThemedLogo } from "@/components/themedLogo";
+import { ThemedLogo } from "@/components/logo/themedLogo";
 
 const planMap = {
   professional: "Professional",

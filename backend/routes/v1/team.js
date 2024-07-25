@@ -10,7 +10,7 @@ router.get("/roles", auth, teamController.getRoles);
 router.put("/default", auth, teamController.updateDefault);
 router.delete("/leave", auth, teamController.leaveTeam);
 
-// within teams (members, domains, subscription, usage, sso)
+// within teams (members, domains, subscription, limits, sso)
 router.post("/members", auth, memberController.getMembers);
 
 module.exports = router;

@@ -1,5 +1,5 @@
 import { SignUpForm } from "@/components/signUp/signUpForm";
-import { ThemedLogo } from "@/components/themedLogo";
+import { ThemedLogo } from "@/components/logo/themedLogo";
 import Link from "next/link";
 import { HiMiniArrowRight, HiMiniQrCode } from "react-icons/hi2";
 import { BiBarChart, BiBrain, BiGlobe, BiLinkAlt } from "react-icons/bi";

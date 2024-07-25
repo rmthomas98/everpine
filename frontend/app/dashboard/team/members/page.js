@@ -10,7 +10,11 @@ const MembersPage = async () => {
 
   return (
     <div className="fade-in-short-delayed opacity-0 w-full">
-      <Members accessToken={user.access_token} teamId={user.team.id} />
+      <Members
+        accessToken={user.access_token}
+        teamId={user.team.id}
+        plan={user?.team.plan}
+      />
     </div>
   );
 };

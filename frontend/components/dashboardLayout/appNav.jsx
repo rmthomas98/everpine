@@ -42,7 +42,7 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import { signOut } from "next-auth/react";
-import { ThemedLogo } from "@/components/themedLogo";
+import { ThemedLogo } from "@/components/logo/themedLogo";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 

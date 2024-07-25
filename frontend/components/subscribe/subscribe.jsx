@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ThemedLogo } from "@/components/themedLogo";
+import { ThemedLogo } from "@/components/logo/themedLogo";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { HiArrowSmRight } from "react-icons/hi";

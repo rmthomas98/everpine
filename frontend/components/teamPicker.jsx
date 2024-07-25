@@ -36,6 +36,7 @@ export const TeamPicker = ({ teams, defaultTeam, accessToken }) => {
 
   const onTeamSelect = async (team) => {
     setValue(teams.find((t) => t.id === team));
+    if (team === defaultTeam?.id) return setOpen(false);
     setOpen(false);
     // make call to backend to set the selected team and reload the page
     const res = await fetch(`${baseUrl}/team/default`, {

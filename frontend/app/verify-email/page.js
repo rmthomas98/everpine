@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { ThemedLogo } from "@/components/themedLogo";
+import { ThemedLogo } from "@/components/logo/themedLogo";
 import {
   Card,
   CardDescription,

@@ -20,7 +20,7 @@ const navItems = [
   },
   {
     label: "Usage",
-    route: "/dashboard/team/usage",
+    route: "/dashboard/team/limits",
   },
   {
     label: "Single sign-on",

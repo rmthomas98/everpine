@@ -3,7 +3,7 @@
 import { BiCheckCircle, BiSolidParty } from "react-icons/bi";
 import { HiMiniCheckCircle } from "react-icons/hi2";
 import Link from "next/link";
-import { ThemedLogo } from "@/components/themedLogo";
+import { ThemedLogo } from "@/components/logo/themedLogo";
 import { Button } from "@/components/ui/button";
 import { HiArrowSmRight } from "react-icons/hi";
 

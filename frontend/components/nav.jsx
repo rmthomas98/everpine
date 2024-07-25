@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { HiArrowSmRight } from "react-icons/hi";
 import Link from "next/link";
-import { ThemedLogo } from "@/components/themedLogo";
+import { ThemedLogo } from "@/components/logo/themedLogo";
 import { usePathname } from "next/navigation";
 import {
   NavigationMenu,

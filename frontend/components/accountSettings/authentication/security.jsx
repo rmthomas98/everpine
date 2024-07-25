@@ -89,7 +89,7 @@ export const Security = ({
             <div className="flex items-center justify-between">
               <div>
                 <div>
-                  <p className="text-sm font-medium">Credentials</p>
+                  <p className="text-sm">Credentials</p>
                   <p className="text-[13px] text-muted-foreground">
                     Sign in with email and password
                   </p>

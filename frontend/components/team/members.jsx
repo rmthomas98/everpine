@@ -2,20 +2,7 @@
 
 import { useEffect } from "react";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { BiLinkAlt } from "react-icons/bi";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { AddMember } from "@/components/team/addMember";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -34,7 +21,7 @@ const fetchMembers = async (accessToken, teamId) => {
   return members;
 };
 
-export const Members = ({ accessToken, teamId }) => {
+export const Members = ({ accessToken, teamId, plan }) => {
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
@@ -47,23 +34,30 @@ export const Members = ({ accessToken, teamId }) => {
     <div>
       <div className="flex justify-between items-center w-full">
         <p className="text-lg font-semibold">Team members</p>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button size="sm">
-              <BiLinkAlt size={15} className="mr-1.5" />
-              Invite link
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem>Invite link</DropdownMenuItem>
-            <DropdownMenuItem>Add member</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {/*<DropdownMenu>*/}
+        {/*  <DropdownMenuTrigger asChild>*/}
+        {/*    <Button size="sm">*/}
+        {/*      <BiLinkAlt size={15} className="mr-1.5" />*/}
+        {/*      Invite link*/}
+        {/*    </Button>*/}
+        {/*  </DropdownMenuTrigger>*/}
+        {/*  <DropdownMenuContent align="end">*/}
+        {/*    <DropdownMenuItem>Invite link</DropdownMenuItem>*/}
+        {/*    <DropdownMenuItem>Add member</DropdownMenuItem>*/}
+        {/*  </DropdownMenuContent>*/}
+        {/*</DropdownMenu>*/}
       </div>
       <p className="text-sm text-muted-foreground mt-1.5">
-        Manage your existings members or create a new one
+        Manage your team members or invite new ones
       </p>
-      <div className="mt-6"></div>
+      <div className="mt-6">
+        <AddMember
+          accessToken={accessToken}
+          members={members}
+          setMembers={setMembers}
+          plan={plan}
+        />
+      </div>
     </div>
   );
 };
