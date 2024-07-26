@@ -1,4 +1,5 @@
 export const limits = {
+  ////////////// FREE PLAN //////////////////
   free: {
     qrCodes: {
       qrCodes: 3,
@@ -30,16 +31,39 @@ export const limits = {
     smartRules: false,
     sso: false,
   },
+  ////////////// PROFESSIONAL PLAN //////////////////
   professional: {
-    qrCodes: 20,
-    links: 400,
-    pages: 3,
+    qrCodes: {
+      qrCodes: 20,
+      redirects: 5,
+      logos: true,
+      colors: true,
+      patterns: true,
+    },
+    links: {
+      links: 400,
+      redirects: 100,
+      bulk: 400,
+      branding: true,
+      paths: true,
+    },
+    pages: {
+      pages: 3,
+      branding: true,
+      templates: true,
+    },
+    campaigns: {
+      campaigns: false,
+      utmBuilder: true,
+      utmPresets: true,
+    },
     domains: 1,
     seats: 5,
     analytics: 90, // days
-    campaigns: false,
+    smartRules: true,
     sso: false,
   },
+  ////////////// BUSINESS PLAN //////////////////
   business: {
     qrCodes: {
       qrCodes: 100,
@@ -53,7 +77,7 @@ export const limits = {
       redirects: 500,
       bulk: 2000,
       branding: true,
-      paths: false,
+      paths: true,
     },
     pages: {
       pages: 10,
@@ -71,14 +95,36 @@ export const limits = {
     smartRules: true,
     sso: false,
   },
+  ////////////// ENTERPRISE PLAN //////////////////
   enterprise: {
-    qrCodes: 500,
-    links: 10000,
-    pages: 50,
+    qrCodes: {
+      qrCodes: 500,
+      redirects: 125,
+      logos: true,
+      colors: true,
+      patterns: true,
+    },
+    links: {
+      links: 10000,
+      redirects: 2500,
+      bulk: 10000,
+      branding: true,
+      paths: true,
+    },
+    pages: {
+      pages: 25,
+      branding: true,
+      templates: true,
+    },
+    campaigns: {
+      campaigns: true,
+      utmBuilder: true,
+      utmPresets: true,
+    },
     domains: 10,
     seats: 50,
-    analytics: 1095, // days,
-    campaigns: true,
+    analytics: 1095, // days
+    smartRules: true,
     sso: true,
   },
 };

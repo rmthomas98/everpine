@@ -91,6 +91,7 @@ model Team {
   subscriptionId   String?       @unique
   users            User[]
   roles            Role[]
+  invites          Invite[]
 }
 
 enum Roles {
@@ -110,4 +111,14 @@ model Role {
   team      Team     @relation(fields: [teamId], references: [id])
   teamId    String
   isActive  Boolean  @default(true) // if false, the user can't access the team. only to be used when the user can't be active because the subscription is canceled or limited to a certain number of users
+}
+
+model Invite {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String
+  token     String   @unique
+  team      Team?    @relation(fields: [teamId], references: [id])
+  teamId    String?
 }

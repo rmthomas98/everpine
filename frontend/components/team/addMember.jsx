@@ -23,6 +23,7 @@ import Link from "next/link";
 import { BiLinkExternal } from "react-icons/bi";
 import { useForm } from "react-hook-form";
 import { limits } from "@/data/limits";
+import { SelectValue } from "@radix-ui/react-select";
 
 const roles = [
   {
@@ -74,13 +75,12 @@ export const AddMember = ({ accessToken, members, setMembers, plan }) => {
           />
           <Select
             disabled={allowedSeats === 1}
-            {...register("role", { required: true })}
             onValueChange={(value) => setRole(value)}
           >
             <SelectTrigger>
               {role
                 ? role.split("")[0].toUpperCase() + role.slice(1)
-                : "Select role"}
+                : "Select role..."}
             </SelectTrigger>
             <SelectContent>
               {roles.map((item) => (
@@ -115,12 +115,12 @@ export const AddMember = ({ accessToken, members, setMembers, plan }) => {
               href="/"
               className="text-blue-600 dark:text-blue-500 hover:underline"
             >
-              roles
+              team members
             </Link>
           </p>
         )}
-        <Button size="sm" disabled={allowedSeats === 1}>
-          Invite
+        <Button size="sm" disabled={allowedSeats === 1} className={`w-[58px]`}>
+          {isLoading ? <CgSpinner className="animate-spin" /> : "Invite"}
         </Button>
       </CardFooter>
     </Card>

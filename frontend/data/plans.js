@@ -87,7 +87,7 @@ export const plans = {
     planDetails: [
       "500 QR codes per month",
       "10,000 links per month",
-      "50 landing pages",
+      "25 landing pages",
       "3 years historical data",
       "50 platform seats",
       "10 custom domains",

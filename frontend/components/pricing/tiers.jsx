@@ -79,7 +79,7 @@ const tiersList = [
     features: [
       "500 QR codes per month",
       "10,000 links per month",
-      "50 landing pages",
+      "25 landing pages",
       "AI-generative QR art",
       "Unlimited scans and clicks",
       "Full QR customization",

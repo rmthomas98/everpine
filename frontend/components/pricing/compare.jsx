@@ -146,7 +146,7 @@ const qrCodes = [
 const pages = [
   {
     label: "Custom pages",
-    data: ["1", "3", "10", "50"],
+    data: ["1", "3", "10", "25"],
   },
   {
     label: "Custom branding",

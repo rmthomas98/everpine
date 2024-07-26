@@ -7,7 +7,9 @@ const getMembers = async (req, res) => {
 
     const members = await prisma.role.findMany({
       where: { teamId },
-      include: {
+      select: {
+        role: true,
+        isActive: true,
         user: {
           select: {
             id: true,
@@ -19,7 +21,9 @@ const getMembers = async (req, res) => {
       },
     });
 
-    res.json({ members });
+    const invites = await prisma.invite.findMany({ where: { teamId } });
+
+    res.json({ members, invites });
   } catch (e) {
     console.log(e);
     res.status(500).json("Internal server error");
