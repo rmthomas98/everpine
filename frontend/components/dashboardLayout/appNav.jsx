@@ -45,6 +45,7 @@ import { signOut } from "next-auth/react";
 import { ThemedLogo } from "@/components/logo/themedLogo";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const AppNav = ({ user }) => {
   const [isAccountTooltipOpen, setIsAccountTooltipOpen] = useState(false);
@@ -313,7 +314,7 @@ export const AppNav = ({ user }) => {
                             alt="avatar"
                           />
                           <AvatarFallback>
-                            <div className="h-full w-full bg-foreground"></div>
+                            <Skeleton className="h-[30px] w-[30px] rounded-full" />
                           </AvatarFallback>
                         </Avatar>
                       </DropdownMenuTrigger>

@@ -22,19 +22,12 @@ import { useState } from "react";
 import Link from "next/link";
 import { BiLinkExternal } from "react-icons/bi";
 import { useForm } from "react-hook-form";
-import { limits } from "@/data/limits";
-import { SelectValue } from "@radix-ui/react-select";
 
 const roles = [
   {
     value: "owner",
     label: "Owner",
     description: "Full access to the entire team",
-  },
-  {
-    value: "admin",
-    label: "Admin",
-    description: "Full access other than billing",
   },
   {
     value: "member",
@@ -48,13 +41,12 @@ const roles = [
   },
 ];
 
-export const AddMember = ({ accessToken, members, setMembers, plan }) => {
+export const AddMember = ({ accessToken, members, setMembers, seats }) => {
   const { register, handleSubmit, formState, reset } = useForm();
   const { errors } = formState;
 
   const [isLoading, setIsLoading] = useState(false);
   const [role, setRole] = useState("");
-  const allowedSeats = limits[plan.toLowerCase()].seats;
 
   const onSubmit = async (values) => {
     console.log(values);
@@ -71,10 +63,10 @@ export const AddMember = ({ accessToken, members, setMembers, plan }) => {
           <Input
             type="email"
             placeholder="Email address..."
-            disabled={allowedSeats === 1}
+            disabled={seats === 1}
           />
           <Select
-            disabled={allowedSeats === 1}
+            disabled={seats === 1}
             onValueChange={(value) => setRole(value)}
           >
             <SelectTrigger>
@@ -98,7 +90,7 @@ export const AddMember = ({ accessToken, members, setMembers, plan }) => {
         </form>
       </CardContent>
       <CardFooter className="justify-between items-center py-3 border-t">
-        {allowedSeats === 1 ? (
+        {seats === 1 ? (
           <p className="text-muted-foreground text-[13px]">
             <Link
               href="/subscribe?plan=professional"
@@ -119,7 +111,7 @@ export const AddMember = ({ accessToken, members, setMembers, plan }) => {
             </Link>
           </p>
         )}
-        <Button size="sm" disabled={allowedSeats === 1} className={`w-[58px]`}>
+        <Button size="sm" disabled={seats === 1} className={`w-[58px]`}>
           {isLoading ? <CgSpinner className="animate-spin" /> : "Invite"}
         </Button>
       </CardFooter>

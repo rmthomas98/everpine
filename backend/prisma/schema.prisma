@@ -96,7 +96,6 @@ model Team {
 
 enum Roles {
   OWNER // team owner (can be multiple)
-  ADMIN // can do everything except changing subscription (can be multiple)
   MEMBER // can create and edit the data (no team management)
   VIEWER // can only view the data (can't see the team management)
 }

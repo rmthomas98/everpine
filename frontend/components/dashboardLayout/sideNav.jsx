@@ -66,10 +66,10 @@ const navItems = [
   },
   {
     label: "My Team",
-    route: "/dashboard/team/members",
-    actualRoute: "/dashboard/team/members",
+    route: "/dashboard/team",
+    actualRoute: "/dashboard/team/general",
     icon: <BiGroup size={15} className="mr-2.5 relative bottom-[1px]" />,
-    roles: ["OWNER", "ADMIN"],
+    roles: ["OWNER"],
   },
 ];
 

@@ -6,6 +6,10 @@ import Link from "next/link";
 
 const navItems = [
   {
+    label: "General",
+    route: "/dashboard/team/general",
+  },
+  {
     label: "Members",
     route: "/dashboard/team/members",
   },

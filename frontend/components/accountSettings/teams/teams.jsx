@@ -117,8 +117,8 @@ export const Teams = ({ accessToken }) => {
       </p>
       {!teams && (
         <div className="mt-6 flex flex-col space-y-4">
-          <Skeleton className="h-[73px] w-full rounded-xl" />
-          <Skeleton className="h-[73px] w-full rounded-xl" />
+          <Skeleton className="h-[73px] w-full rounded-lg" />
+          <Skeleton className="h-[73px] w-full rounded-lg" />
         </div>
       )}
       {teams && (
@@ -126,7 +126,7 @@ export const Teams = ({ accessToken }) => {
           {teams.map((team) => (
             <div
               key={team.id}
-              className={`flex items-center justify-between bg-card-background border rounded-xl p-4 shadow`}
+              className={`flex items-center justify-between bg-card-background border rounded-lg p-4 shadow`}
             >
               <div className="flex items-center space-x-3">
                 <Avatar className="h-[32px] w-[32px]">
