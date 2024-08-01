@@ -17,11 +17,12 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { TableSkeleton } from "@/components/team/tableSkeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 
 export const MembersTable = ({
   members,
@@ -30,22 +31,38 @@ export const MembersTable = ({
   userId,
   role,
 }) => {
-  const [selectAll, setSelectAll] = useState(false);
   const [selected, setSelected] = useState([]);
+  const [isAllSelected, setIsAllSelected] = useState(false);
 
-  const onSelect = (id) => {};
+  const onSelect = (id) => {
+    if (selected.includes(id)) {
+      // remove the id from selected array
+      const filtered = selected.filter((memberId) => memberId !== id);
+      return setSelected(filtered);
+    }
+
+    setSelected([...selected, id]);
+  };
 
   const onSelectAll = () => {
-    if (selectAll) {
-      setSelected([]);
-      setSelectAll(false);
-      return;
+    if (selected.length === members.length - 1) {
+      return setSelected([]);
     }
-    // add all except the current user
-    const filtered = members.filter((member) => member.user.id !== userId);
-    setSelected(filtered.map((member) => member.user.id));
-    setSelectAll(true);
+    // select all members besides the current user
+    const all = members.map((member) => member.user.id);
+    const filtered = all.filter((id) => id !== userId);
+    setSelected(filtered);
   };
+
+  useEffect(() => {
+    if (selected.length === members.length - 1 && members.length > 1) {
+      setIsAllSelected(true);
+    } else if (selected.length === 0) {
+      setIsAllSelected(false);
+    } else {
+      setIsAllSelected("indeterminate");
+    }
+  }, [selected, members]);
 
   return (
     <div className="mt-3">
@@ -56,11 +73,11 @@ export const MembersTable = ({
               <Checkbox
                 id="check-all"
                 onCheckedChange={onSelectAll}
-                checked={"indeterminate"}
+                checked={isAllSelected}
                 disabled={members.length === 1}
               />
               <label htmlFor="check-all" className="text-[13px]">
-                {!selectAll
+                {!selected.length
                   ? `Select all (${members?.length})`
                   : `${selected.length} of ${members?.length} selected`}
               </label>
@@ -79,6 +96,7 @@ export const MembersTable = ({
               <div className="flex items-center space-x-3">
                 <Checkbox
                   checked={selected.includes(member.user.id)}
+                  onCheckedChange={() => onSelect(member.user.id)}
                   disabled={member.user.id === userId}
                 />
                 <Avatar className="h-8 w-8">
@@ -90,6 +108,7 @@ export const MembersTable = ({
                 </Avatar>
                 <div className="flex flex-col">
                   <p className="text-[13px]">{member.user.email}</p>
+
                   <p className="text-[13px] text-muted-foreground">
                     {member.role.split("")[0] +
                       member.role.slice(1).toLowerCase()}

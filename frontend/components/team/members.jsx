@@ -66,6 +66,9 @@ export const Members = ({ accessToken, teamId, plan, userId }) => {
           accessToken={accessToken}
           members={members}
           setMembers={setMembers}
+          setInvites={setInvites}
+          setActiveTab={setActiveTab}
+          teamId={teamId}
           seats={seats}
         />
       </div>

@@ -142,3 +142,48 @@
     background-position: 100% 50%;
   }
 }
+
+
+.cls-1 {
+  fill: #7b7b7b;
+}
+
+.cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7, .cls-8, .cls-9, .cls-10 {
+  stroke-width: 0px;
+}
+
+.cls-2 {
+  fill: #acacac;
+}
+
+.cls-3 {
+  fill: url(#linear-gradient);
+}
+
+.cls-4 {
+  fill: #cbcbcb;
+}
+
+.cls-5 {
+  fill: #868686;
+}
+
+.cls-6 {
+  fill: #a5a5a5;
+}
+
+.cls-7 {
+  fill: #959596;
+}
+
+.cls-8 {
+  fill: #717172;
+}
+
+.cls-9 {
+  fill: #a4a4a4;
+}
+
+.cls-10 {
+  fill: #7e7e7f;
+}

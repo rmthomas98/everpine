@@ -5,13 +5,6 @@ import { Toaster } from "@/components/ui/sonner";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 
-export const metadata = {
-  icons: {
-    favicon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
-};
-
 export const runtime = "experimental-edge";
 
 export default function RootLayout({ children }) {

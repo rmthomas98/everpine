@@ -12,5 +12,7 @@ router.delete("/leave", auth, teamController.leaveTeam);
 
 // within teams (members, domains, subscription, limits, sso)
 router.post("/members", auth, memberController.getMembers);
+router.post("/members/invite", auth, memberController.createInvite);
+router.post("/members/add", auth, memberController.addMember);
 
 module.exports = router;

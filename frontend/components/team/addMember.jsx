@@ -22,6 +22,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { BiLinkExternal } from "react-icons/bi";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const roles = [
   {
@@ -41,7 +44,16 @@ const roles = [
   },
 ];
 
-export const AddMember = ({ accessToken, members, setMembers, seats }) => {
+export const AddMember = ({
+  accessToken,
+  members,
+  setMembers,
+  seats,
+  setInvites,
+  setActiveTab,
+  teamId,
+  search,
+}) => {
   const { register, handleSubmit, formState, reset } = useForm();
   const { errors } = formState;
 
@@ -49,7 +61,28 @@ export const AddMember = ({ accessToken, members, setMembers, seats }) => {
   const [role, setRole] = useState("");
 
   const onSubmit = async (values) => {
-    console.log(values);
+    if (!role) return toast.error("Please select a role");
+    setIsLoading(true);
+    const res = await fetch(`${baseUrl}/team/members/invite`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...values, role, teamId }),
+    });
+
+    setIsLoading(false);
+    if (!res.ok) {
+      const data = await res.json();
+      return toast.error(data);
+    }
+
+    const { invites } = await res.json();
+    setInvites(invites);
+    setRole("");
+    reset();
+    toast.success("Invitation sent");
   };
 
   return (
@@ -59,15 +92,17 @@ export const AddMember = ({ accessToken, members, setMembers, seats }) => {
         <CardDescription>Invite a new member to your team</CardDescription>
       </CardHeader>
       <CardContent>
-        <form className="flex space-x-2" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex space-x-2" onSubmit={(e) => e.preventDefault()}>
           <Input
             type="email"
             placeholder="Email address..."
             disabled={seats === 1}
+            {...register("email", { required: true })}
           />
           <Select
             disabled={seats === 1}
             onValueChange={(value) => setRole(value)}
+            value={role}
           >
             <SelectTrigger>
               {role
@@ -111,7 +146,12 @@ export const AddMember = ({ accessToken, members, setMembers, seats }) => {
             </Link>
           </p>
         )}
-        <Button size="sm" disabled={seats === 1} className={`w-[58px]`}>
+        <Button
+          size="sm"
+          disabled={seats === 1}
+          className={`w-[58px]`}
+          onClick={handleSubmit(onSubmit)}
+        >
           {isLoading ? <CgSpinner className="animate-spin" /> : "Invite"}
         </Button>
       </CardFooter>

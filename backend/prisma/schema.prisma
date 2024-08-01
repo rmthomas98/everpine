@@ -36,6 +36,7 @@ model User {
   teams                  Team[]
   roles                  Role[]
   subscriptions          Subscription[]
+  invites                Invite[]
 }
 
 enum Plan {
@@ -118,6 +119,9 @@ model Invite {
   updatedAt DateTime @updatedAt
   email     String
   token     String   @unique
+  role      Roles
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
   team      Team?    @relation(fields: [teamId], references: [id])
   teamId    String?
 }
