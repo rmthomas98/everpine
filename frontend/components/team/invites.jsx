@@ -19,7 +19,7 @@ import {
   BiUser,
   BiXCircle,
 } from "react-icons/bi";
-import { InviteLinkDialog } from "@/components/team/dialogs/inviteLink";
+import { InviteLinkDialog } from "@/components/team/dialogs/getInviteLink";
 
 export const Invites = ({ invites, setInvites, selected, setSelected }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -37,10 +37,6 @@ export const Invites = ({ invites, setInvites, selected, setSelected }) => {
 
     setSelected([...selected, id]);
   };
-
-  const onRevoke = async (id) => {};
-  const onUpdateRole = async (id) => {};
-  const onGetInviteLink = async (id) => {};
 
   return (
     <>
@@ -74,7 +70,7 @@ export const Invites = ({ invites, setInvites, selected, setSelected }) => {
               </p>
             </div>
           </div>
-          <DropdownMenu>
+          <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
               <Button size="icon" variant="outline" className="h-8 w-8">
                 <FiMoreHorizontal />

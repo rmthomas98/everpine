@@ -10,6 +10,7 @@ import {
 import { BiLinkAlt, BiCopy, BiCheck } from "react-icons/bi";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { Input } from "@/components/ui/input";
 
 export const InviteLinkDialog = ({ invite, isOpen, setIsOpen }) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -25,7 +26,7 @@ export const InviteLinkDialog = ({ invite, isOpen, setIsOpen }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent>
+      <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
         <DialogHeader>
           <DialogTitle>Invitation link</DialogTitle>
           <DialogDescription className="text-[13px]">
@@ -34,15 +35,17 @@ export const InviteLinkDialog = ({ invite, isOpen, setIsOpen }) => {
             else.
           </DialogDescription>
         </DialogHeader>
-        <div className="flex items-center justify-between rounded-lg p-1.5 border bg-accent/20">
-          <div className="flex items-center space-x-2 ml-1 max-w-[280px]">
-            <BiLinkAlt size={14} className="shrink-0" />
-            <p className="text-[13px] truncate">{`${process.env.NEXT_PUBLIC_FRONTEND_URL}/invite?token=${invite?.token}&email=${invite?.email}`}</p>
-          </div>
+        <div className="relative flex items-center">
+          <BiLinkAlt size={14} className="absolute left-3" />
+          <Input
+            className="pl-8 h-[34px]"
+            value={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/invite?token=${invite?.token}&email=${invite?.email}`}
+            readOnly
+          />
           <Button
             size="sm"
             onClick={onCopy}
-            className="p-0 h-8 w-8 flex items-center justify-center relative"
+            className="p-0 h-[34px] w-[34px] flex items-center justify-center relative shrink-0 ml-2"
           >
             <BiCheck
               size={16}
