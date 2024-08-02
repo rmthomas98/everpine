@@ -1,6 +1,6 @@
 const prisma = require("../../../db/prisma");
 const crypto = require("crypto");
-const sendVerificationEmail = require("../../../services/v1/user/sendVerificationEmail");
+const sendVerificationEmail = require("../../../services/v1/emails/sendVerificationEmail");
 
 const verifyEmail = async (req, res) => {
   try {

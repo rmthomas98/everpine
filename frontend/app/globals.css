@@ -96,6 +96,12 @@
   animation-fill-mode: forwards;
 }
 
+.fade-in {
+  animation: fadeIn 300ms ease;
+  animation-fill-mode: forwards;
+
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

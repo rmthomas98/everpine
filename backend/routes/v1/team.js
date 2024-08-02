@@ -11,8 +11,16 @@ router.put("/default", auth, teamController.updateDefault);
 router.delete("/leave", auth, teamController.leaveTeam);
 
 // within teams (members, domains, subscription, limits, sso)
+
+// member and invites
 router.post("/members", auth, memberController.getMembers);
+
 router.post("/members/invite", auth, memberController.createInvite);
-router.post("/members/add", auth, memberController.addMember);
+router.patch("/members/invite/resend", auth, memberController.resendInvite);
+router.delete("/members/invite/revoke", auth, memberController.revokeInvite);
+router.post("/members/invite/accept", auth, memberController.acceptInvite);
+
+router.patch("/members/update-role", auth, () => {});
+router.delete("/members/delete", auth, () => {});
 
 module.exports = router;

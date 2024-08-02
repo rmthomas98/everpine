@@ -89,7 +89,7 @@ export const Teams = ({ accessToken }) => {
   const onManageTeam = (team) => {
     setSelectedTeam(team);
     setIsLoadingManage(true);
-    if (team.id === defaultTeam) return router.push("/dashboard/team");
+    if (team.id === defaultTeam) return router.push("/dashboard/team/general");
 
     // make call to backend to set a new default team and redirect to team dashboard
     const res = onDefaultTeamChange(team);
@@ -99,7 +99,7 @@ export const Teams = ({ accessToken }) => {
     }
 
     // need to refresh the page and route to team dashboard view
-    window?.location.assign("/dashboard/team");
+    window?.location.assign("/dashboard/team/general");
   };
 
   return (

@@ -80,7 +80,7 @@ export const AddMember = ({
 
     const { invites } = await res.json();
     setInvites(invites);
-    setRole("");
+    setRole("all");
     reset();
     toast.success("Invitation sent");
   };

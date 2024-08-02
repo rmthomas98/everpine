@@ -1,7 +1,7 @@
 const prisma = require("../../../db/prisma");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
-const sendVerificationEmail = require("../../../services/v1/user/sendVerificationEmail");
+const sendVerificationEmail = require("../../../services/v1/emails/sendVerificationEmail");
 const { createTeam } = require("../../../services/v1/team");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
@@ -42,6 +42,12 @@ const create = async (req, res) => {
       // hash the password and create email verification token
       hashedPassword = await bcrypt.hash(password, 10);
       emailVerificationToken = crypto.randomBytes(32).toString("hex");
+      const isToken = await prisma.user.findUnique({
+        where: { emailVerificationToken },
+      });
+      while (isToken) {
+        emailVerificationToken = crypto.randomBytes(32).toString("hex");
+      }
     }
 
     // generate random avatar for the user

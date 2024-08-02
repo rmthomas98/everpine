@@ -88,13 +88,16 @@ export const Members = ({ accessToken, teamId, plan, userId }) => {
             <p className="text-[13px]">Seats</p>
             {members?.length ? (
               <p className="text-muted-foreground text-[12px] fade-in-short-delayed opacity-0">
-                {members?.length}/{seats}
+                {members?.length + invites?.length}/{seats}
               </p>
             ) : (
               <Skeleton className="h-[18px] w-6 rounded-md" />
             )}
           </div>
-          <Progress value={(members?.length / seats) * 100} className="h-1.5" />
+          <Progress
+            value={((members?.length + invites?.length) / seats) * 100}
+            className="h-1.5"
+          />
         </div>
       </div>
       <FilterMembers
@@ -117,6 +120,7 @@ export const Members = ({ accessToken, teamId, plan, userId }) => {
           invites={invites}
           setInvites={setInvites}
           role={role}
+          search={search}
         />
       )}
     </div>

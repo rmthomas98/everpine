@@ -18,7 +18,12 @@ export const FilterMembers = ({ search, setSearch, role, setRole }) => {
           size={15}
           className="absolute text-muted-foreground left-3 top-1/2 transform -translate-y-1/2"
         />
-        <Input className="w-full pl-[34px]" placeholder="Search..." />
+        <Input
+          className="w-full pl-[34px]"
+          placeholder="Search email..."
+          onChange={(e) => setSearch(e.target.value)}
+          value={search}
+        />
       </div>
       <div className="max-w-[220px] w-full">
         <Select defaultValue="all" onValueChange={(value) => setRole(value)}>

@@ -1,6 +1,8 @@
 const prisma = require("../../../db/prisma");
 const crypto = require("crypto");
 const transporter = require("../../../utils/emailTransporter");
+const sendMemberInvite = require("../../../services/v1/emails/sendMemberInvite");
+const limits = require("../../../data/limits");
 
 const getMembers = async (req, res) => {
   try {
@@ -23,7 +25,12 @@ const getMembers = async (req, res) => {
       },
     });
 
-    const invites = await prisma.invite.findMany({ where: { teamId } });
+    const invites = await prisma.invite.findMany({
+      where: { teamId },
+      include: {
+        user: { select: { id: true, email: true, name: true, avatar: true } },
+      },
+    });
 
     res.json({ members, invites });
   } catch (e) {
@@ -51,6 +58,15 @@ const createInvite = async (req, res) => {
     // get the team
     const team = await prisma.team.findUnique({ where: { id: teamId } });
     if (!team) return res.status(404).json("Team not found");
+
+    // check if team is allowed to add another seat
+    const plan = team.plan.toLowerCase();
+    const { seats: allowedSeats } = limits[plan];
+    const members = await prisma.role.count({ where: { teamId } });
+    const pendingInvites = await prisma.invite.count({ where: { teamId } });
+    if (members + pendingInvites >= allowedSeats) {
+      return res.status(400).json("Team is at maximum capacity");
+    }
 
     // check if user has an account with the email
     const user = await prisma.user.findUnique({ where: { email } });
@@ -94,31 +110,96 @@ const createInvite = async (req, res) => {
     // get all the invites for the team
     const invites = await prisma.invite.findMany({ where: { teamId } });
 
-    // send email to invite the user
-    const msg = {
-      from: '"Everpine" <rmthomas@charmify.io>',
-      to: email,
-      subject: `You have been invited to join ${team.name}`,
-      html: `
-        <p>You have been invited to join ${team.name} on Everpine.</p>
-        <p>Click the link below to accept the invitation.</p>
-        <a href="${process.env.FRONTEND_URL}/invite?email=${email}&token=${token}">Accept invitation</a>
-      `,
-    };
-
     res.json({ invites });
 
-    try {
-      await transporter.sendMail(msg);
-    } catch (e) {
-      console.log(e);
-    }
+    // send invite email
+    await sendMemberInvite(email, token, team.name);
   } catch (e) {
     console.log(e);
     res.status(500).json("Internal server error");
   }
 };
 
-const addMember = async (req, res) => {};
+const resendInvite = async (req, res) => {
+  try {
+    const { userId } = req;
+    const { inviteId } = req.body;
 
-module.exports = { getMembers, addMember, createInvite };
+    // get invite
+    const invite = await prisma.invite.findUnique({
+      where: { id: inviteId },
+      include: { team: true },
+    });
+    if (!invite) return res.status(404).json("Invite not found");
+
+    // verify user has permission
+    const isOwner = await prisma.role.findFirst({
+      where: { userId, role: "OWNER", teamId: invite.team.id },
+    });
+    if (!isOwner) return res.status(403).json("You do not have permission");
+
+    // generate new token
+    let token = crypto.randomBytes(32).toString("hex");
+    while (await prisma.invite.findUnique({ where: { token } })) {
+      token = crypto.randomBytes(32).toString("hex");
+    }
+
+    // update invite
+    const updatedInvite = await prisma.invite.update({
+      where: { id: inviteId },
+      data: { token },
+    });
+
+    // send email
+    const sent = await sendMemberInvite(invite.email, token, invite.team.name);
+    if (!sent) return res.status(500).json("Failed to send email");
+
+    res.json("Invite has been resent!");
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Internal server error");
+  }
+};
+
+const revokeInvite = async (req, res) => {
+  try {
+    const { userId } = req;
+    const { inviteId } = req.body;
+
+    // get invite
+    const invite = await prisma.invite.findUnique({
+      where: { id: inviteId },
+      include: { team: true },
+    });
+    if (!invite) return res.status(404).json("Invite not found");
+
+    // verify user has permission
+    const isOwner = await prisma.role.findFirst({
+      where: { userId, role: "OWNER", teamId: invite.team.id },
+    });
+    if (!isOwner) return res.status(403).json("You do not have permission");
+
+    // delete invite
+    await prisma.invite.delete({ where: { id: inviteId } });
+
+    // get updated invites
+    const invites = await prisma.invite.findMany({
+      where: { teamId: invite.team.id },
+    });
+
+    res.json({ invites });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Internal server error");
+  }
+};
+
+const acceptInvite = async (req, res) => {};
+
+module.exports = {
+  getMembers,
+  acceptInvite,
+  createInvite,
+  resendInvite,
+  revokeInvite,
+};

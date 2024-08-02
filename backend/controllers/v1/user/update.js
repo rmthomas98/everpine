@@ -1,5 +1,5 @@
 const prisma = require("../../../db/prisma");
-const sendVerificationEmail = require("../../../services/v1/user/sendVerificationEmail");
+const sendVerificationEmail = require("../../../services/v1/emails/sendVerificationEmail");
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
 

@@ -2,6 +2,7 @@ const prisma = require("../../db/prisma");
 const bcrypt = require("bcrypt");
 const getUserInfo = require("../../services/v1/auth/getUserInfo");
 const transporter = require("../../utils/emailTransporter");
+const sendTwoFactorToken = require("../../services/v1/emails/sendTwoFactorToken");
 
 const checkTwoFactor = async (req, res) => {
   try {
@@ -36,14 +37,8 @@ const checkTwoFactor = async (req, res) => {
     });
 
     // send email
-    const message = {
-      from: '"Airtoken" <rmthomas@charmify.io>',
-      to: email,
-      subject: "Your two factor auth code",
-      html: `<p>Please enter this code to sign in to your account.</p><br><p>${code}</p>`,
-    };
-
-    await transporter.sendMail(message);
+    const sent = await sendTwoFactorToken(email, code);
+    if (!sent) return res.status(500).json("Error sending two factor code");
 
     res.json({ isEnabled: true });
   } catch (e) {
@@ -88,14 +83,8 @@ const resendTwoFactor = async (req, res) => {
     });
 
     // send email
-    const message = {
-      from: '"Airtoken" <rmthomas@charmify.io>',
-      to: email,
-      subject: "Your two factor auth code",
-      html: `<p>Please enter this code to sign in to your account.</p><br><p>${code}</p>`,
-    };
-
-    await transporter.sendMail(message);
+    const sent = await sendTwoFactorToken(email, code);
+    if (!sent) return res.status(500).json("Error sending two factor code");
 
     res.json({});
   } catch (e) {
