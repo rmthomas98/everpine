@@ -38,7 +38,7 @@ const getUserInfo = async (userId) => {
     let role = user?.roles.find((role) => role.team.id === user.defaultTeamId);
 
     // check if role is active, and if not, get the first active role
-    if (!role.isActive) {
+    if (!role?.isActive) {
       role = user?.roles.find((role) => role.isActive);
       // set the first active role as default team if found
       if (role) {

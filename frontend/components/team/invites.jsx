@@ -20,13 +20,21 @@ import {
   BiXCircle,
 } from "react-icons/bi";
 import { InviteLinkDialog } from "@/components/team/dialogs/getInviteLink";
+import { ResendInvite } from "@/components/team/dialogs/resendInvite";
+import { RevokeInvite } from "@/components/team/dialogs/revokeInvite";
 
-export const Invites = ({ invites, setInvites, selected, setSelected }) => {
+export const Invites = ({
+  invites,
+  setInvites,
+  selected,
+  setSelected,
+  accessToken,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLinkDialogOpen, setIsLinkDialogOpen] = useState(false);
-  const [isRoleDialogOpen, setIsRoleDialogOpen] = useState(false);
   const [isRevokeDialogOpen, setIsRevokeDialogOpen] = useState(false);
   const [selectedInvite, setSelectedInvite] = useState(null);
+  const [isResendDialogOpen, setIsResendDialogOpen] = useState(false);
 
   const onSelect = (id) => {
     if (selected.includes(id)) {
@@ -81,7 +89,7 @@ export const Invites = ({ invites, setInvites, selected, setSelected }) => {
                 className="space-x-1.5"
                 onSelect={() => {
                   setSelectedInvite(invite);
-                  setIsLinkDialogOpen(true);
+                  setIsResendDialogOpen(true);
                 }}
               >
                 <BiMailSend />
@@ -97,11 +105,13 @@ export const Invites = ({ invites, setInvites, selected, setSelected }) => {
                 <BiLinkAlt />
                 <span>Get invite link</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="space-x-1.5">
-                <BiUser />
-                <span>Update role</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="space-x-1.5 text-red-600 hover:!text-red-600 hover:!bg-destructive/10">
+              <DropdownMenuItem
+                className="space-x-1.5 text-red-600 hover:!text-red-600 hover:!bg-destructive/10"
+                onSelect={() => {
+                  setSelectedInvite(invite);
+                  setIsRevokeDialogOpen(true);
+                }}
+              >
                 <BiXCircle />
                 <span>Revoke invite</span>
               </DropdownMenuItem>
@@ -109,10 +119,23 @@ export const Invites = ({ invites, setInvites, selected, setSelected }) => {
           </DropdownMenu>
         </div>
       ))}
+      <ResendInvite
+        isOpen={isResendDialogOpen}
+        setIsOpen={setIsResendDialogOpen}
+        invite={selectedInvite}
+        accessToken={accessToken}
+      />
       <InviteLinkDialog
         isOpen={isLinkDialogOpen}
         setIsOpen={setIsLinkDialogOpen}
         invite={selectedInvite}
+      />
+      <RevokeInvite
+        isOpen={isRevokeDialogOpen}
+        setIsOpen={setIsRevokeDialogOpen}
+        invite={selectedInvite}
+        accessToken={accessToken}
+        setInvites={setInvites}
       />
     </>
   );

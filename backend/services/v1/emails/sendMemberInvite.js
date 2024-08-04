@@ -6,9 +6,9 @@ const sendMemberInvite = async (email, token, teamName) => {
     to: email,
     subject: `You have been invited to join ${teamName}`,
     html: `
-        <p>You have been invited to join ${teamName} on Everpine.</p>
+        <p>You have been invited to join team ${teamName} on Everpine.</p>
         <p>Click the link below to accept the invitation.</p>
-        <a href="${process.env.FRONTEND_URL}/invite?email=${email}&token=${token}">View invitation</a>
+        <a href="${process.env.FRONTEND_URL}/invite?token=${token}">View invitation</a>
       `,
   };
 

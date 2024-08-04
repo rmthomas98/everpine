@@ -113,6 +113,7 @@ export const Members = ({ accessToken, teamId, plan, userId }) => {
           accessToken={accessToken}
           userId={userId}
           role={role}
+          search={search}
         />
       ) : (
         <InvitesTable
@@ -121,6 +122,7 @@ export const Members = ({ accessToken, teamId, plan, userId }) => {
           setInvites={setInvites}
           role={role}
           search={search}
+          teamId={teamId}
         />
       )}
     </div>

@@ -16,11 +16,14 @@ router.delete("/leave", auth, teamController.leaveTeam);
 router.post("/members", auth, memberController.getMembers);
 
 router.post("/members/invite", auth, memberController.createInvite);
-router.patch("/members/invite/resend", auth, memberController.resendInvite);
-router.delete("/members/invite/revoke", auth, memberController.revokeInvite);
+router.post("/members/invite/resend", auth, memberController.resendInvite);
+router.post("/members/invite/revoke", auth, memberController.revokeInvite);
+router.post("/members/invite/bulk-revoke", auth, memberController.bulkRevoke);
+router.post("/members/invite/get", auth, memberController.getInvite);
 router.post("/members/invite/accept", auth, memberController.acceptInvite);
+router.post("/members/invite/decline", auth, memberController.declineInvite);
 
 router.patch("/members/update-role", auth, () => {});
-router.delete("/members/delete", auth, () => {});
+router.post("/members/remove", auth, () => {});
 
 module.exports = router;

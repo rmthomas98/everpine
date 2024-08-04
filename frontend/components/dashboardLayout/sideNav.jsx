@@ -141,10 +141,10 @@ export const SideNav = ({ user }) => {
                   side="right"
                   onCloseAutoFocus={(e) => e.preventDefault()}
                 >
-                  <DropdownMenuLabel className="py-1">
-                    {/*<p className="text-[13px]">Create new</p>*/}
-                    <p className="text-xs text-muted-foreground">Create new</p>
-                  </DropdownMenuLabel>
+                  {/*<DropdownMenuLabel className="py-1">*/}
+                  {/*  /!*<p className="text-[13px]">Create new</p>*!/*/}
+                  {/*  <p className="text-xs text-muted-foreground">Create new</p>*/}
+                  {/*</DropdownMenuLabel>*/}
                   {/*<DropdownMenuSeparator />*/}
                   <DropdownMenuItem>
                     <BiLinkAlt size={15} className="mr-2" />

@@ -12,11 +12,14 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 
+const baseUrl = process.env.NEXT_PUBLIC_FRONTEND_URL;
+
 export const InviteLinkDialog = ({ invite, isOpen, setIsOpen }) => {
   const [isCopied, setIsCopied] = useState(false);
 
+  const url = `${baseUrl}/invite?token=${invite?.token}`;
+
   const onCopy = () => {
-    const url = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/invite?token=${invite.token}&email=${invite.email}`;
     navigator.clipboard.writeText(url);
     setIsCopied(true);
     setTimeout(() => {
@@ -37,11 +40,7 @@ export const InviteLinkDialog = ({ invite, isOpen, setIsOpen }) => {
         </DialogHeader>
         <div className="relative flex items-center">
           <BiLinkAlt size={14} className="absolute left-3" />
-          <Input
-            className="pl-8 h-[34px]"
-            value={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/invite?token=${invite?.token}&email=${invite?.email}`}
-            readOnly
-          />
+          <Input className="pl-8 h-[34px]" value={url} readOnly />
           <Button
             size="sm"
             onClick={onCopy}

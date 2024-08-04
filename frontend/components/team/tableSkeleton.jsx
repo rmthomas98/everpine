@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const TableSkeleton = () => {
   return (
-    <div className="shadow rounded-lg border w-full fade-in-short-delayed opacity-0">
+    <div className="shadow rounded-lg border w-full fade-in-short-delayed opacity-0 mt-3">
       <div className="w-full flex justify-between items-center px-4 py-3 border-b space-x-4">
         <div className="flex items-center space-x-3">
           <Skeleton className="h-4 w-4 rounded-sm" />

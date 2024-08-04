@@ -7,7 +7,7 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { Invites } from "@/components/team/invites";
-import { filterSearch } from "@/lib/filterInvites";
+import { filterSearch } from "@/lib/filterMembers";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,17 +15,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { BiLinkAlt, BiUser, BiXCircle } from "react-icons/bi";
+import { BulkRevoke } from "@/components/team/dialogs/bulkRevoke";
 
 export const InvitesTable = ({
-  invites,
-  setInvites,
-  accessToken,
-  role,
-  search,
+  invites, // all invites
+  setInvites, // setInvites function
+  accessToken, // user access token
+  role, // role filter
+  search, // search filter
+  teamId, // team id for requests
 }) => {
   const [selected, setSelected] = useState([]);
   const [isAllSelected, setIsAllSelected] = useState(false);
-  const [filteredInvites, setFilteredInvites] = useState(invites);
+  const [filteredInvites, setFilteredInvites] = useState(invites); // we will always use this to display the invites
+  const [isBulkRevokeOpen, setIsBulkRevokeOpen] = useState(false);
 
   const onSelectAll = () => {
     if (selected.length === filteredInvites.length) {
@@ -49,7 +52,7 @@ export const InvitesTable = ({
   // filter invites based on search and role
   useEffect(() => {
     const newInvites = filterSearch(search, role, invites);
-    setFilteredInvites(newInvites);
+    setFilteredInvites(newInvites); // this should be the only place we alter filteredInvites
     // make sure to reset selected if search does not include user anymore
     if (selected.length) {
       const filtered = newInvites.filter((invite) =>
@@ -79,7 +82,12 @@ export const InvitesTable = ({
           </label>
         </div>
         {selected.length ? (
-          <Button className="fade-in opacity-0" size="sm" variant="destructive">
+          <Button
+            className="fade-in opacity-0"
+            size="sm"
+            variant="destructive"
+            onClick={() => setIsBulkRevokeOpen(true)}
+          >
             {selected.length > 1 ? "Revoke invites" : "Revoke invite"}
           </Button>
         ) : undefined}
@@ -89,6 +97,15 @@ export const InvitesTable = ({
         setInvites={setInvites}
         selected={selected}
         setSelected={setSelected}
+        accessToken={accessToken}
+      />
+      <BulkRevoke
+        invites={selected}
+        setInvites={setInvites}
+        accessToken={accessToken}
+        isOpen={isBulkRevokeOpen}
+        setIsOpen={setIsBulkRevokeOpen}
+        teamId={teamId}
       />
     </div>
   );
