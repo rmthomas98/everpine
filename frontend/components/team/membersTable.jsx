@@ -99,8 +99,6 @@ export const MembersTable = ({
     }
   }, [search, role, members]);
 
-  console.log(selected);
-
   if (!members.length) return <TableSkeleton />;
   if (!filteredMembers.length) return <NoResults />;
 
@@ -151,11 +149,7 @@ export const MembersTable = ({
                   disabled={member.user.id === userId}
                 />
                 <Avatar className="h-8 w-8">
-                  <AvatarImage
-                    className="bg-zinc-200 dark:bg-foreground transition-all"
-                    src={member.user.avatar}
-                    alt="avatar"
-                  />
+                  <AvatarImage src={member.user.avatar} alt="avatar" />
                 </Avatar>
                 <div className="flex flex-col">
                   <p className="text-[13px]">{member.user.email}</p>

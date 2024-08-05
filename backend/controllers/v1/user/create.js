@@ -51,8 +51,7 @@ const create = async (req, res) => {
     }
 
     // generate random avatar for the user
-    // const avatar = `https://api.dicebear.com/9.x/pixel-art/png?seed=${email}`;
-    const avatar = `https://api.dicebear.com/9.x/lorelei/png?seed=${email}`;
+    const avatar = `https://api.dicebear.com/9.x/lorelei/png?seed=${email}&backgroundColor=ffffff`;
 
     let user;
     let team;

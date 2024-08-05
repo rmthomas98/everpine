@@ -308,11 +308,7 @@ export const AppNav = ({ user }) => {
                     >
                       <DropdownMenuTrigger asChild>
                         <Avatar className="cursor-pointer">
-                          <AvatarImage
-                            className="bg-zinc-200 dark:bg-foreground transition-all"
-                            src={user?.avatar}
-                            alt="avatar"
-                          />
+                          <AvatarImage src={user?.avatar} alt="avatar" />
                           <AvatarFallback>
                             <Skeleton className="h-[30px] w-[30px] rounded-full" />
                           </AvatarFallback>
