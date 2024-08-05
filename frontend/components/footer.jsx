@@ -75,7 +75,7 @@ export const Footer = () => {
 
   return (
     <div className="border-t px-4 py-12 fade-in-short-delayed opacity-0">
-      <div className="max-w-[1000px] mx-auto">
+      <div className="max-w-[1100px] mx-auto">
         <div className="flex justify-between">
           <div>
             <div className="h-[25px]">

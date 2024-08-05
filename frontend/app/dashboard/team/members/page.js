@@ -12,6 +12,7 @@ const MembersPage = async () => {
         userId={user.id}
         accessToken={user.access_token}
         teamId={user.team.id}
+        teamName={user?.team.name}
         plan={user?.team.plan}
       />
     </div>

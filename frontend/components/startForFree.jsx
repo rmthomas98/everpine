@@ -50,7 +50,7 @@ export const StartForFree = () => {
     //     </div>
     //   </CardContent>
     // </Card>
-    <div className="flex justify-between items-center max-w-[1000px] mx-auto py-12">
+    <div className="flex justify-between items-center max-w-[1100px] mx-auto py-12">
       <div>
         <h2 className="text-2xl font-bold">Generate. Engage. Grow.</h2>
         <p className="text-muted-foreground mt-2 text-sm max-w-[500px]">

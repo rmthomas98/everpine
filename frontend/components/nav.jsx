@@ -60,6 +60,7 @@ import { IconRocket } from "@tabler/icons-react";
 import { TbBuildingSkyscraper } from "react-icons/tb";
 import { PiPaintBucketBold } from "react-icons/pi";
 import { products } from "@/data/nav/navItems";
+import { useState, useEffect } from "react";
 
 const solutions = {
   stages: [
@@ -227,6 +228,11 @@ const showNavRoutes = ["/", "/pricing"];
 export const Nav = () => {
   const path = usePathname();
   const scrollPosition = useWindowScroll();
+  const [scrollOnLoad, setScrollOnLoad] = useState(0);
+
+  useEffect(() => {
+    setScrollOnLoad(scrollPosition);
+  }, [scrollPosition]);
 
   if (!showNavRoutes.includes(path)) return <div></div>;
 
@@ -237,13 +243,15 @@ export const Nav = () => {
       {/*>*/}
       {/*  Light*/}
       {/*</Button>*/}
-      <div className={`px-4 py-3 top-0 z-[9999] sticky`}>
+      <div
+        className={`px-4 py-2 top-0 z-[9999] sticky border-b bg-background/80 backdrop-blur transition-all ${
+          scrollOnLoad > 50 ? "border-border" : "border-transparent"
+        }`}
+      >
         <div
-          className={`w-full rounded-full max-w-[1100px] mx-auto flex justify-between items-center px-2 py-2 border bg-background/80 backdrop-blur opacity-0 fade-in-short-delayed ${
-            scrollPosition > 50 && "shadow"
-          } transition-all`}
+          className={`w-full max-w-[1100px] mx-auto flex justify-between items-center opacity-0 fade-in-short-delayed transition-all`}
         >
-          <div className="ml-1">
+          <div>
             <Link href="/" passHref>
               <ThemedLogo />
             </Link>
@@ -412,7 +420,7 @@ export const Nav = () => {
             <Button size="sm" className="rounded-full" asChild>
               <Link href="/pricing">
                 Get started
-                <HiArrowSmRight className="ml-1" size={16} />
+                {/*<HiArrowSmRight className="ml-1" size={16} />*/}
               </Link>
             </Button>
           </div>

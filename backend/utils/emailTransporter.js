@@ -5,7 +5,7 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false,
   auth: {
-    user: "rmthomas@charmify.io",
+    user: "rmthomas@qryptic.io",
     pass: process.env.ZOHO_ACCESS_TOKEN,
   },
 });

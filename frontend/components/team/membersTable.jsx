@@ -24,19 +24,31 @@ import { TableSkeleton } from "@/components/team/tableSkeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { filterMembers } from "@/lib/filterMembers";
 import { BiLinkAlt, BiUser, BiXCircle } from "react-icons/bi";
+import { RemoveMember } from "@/components/team/dialogs/removeMember";
+import { BulkRemoveMembers } from "@/components/team/dialogs/bulkRemoveMembers";
+import { ChangeRole } from "@/components/team/dialogs/changeRole";
+import { LeaveTeam } from "@/components/team/dialogs/leaveTeam";
 
 export const MembersTable = ({
   members,
   setMembers,
   accessToken,
   userId,
+  teamId,
   role,
   search,
+  teamName,
 }) => {
   const [selected, setSelected] = useState([]);
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [filteredMembers, setFilteredMembers] = useState(members);
   const currUser = members.find((member) => member.user.id === userId);
+
+  const [selectedMember, setSelectedMember] = useState(null); // used for removing a single member or updating their role
+  const [isRemoveMemberOpen, setIsRemoveMemberOpen] = useState(false);
+  const [isRemoveBulkOpen, setIsRemoveBulkOpen] = useState(false);
+  const [isUpdateRoleOpen, setIsUpdateRoleOpen] = useState(false);
+  const [isLeaveTeamOpen, setIsLeaveTeamOpen] = useState(false);
 
   const onSelect = (id) => {
     if (selected.includes(id)) {
@@ -87,92 +99,159 @@ export const MembersTable = ({
     }
   }, [search, role, members]);
 
+  console.log(selected);
+
   if (!members.length) return <TableSkeleton />;
   if (!filteredMembers.length) return <NoResults />;
 
   return (
-    <div className="mt-3 opacity-0 fade-in-short-delayed">
-      <div className="shadow rounded-lg border w-full">
-        <div className="w-full flex justify-between items-center px-4 py-3 border-b space-x-4 h-[57px]">
-          <div className="flex items-center space-x-3">
-            <Checkbox
-              id="check-all"
-              onCheckedChange={onSelectAll}
-              checked={isAllSelected}
-              disabled={
-                members.length === 1 ||
-                (filteredMembers.length === 1 &&
-                  filteredMembers[0].user.id === userId)
-              }
-            />
-            <label htmlFor="check-all" className="text-[13px]">
-              {!selected.length
-                ? `Select all (${filteredMembers?.length})`
-                : `${selected.length} of ${filteredMembers?.length} selected`}
-            </label>
-          </div>
-          {selected.length ? (
-            <Button
-              className="fade-in opacity-0"
-              size="sm"
-              variant="destructive"
-            >
-              {selected.length > 1 ? "Remove members" : "Remove member"}
-            </Button>
-          ) : undefined}
-        </div>
-        {filteredMembers.map((member, i) => (
-          <div
-            key={member.user.id}
-            className={`w-full flex justify-between items-center p-4 space-x-4 ${
-              i === filteredMembers.length - 1 ? undefined : "border-b"
-            }`}
-          >
+    <>
+      <div className="mt-3 opacity-0 fade-in-short-delayed">
+        <div className="shadow rounded-lg border w-full">
+          <div className="w-full flex justify-between items-center px-4 py-3 border-b space-x-4 h-[57px]">
             <div className="flex items-center space-x-3">
               <Checkbox
-                checked={selected.includes(member.user.id)}
-                onCheckedChange={() => onSelect(member.user.id)}
-                disabled={member.user.id === userId}
+                id="check-all"
+                onCheckedChange={onSelectAll}
+                checked={isAllSelected}
+                disabled={
+                  members.length === 1 ||
+                  (filteredMembers.length === 1 &&
+                    filteredMembers[0].user.id === userId)
+                }
               />
-              <Avatar className="h-8 w-8">
-                <AvatarImage
-                  className="bg-zinc-200 dark:bg-foreground transition-all"
-                  src={member.user.avatar}
-                  alt="avatar"
-                />
-              </Avatar>
-              <div className="flex flex-col">
-                <p className="text-[13px]">{member.user.email}</p>
-
-                <p className="text-[13px] text-muted-foreground">
-                  {member.role.split("")[0] +
-                    member.role.slice(1).toLowerCase()}
-                </p>
-              </div>
+              <label htmlFor="check-all" className="text-[13px]">
+                {!selected.length
+                  ? `Select all (${filteredMembers?.length})`
+                  : `${selected.length} of ${filteredMembers?.length} selected`}
+              </label>
             </div>
-            <DropdownMenu modal={false}>
-              <DropdownMenuTrigger asChild>
-                <Button size="icon" variant="outline" className="h-8 w-8">
-                  <FiMoreHorizontal />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem className="space-x-1.5">
-                  <BiUser />
-                  <span>Change role</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="space-x-1.5 text-red-600 hover:!text-red-600 hover:!bg-destructive/10">
-                  <BiXCircle />
-                  <span>
-                    {member.user.id === userId ? "Leave team" : "Remove member"}
-                  </span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {selected.length ? (
+              <Button
+                className="fade-in opacity-0"
+                size="sm"
+                variant="destructive"
+                onClick={() => setIsRemoveBulkOpen(true)}
+              >
+                {selected.length > 1 ? "Remove members" : "Remove member"}
+              </Button>
+            ) : undefined}
           </div>
-        ))}
+          {filteredMembers.map((member, i) => (
+            <div
+              key={member.user.id}
+              className={`w-full flex justify-between items-center p-4 space-x-4 ${
+                i === filteredMembers.length - 1 ? undefined : "border-b"
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <Checkbox
+                  checked={selected.includes(member.user.id)}
+                  onCheckedChange={() => onSelect(member.user.id)}
+                  disabled={member.user.id === userId}
+                />
+                <Avatar className="h-8 w-8">
+                  <AvatarImage
+                    className="bg-zinc-200 dark:bg-foreground transition-all"
+                    src={member.user.avatar}
+                    alt="avatar"
+                  />
+                </Avatar>
+                <div className="flex flex-col">
+                  <p className="text-[13px]">{member.user.email}</p>
+
+                  <p className="text-[13px] text-muted-foreground">
+                    {member.role.split("")[0] +
+                      member.role.slice(1).toLowerCase()}
+                  </p>
+                </div>
+              </div>
+              <DropdownMenu modal={false}>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    className="h-8 w-8"
+                    disabled={members.length === 1}
+                  >
+                    <FiMoreHorizontal />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem
+                    className="space-x-1.5"
+                    onSelect={() => {
+                      setSelectedMember(member);
+                      setIsUpdateRoleOpen(true);
+                    }}
+                  >
+                    <BiUser />
+                    <span>Change role</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={
+                      member.user.id === userId
+                        ? () => setIsLeaveTeamOpen(true)
+                        : () => {
+                            setSelectedMember(member);
+                            setIsRemoveMemberOpen(true);
+                          }
+                    }
+                    className="space-x-1.5 text-red-600 hover:!text-red-600 hover:!bg-destructive/10"
+                  >
+                    <BiXCircle />
+                    <span>
+                      {member.user.id === userId
+                        ? "Leave team"
+                        : "Remove member"}
+                    </span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+      <RemoveMember
+        accessToken={accessToken}
+        member={selectedMember}
+        teamId={teamId}
+        setMembers={setMembers}
+        setIsOpen={setIsRemoveMemberOpen}
+        isOpen={isRemoveMemberOpen}
+      />
+      <BulkRemoveMembers
+        members={
+          selected.length
+            ? selected.map((id) => {
+                const member = members.find((member) => member.user.id === id);
+                return member?.id; // role id
+              })
+            : undefined
+        }
+        accessToken={accessToken}
+        teamId={teamId}
+        setMembers={setMembers}
+        setIsOpen={setIsRemoveBulkOpen}
+        isOpen={isRemoveBulkOpen}
+      />
+      <ChangeRole
+        accessToken={accessToken}
+        isOpen={isUpdateRoleOpen}
+        setIsOpen={setIsUpdateRoleOpen}
+        teamId={teamId}
+        member={selectedMember}
+        setMembers={setMembers}
+        userId={userId}
+      />
+      <LeaveTeam
+        accessToken={accessToken}
+        teamId={teamId}
+        isOpen={isLeaveTeamOpen}
+        setIsOpen={setIsLeaveTeamOpen}
+        teamName={teamName}
+      />
+    </>
   );
 };
 

@@ -12,59 +12,60 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { CgSpinner } from "react-icons/cg";
 import { toast } from "sonner";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export const LeaveTeamDialog = ({
+export const BulkRemoveMembers = ({
+  members,
+  accessToken,
+  setMembers,
   isOpen,
   setIsOpen,
-  accessToken,
-  team,
-  setTeams,
-  setDefaultTeam,
-  setSelectedTeam,
+  teamId,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const onLeaveTeam = async () => {
+  const onRemove = async () => {
+    // get member role id
     setIsLoading(true);
-    const res = await fetch(`${baseUrl}/team/leave`, {
-      method: "DELETE",
+    const res = await fetch(`${baseUrl}/team/members/remove`, {
+      method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ teamId: team?.team.id }),
+      body: JSON.stringify({ teamId, roleIds: members }),
     });
 
     if (!res.ok) {
-      const data = await res.json();
       setIsLoading(false);
-      return toast.error(data?.message, {
-        description: data?.description,
-      });
+      const data = await res.json();
+      return toast.error(data);
     }
 
-    const data = await res.json();
-    const { changeDefault } = data;
-    if (changeDefault) return window?.location.reload();
-    setTeams(data?.roles || []);
-    setDefaultTeam(data?.defaultTeam || null);
-    setSelectedTeam(null);
-    setIsLoading(false);
+    const { members: newMembers } = await res.json();
+    setMembers(newMembers);
     setIsOpen(false);
+    setIsLoading(false);
+    toast.success(
+      `${members?.length} member${
+        members?.length > 1 ? "s" : ""
+      } successfully removed`,
+    );
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Leave team</DialogTitle>
+          <DialogTitle>
+            Remove {members?.length} team member{members?.length > 1 && "s"}
+          </DialogTitle>
           <DialogDescription className="text-[13px]">
-            Are you sure you want to leave team{" "}
-            <span className="text-primary">{team?.team?.name}</span>?<br />
-            You will lose access to all resources associated with this team and
-            will have to be invited back by a team owner to rejoin.
+            Are you sure you want to remove {members?.length} team member
+            {members?.length > 1 && "s"}? You will have to re-invite them if you
+            want them to join your team. This action cannot be undone.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -74,11 +75,11 @@ export const LeaveTeamDialog = ({
           <Button
             size="sm"
             variant="destructive"
-            className="w-[74px]"
-            onClick={onLeaveTeam}
-            disabled={isLoading || !team}
+            onClick={onRemove}
+            disabled={isLoading}
+            className="w-[69px]"
           >
-            {isLoading ? <CgSpinner className="animate-spin" /> : "Confirm"}
+            {isLoading ? <CgSpinner className="animate-spin" /> : "Remove"}
           </Button>
         </DialogFooter>
       </DialogContent>

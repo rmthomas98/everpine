@@ -2,11 +2,11 @@ const transporter = require("../../../utils/emailTransporter");
 
 const sendMemberInvite = async (email, token, teamName) => {
   const msg = {
-    from: '"Everpine" <rmthomas@charmify.io>',
+    from: '"Qryptic" <rmthomas@qryptic.io>',
     to: email,
     subject: `You have been invited to join ${teamName}`,
     html: `
-        <p>You have been invited to join team ${teamName} on Everpine.</p>
+        <p>You have been invited to join team ${teamName} on Qrytpic.</p>
         <p>Click the link below to accept the invitation.</p>
         <a href="${process.env.FRONTEND_URL}/invite?token=${token}">View invitation</a>
       `,

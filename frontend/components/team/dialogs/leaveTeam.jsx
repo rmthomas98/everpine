@@ -15,18 +15,16 @@ import { toast } from "sonner";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export const LeaveTeamDialog = ({
+export const LeaveTeam = ({
+  accessToken,
+  teamId,
   isOpen,
   setIsOpen,
-  accessToken,
-  team,
-  setTeams,
-  setDefaultTeam,
-  setSelectedTeam,
+  teamName,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const onLeaveTeam = async () => {
+  const onLeave = async () => {
     setIsLoading(true);
     const res = await fetch(`${baseUrl}/team/leave`, {
       method: "DELETE",
@@ -34,51 +32,50 @@ export const LeaveTeamDialog = ({
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ teamId: team?.team.id }),
+      body: JSON.stringify({ teamId }),
     });
 
     if (!res.ok) {
-      const data = await res.json();
       setIsLoading(false);
+      const data = await res.json();
       return toast.error(data?.message, {
         description: data?.description,
       });
     }
 
-    const data = await res.json();
-    const { changeDefault } = data;
-    if (changeDefault) return window?.location.reload();
-    setTeams(data?.roles || []);
-    setDefaultTeam(data?.defaultTeam || null);
-    setSelectedTeam(null);
-    setIsLoading(false);
-    setIsOpen(false);
+    // we will have to refresh this page to update team
+    window?.location.reload();
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Leave team</DialogTitle>
+          <DialogTitle>Leave team {teamName}</DialogTitle>
           <DialogDescription className="text-[13px]">
             Are you sure you want to leave team{" "}
-            <span className="text-primary">{team?.team?.name}</span>?<br />
+            <span className="text-primary">{teamName}</span>?<br />
             You will lose access to all resources associated with this team and
             will have to be invited back by a team owner to rejoin.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button size="sm" variant="outline" onClick={() => setIsOpen(false)}>
+          <Button
+            variant="outline"
+            onClick={() => setIsOpen(false)}
+            disabled={isLoading}
+            size="sm"
+          >
             Cancel
           </Button>
           <Button
-            size="sm"
+            onClick={onLeave}
+            disabled={isLoading}
             variant="destructive"
-            className="w-[74px]"
-            onClick={onLeaveTeam}
-            disabled={isLoading || !team}
+            size="sm"
+            className="w-[95px]"
           >
-            {isLoading ? <CgSpinner className="animate-spin" /> : "Confirm"}
+            {isLoading ? <CgSpinner className="animate-spin" /> : "Leave team"}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -333,12 +333,68 @@ const declineInvite = async (req, res) => {
   }
 };
 
-const updateRole = async (req, res) => {};
+const updateRole = async (req, res) => {
+  try {
+    const { userId } = req;
+    const { teamId, roleId, role } = req.body;
+
+    // check if user is owner
+    const isOwner = await prisma.role.findFirst({
+      where: { userId, role: "OWNER", teamId },
+    });
+    if (!isOwner) return res.status(403).json("You do not have permission");
+
+    // make sure role is valid
+    const allowedRoles = ["OWNER", "MEMBER", "VIEWER"];
+    if (!allowedRoles.includes(role.toUpperCase())) {
+      return res.status(400).json("Invalid role");
+    }
+
+    // update role
+    await prisma.role.update({
+      where: { id: roleId },
+      data: { role: role.toUpperCase() },
+    });
+
+    // get updated roles
+    const members = await prisma.role.findMany({
+      where: { teamId },
+      select: {
+        id: true,
+        role: true,
+        isActive: true,
+        user: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            avatar: true,
+          },
+        },
+      },
+    });
+
+    res.json({ members });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Internal server error");
+  }
+};
 
 const removeMembers = async (req, res) => {
   try {
     const { userId } = req;
     const { teamId, roleIds } = req.body;
+
+    // maker sure roleIds is an array
+    if (!Array.isArray(roleIds)) {
+      return res.status(400).json("Invalid role ids");
+    }
+
+    // make sure user id is not in roleIds
+    if (roleIds.includes(userId)) {
+      return res.status(400).json("Cannot remove yourself");
+    }
 
     // check if user is owner
     const isOwner = await prisma.role.findFirst({

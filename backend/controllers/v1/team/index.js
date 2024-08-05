@@ -1,23 +1,6 @@
 const prisma = require("../../../db/prisma");
 const { createTeam } = require("../../../services/v1/team");
 
-const getTeams = async (req, res) => {
-  try {
-    const userId = req.userId;
-    if (!userId) return res.status(401).json({ message: "Unauthorized" });
-
-    const { teams } = await prisma.user.findUnique({
-      where: { id: userId },
-      include: { teams: true },
-    });
-
-    res.json({ teams });
-  } catch (e) {
-    console.log(e);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-};
-
 // this function will include the roles with the team
 const getRoles = async (req, res) => {
   try {
@@ -108,10 +91,6 @@ const leaveTeam = async (req, res) => {
     // allow the user to leave the team
     // delete role and disconnect user from team
     await prisma.role.delete({ where: { id: userRole.id } });
-    await prisma.team.update({
-      where: { id: teamId },
-      data: { users: { disconnect: { id: userId } } },
-    });
 
     // check if user is leaving the default team
     const user = await prisma.user.findUnique({
@@ -178,7 +157,6 @@ const leaveTeam = async (req, res) => {
 };
 
 module.exports = {
-  getTeams,
   getRoles,
   updateDefault,
   leaveTeam,

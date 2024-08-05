@@ -5,7 +5,6 @@ const memberController = require("../../controllers/v1/team/members");
 const auth = require("../../middleware/auth");
 
 // main (for teams)
-router.get("/", auth, teamController.getTeams);
 router.get("/roles", auth, teamController.getRoles);
 router.put("/default", auth, teamController.updateDefault);
 router.delete("/leave", auth, teamController.leaveTeam);
@@ -23,7 +22,7 @@ router.post("/members/invite/get", auth, memberController.getInvite);
 router.post("/members/invite/accept", auth, memberController.acceptInvite);
 router.post("/members/invite/decline", auth, memberController.declineInvite);
 
-router.patch("/members/update-role", auth, () => {});
-router.post("/members/remove", auth, () => {});
+router.patch("/members/update-role", auth, memberController.updateRole);
+router.post("/members/remove", auth, memberController.removeMembers);
 
 module.exports = router;

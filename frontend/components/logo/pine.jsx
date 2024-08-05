@@ -24,7 +24,7 @@ export const Pine = () => {
       id="logo"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1361.3 1330"
-      className="h-4 relative bottom-[1px]"
+      className="h-3.5 relative bottom-[1px]"
     >
       <defs>
         <linearGradient

@@ -419,9 +419,9 @@ export const Compare = () => {
         <p className="text-muted-foreground mt-2 text-center text-sm">
           Compare all features across all plans to find the best plan for you
         </p>
-        <div className={`border-b px-4 h-full sticky top-[60px]`}>
+        <div className={`border-b px-4 h-full sticky top-[49px]`}>
           <div
-            className={`flex justify-between items-end pt-8 bg-background pb-4 max-w-[1000px] mx-auto`}
+            className={`flex justify-between items-end pt-8 bg-background pb-4 max-w-[1100px] mx-auto`}
           >
             <h3
               className={`text-xl font-semibold ${
@@ -458,7 +458,7 @@ export const Compare = () => {
                   Select
                 </Button>
               </div>
-              <div className="w-[140px] px-2">
+              <div className="w-[140px] pl-2">
                 <p className="mb-2 text-center text-sm">Enterprise</p>
                 {/*<p className="text-center text-muted-foreground text-xs mb-2">*/}
                 {/*  $0/month*/}
@@ -471,13 +471,13 @@ export const Compare = () => {
           </div>
         </div>
         <div className="px-4">
-          <div className="max-w-[1000px] mx-auto">
+          <div className="max-w-[1100px] mx-auto">
             <TooltipProvider delayDuration={0}>
               <div className="mt-8">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                      <TableHead className="text-foreground text-base sticky top-[109px]">
                         <div className="flex items-center space-x-2">
                           <BiLinkAlt />
                           <span>Custom links</span>
@@ -525,7 +525,7 @@ export const Compare = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                      <TableHead className="text-foreground text-base sticky top-[109px]">
                         <div className="flex items-center space-x-2">
                           <HiMiniQrCode />
                           <span>QR codes</span>
@@ -573,7 +573,7 @@ export const Compare = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                      <TableHead className="text-foreground text-base sticky top-[109px]">
                         <div className="flex items-center space-x-2">
                           <BiGlobe />
                           <span>Landing pages</span>
@@ -621,7 +621,7 @@ export const Compare = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                      <TableHead className="text-foreground text-base sticky top-[109px]">
                         <div className="flex items-center space-x-2">
                           <BiBarChart />
                           <span>Analytics and tracking</span>
@@ -669,7 +669,7 @@ export const Compare = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                      <TableHead className="text-foreground text-base sticky top-[109px]">
                         <div className="flex items-center space-x-2">
                           <BiFolder />
                           <span>Campaigns</span>
@@ -717,7 +717,7 @@ export const Compare = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                      <TableHead className="text-foreground text-base sticky top-[109px]">
                         <div className="flex items-center space-x-2">
                           <FiBox />
                           <span>White label</span>
@@ -765,7 +765,7 @@ export const Compare = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                      <TableHead className="text-foreground text-base sticky top-[109px]">
                         <div className="flex items-center space-x-2">
                           <FiFlag />
                           <span>Smart rules</span>
@@ -813,7 +813,7 @@ export const Compare = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                      <TableHead className="text-foreground text-base sticky top-[109px]">
                         <div className="flex items-center space-x-2">
                           <FiUsers />
                           <span>Team management</span>
@@ -861,7 +861,7 @@ export const Compare = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                      <TableHead className="text-foreground text-base sticky top-[109px]">
                         <div className="flex items-center space-x-2">
                           <FiShield />
                           <span>Security</span>
@@ -909,7 +909,7 @@ export const Compare = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="text-foreground text-base sticky top-[120px]">
+                      <TableHead className="text-foreground text-base sticky top-[109px]">
                         <div className="flex items-center space-x-2">
                           <FiMessageCircle />
                           <span>Customer support</span>

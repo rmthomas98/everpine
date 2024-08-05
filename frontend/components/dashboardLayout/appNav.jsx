@@ -104,12 +104,12 @@ export const AppNav = ({ user }) => {
                 <Link href="/dashboard" passHref>
                   <ThemedLogo isDashboard={true} />
                 </Link>
-                <Badge
-                  className="capitalize dark:font-medium"
-                  variant="secondary"
-                >
-                  {user?.team.plan.toLowerCase()}
-                </Badge>
+                {/*<Badge*/}
+                {/*  className="capitalize dark:font-medium"*/}
+                {/*  variant="secondary"*/}
+                {/*>*/}
+                {/*  {user?.team.plan.toLowerCase()}*/}
+                {/*</Badge>*/}
               </div>
               {/*</div>*/}
               <Separator

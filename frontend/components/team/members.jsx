@@ -36,7 +36,7 @@ const fetchMembers = async (accessToken, teamId) => {
   return { members, invites };
 };
 
-export const Members = ({ accessToken, teamId, plan, userId }) => {
+export const Members = ({ accessToken, teamId, plan, userId, teamName }) => {
   const [members, setMembers] = useState([]);
   const [invites, setInvites] = useState([]);
   const [activeTab, setActiveTab] = useState("members");
@@ -114,6 +114,8 @@ export const Members = ({ accessToken, teamId, plan, userId }) => {
           userId={userId}
           role={role}
           search={search}
+          teamId={teamId}
+          teamName={teamName}
         />
       ) : (
         <InvitesTable

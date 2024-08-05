@@ -14,28 +14,26 @@ datasource db {
 }
 
 model User {
-  id                     String         @id @default(cuid())
-  createdAt              DateTime       @default(now())
-  updatedAt              DateTime       @updatedAt
+  id                     String   @id @default(cuid())
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
   name                   String?
-  email                  String         @unique
+  email                  String   @unique
   avatar                 String?
   password               String?
   resetPasswordToken     String?
-  allowGoogleAuth        Boolean        @default(true)
-  allowCredentialsAuth   Boolean        @default(true)
-  isTwoFactorAuthEnabled Boolean        @default(false)
+  allowGoogleAuth        Boolean  @default(true)
+  allowCredentialsAuth   Boolean  @default(true)
+  isTwoFactorAuthEnabled Boolean  @default(false)
   twoFactorAuthSecret    String?
-  isEmailVerified        Boolean        @default(false)
-  emailVerificationToken String?        @unique
+  isEmailVerified        Boolean  @default(false)
+  emailVerificationToken String?  @unique
   defaultTeamId          String?
   stripeCustomerId       String?
-  allowCriticalNotifs    Boolean        @default(true)
-  allowProductNotifs     Boolean        @default(true)
-  allowMarketingNotifs   Boolean        @default(true)
-  teams                  Team[]
+  allowCriticalNotifs    Boolean  @default(true)
+  allowProductNotifs     Boolean  @default(true)
+  allowMarketingNotifs   Boolean  @default(true)
   roles                  Role[]
-  subscriptions          Subscription[]
   invites                Invite[]
 }
 
@@ -65,8 +63,7 @@ model Subscription {
   id                   String             @id @default(cuid())
   createdAt            DateTime           @default(now())
   updatedAt            DateTime           @updatedAt
-  createdBy            User               @relation(fields: [createdById], references: [id])
-  createdById          String
+  createdById          String // user id of the person that created the subscription
   status               SubscriptionStatus @default(ACTIVE)
   plan                 Plan               @default(FREE)
   billingCycle         BillingCycle
@@ -90,7 +87,6 @@ model Team {
   stripeCustomerId String?
   subscription     Subscription? @relation(fields: [subscriptionId], references: [id])
   subscriptionId   String?       @unique
-  users            User[]
   roles            Role[]
   invites          Invite[]
 }
