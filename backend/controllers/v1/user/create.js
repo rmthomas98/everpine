@@ -4,6 +4,8 @@ const crypto = require("crypto");
 const sendVerificationEmail = require("../../../services/v1/emails/sendVerificationEmail");
 const { createTeam } = require("../../../services/v1/team");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const { s3 } = require("../../../utils/s3");
+const { PutObjectCommand } = require("@aws-sdk/client-s3");
 
 const create = async (req, res) => {
   try {
@@ -51,7 +53,7 @@ const create = async (req, res) => {
     }
 
     // generate random avatar for the user
-    const avatar = `https://api.dicebear.com/9.x/lorelei/png?seed=${email}&backgroundColor=ffffff`;
+    const avatar = `https://api.dicebear.com/9.x/lorelei/png?seed=${email}&scale=90&backgroundColor=ffffff`;
 
     let user;
     let team;
@@ -89,6 +91,36 @@ const create = async (req, res) => {
       if (user) await prisma.user.delete({ where: { id: user.id } });
       if (team) await prisma.team.delete({ where: { id: team.id } });
       if (role) await prisma.role.delete({ where: { id: role.id } });
+    }
+
+    // make request to avatar api to get image data
+    // need to convert the image to a buffer and upload it to s3
+    const img = await fetch(avatar);
+    const buffer = Buffer.from(await img.arrayBuffer());
+
+    // upload avatar to s3
+    const avatarKey = `avatars/${user.id}/default.png`;
+
+    const params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: avatarKey,
+      Body: buffer,
+      ContentType: "image/png",
+    };
+
+    try {
+      const command = new PutObjectCommand(params);
+      const data = await s3.send(command);
+      // build location of the image
+      const location = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${avatarKey}`;
+      // update the user with the avatar location
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { avatar: location },
+      });
+    } catch (e) {
+      console.log(e);
+      // dont do anything
     }
 
     res.json("user created");

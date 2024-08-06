@@ -2,6 +2,8 @@ const prisma = require("../../../db/prisma");
 const sendVerificationEmail = require("../../../services/v1/emails/sendVerificationEmail");
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
+const { s3 } = require("../../../utils/s3");
+const { PutObjectCommand } = require("@aws-sdk/client-s3");
 
 const updateName = async (req, res) => {
   try {
@@ -193,10 +195,63 @@ const updateNotifs = async (req, res) => {
   }
 };
 
+const updateAvatar = async (req, res) => {
+  try {
+    const { userId, file } = req;
+
+    if (!file) return res.status(400).json("You must provide a file");
+    const { originalname, size, mimetype, buffer } = file;
+
+    // get user
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) return res.status(400).json("Invalid request");
+
+    // check to make sure file is not too large
+    const maxSize = 5 * 1024 * 1024; // 5mb
+    if (size > maxSize) return res.status(400).json("Image size is too large");
+
+    // check to make sure file is an image
+    if (!mimetype.startsWith("image/")) {
+      return res.status(400).json("Please select an image file");
+    }
+
+    const key = `avatars/${userId}/${originalname}`;
+    const bucket = process.env.AWS_BUCKET_NAME;
+    // upload to s3
+    const params = {
+      Bucket: bucket,
+      Key: key,
+      Body: buffer,
+      ContentType: mimetype,
+    };
+
+    try {
+      const command = new PutObjectCommand(params);
+      const data = await s3.send(command);
+      // build location of the image
+      const location = `https://${bucket}.s3.amazonaws.com/${key}`;
+      // update the user avatar
+      await prisma.user.update({
+        where: { id: userId },
+        data: { avatar: location },
+      });
+    } catch (e) {
+      console.log(e);
+      return res.status(500).json("Error uploading avatar");
+    }
+
+    res.json("Avatar updated successfully!");
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Internal server error");
+  }
+};
+
 module.exports = {
   updateName,
   updateEmail,
   updatePassword,
   updateAuth,
   updateNotifs,
+  updateAvatar,
 };

@@ -150,6 +150,11 @@ export const MembersTable = ({
                 />
                 <Avatar className="h-8 w-8">
                   <AvatarImage src={member.user.avatar} alt="avatar" />
+                  <AvatarFallback>
+                    <p className="text-xs">
+                      {member.user.email[0].toUpperCase()}
+                    </p>
+                  </AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col">
                   <p className="text-[13px]">{member.user.email}</p>

@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { CgSpinner } from "react-icons/cg";
 import { toast } from "sonner";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -69,13 +69,14 @@ export const RemoveMember = ({
               <Avatar className="h-8 w-8">
                 <AvatarImage
                   className="bg-zinc-200 dark:bg-foreground transition-all"
-                  src={
-                    member?.user
-                      ? member?.user.avatar
-                      : `https://api.dicebear.com/9.x/lorelei/png?seed=${member?.user.email}`
-                  }
+                  src={member?.user.avatar || undefined}
                   alt="avatar"
                 />
+                <AvatarFallback>
+                  <p className="text-xs">
+                    {member?.user.email[0].toUpperCase()}
+                  </p>
+                </AvatarFallback>
               </Avatar>
               <div className="flex flex-col">
                 <p className="text-[13px]">{member?.user.email}</p>

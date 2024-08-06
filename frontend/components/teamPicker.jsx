@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/popover";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { FiPlusCircle } from "react-icons/fi";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
@@ -53,7 +53,15 @@ export const TeamPicker = ({ teams, defaultTeam, accessToken }) => {
     setOpen(false);
   };
 
-  if (!teams?.length) return <Skeleton className="h-[36px] w-full" />;
+  if (!teams?.length)
+    return (
+      <div className="h-[36px] w-full flex items-center justify-between border rounded-md px-3">
+        <div className="flex items-center space-x-2">
+          <Skeleton className="h-5 w-5 rounded-full" />
+          <Skeleton className="rounded h-4 w-20" />
+        </div>
+      </div>
+    );
 
   return (
     <div className="fade-in-short-delayed opacity-0">
@@ -70,8 +78,11 @@ export const TeamPicker = ({ teams, defaultTeam, accessToken }) => {
               <div className="flex items-center space-x-2">
                 <Avatar className="h-[20px] w-[20px]">
                   <AvatarImage src={value.avatar} alt={value.name} />
+                  <AvatarFallback>
+                    <Skeleton className="h-5 w-5 rounded-full" />
+                  </AvatarFallback>
                 </Avatar>
-                <span className="max-w-[142px] truncate">{value.name}</span>
+                <span className="max-w-[130px] truncate">{value.name}</span>
               </div>
             ) : (
               <p>Select team...</p>
@@ -111,14 +122,17 @@ export const TeamPicker = ({ teams, defaultTeam, accessToken }) => {
                     <div className="flex items-center space-x-2">
                       <Avatar className="h-[20px] w-[20px]">
                         <AvatarImage src={team.avatar} alt={team.name} />
+                        <AvatarFallback>
+                          <Skeleton className="h-5 w-5 rounded-full" />
+                        </AvatarFallback>
                       </Avatar>
-                      <span className="text-[13px] font-medium truncate max-w-[156px]">
+                      <span className="text-[13px] font-medium truncate max-w-[136px]">
                         {team.name}
                       </span>
                     </div>
                     <HiMiniCheck
                       size={13}
-                      className={`mr-2 ${
+                      className={`shrink-0 ${
                         team.id === value?.id ? "opacity-100" : "opacity-0"
                       }`}
                     />

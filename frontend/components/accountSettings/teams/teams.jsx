@@ -115,25 +115,28 @@ export const Teams = ({ accessToken }) => {
       <p className="text-sm text-muted-foreground mt-1.5">
         Manage your existings teams or create a new one.
       </p>
-      {!teams && (
-        <div className="mt-6 flex flex-col space-y-4">
-          <Skeleton className="h-[73px] w-full rounded-lg" />
-          <Skeleton className="h-[73px] w-full rounded-lg" />
-        </div>
-      )}
+      {/*{!teams && (*/}
+      {/*  <div className="mt-6 flex flex-col space-y-4">*/}
+      {/*    <Skeleton className="h-[73px] w-full rounded-lg" />*/}
+      {/*    <Skeleton className="h-[73px] w-full rounded-lg" />*/}
+      {/*  </div>*/}
+      {/*)}*/}
+      {!teams && <TeamSkeleton />}
       {teams && (
-        <div className="mt-6 flex flex-col space-y-4 fade-in-short-delayed opacity-0">
-          {teams.map((team) => (
+        <div className="mt-6 fade-in-short-delayed opacity-0 border shadow rounded-lg">
+          {teams.map((team, i) => (
             <div
               key={team.id}
-              className={`flex items-center justify-between bg-card-background border rounded-lg p-4 shadow`}
+              className={`flex items-center justify-between bg-card-background p-4 ${
+                teams.length > i + 1 ? "border-b" : undefined
+              }`}
             >
               <div className="flex items-center space-x-3">
-                <Avatar className="h-[32px] w-[32px]">
+                <Avatar className="h-8 w-8">
                   <AvatarImage src={team.team.avatar} />
                 </Avatar>
                 <div>
-                  <p className="text-sm font-medium">{team.team.name}</p>
+                  <p className="text-[13px]">{team.team.name}</p>
                   <p className="text-[13px] text-muted-foreground capitalize">
                     {team.role.toLowerCase()}
                   </p>
@@ -202,6 +205,55 @@ export const Teams = ({ accessToken }) => {
         setDefaultTeam={setDefaultTeam}
         setSelectedTeam={setSelectedTeam}
       />
+    </div>
+  );
+};
+
+const TeamSkeleton = () => {
+  return (
+    <div className="shadow rounded-lg border w-full mt-6">
+      <div className="w-full flex justify-between items-center p-4 border-b space-x-4">
+        <div className="flex items-center space-x-3">
+          <Skeleton className="h-8 w-8 rounded-full" />
+          <div className="flex flex-col space-y-1.5">
+            <Skeleton className="h-4 w-32" />
+            <Skeleton className="h-4 w-20" />
+          </div>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Skeleton className="h-8 w-[56px] rounded-md" />
+          <Skeleton className="h-8 w-[75px] rounded-md" />
+          <Skeleton className="h-8 w-8 rounded-md" />
+        </div>
+      </div>
+      <div className="w-full flex justify-between items-center p-4 border-b space-x-4">
+        <div className="flex items-center space-x-3">
+          <Skeleton className="h-8 w-8 rounded-full" />
+          <div className="flex flex-col space-y-1.5">
+            <Skeleton className="h-4 w-32" />
+            <Skeleton className="h-4 w-20" />
+          </div>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Skeleton className="h-8 w-[56px] rounded-md" />
+          <Skeleton className="h-8 w-[75px] rounded-md" />
+          <Skeleton className="h-8 w-8 rounded-md" />
+        </div>
+      </div>
+      <div className="w-full flex justify-between items-center p-4 space-x-4">
+        <div className="flex items-center space-x-3">
+          <Skeleton className="h-8 w-8 rounded-full" />
+          <div className="flex flex-col space-y-1.5">
+            <Skeleton className="h-4 w-32" />
+            <Skeleton className="h-4 w-20" />
+          </div>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Skeleton className="h-8 w-[56px] rounded-md" />
+          <Skeleton className="h-8 w-[75px] rounded-md" />
+          <Skeleton className="h-8 w-8 rounded-md" />
+        </div>
+      </div>
     </div>
   );
 };

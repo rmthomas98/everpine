@@ -243,56 +243,56 @@ export const AppNav = ({ user }) => {
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-              {/*<div>*/}
-              {/*  <Popover*/}
-              {/*    onOpenChange={setIsNotifsMenuOpen}*/}
-              {/*    open={isNotifsMenuOpen}*/}
-              {/*  >*/}
-              {/*    <Tooltip open={isNotifsTooltipOpen && !isAnyMenuOpen}>*/}
-              {/*      <TooltipTrigger*/}
-              {/*        asChild*/}
-              {/*        onMouseEnter={() => setIsNotifsTooltipOpen(true)}*/}
-              {/*        onMouseLeave={() => setIsNotifsTooltipOpen(false)}*/}
-              {/*      >*/}
-              {/*        <PopoverTrigger*/}
-              {/*          asChild*/}
-              {/*          onClick={(e) => e.preventDefault()}*/}
-              {/*          onPointerDown={() =>*/}
-              {/*            setIsNotifsMenuOpen((prev) => !prev)*/}
-              {/*          }*/}
-              {/*        >*/}
-              {/*          <Button*/}
-              {/*            size="icon"*/}
-              {/*            variant="ghost"*/}
-              {/*            className="rounded-full"*/}
-              {/*          >*/}
-              {/*            <FiBell size={15} className="text-muted-foreground" />*/}
-              {/*          </Button>*/}
-              {/*        </PopoverTrigger>*/}
-              {/*      </TooltipTrigger>*/}
-              {/*      <TooltipContent side="bottom" align="center" sideOffset={8}>*/}
-              {/*        <p>Notifications</p>*/}
-              {/*      </TooltipContent>*/}
-              {/*    </Tooltip>*/}
-              {/*    <PopoverContent*/}
-              {/*      onCloseAutoFocus={(e) => e.preventDefault()}*/}
-              {/*      collisionBoundary={ref?.current}*/}
-              {/*    >*/}
-              {/*      /!*<div className="flex items-center justify-between">*!/*/}
-              {/*      /!*  <p className="font-medium text-[13px]">Notifications</p>*!/*/}
-              {/*      /!*</div>*!/*/}
-              {/*      <div className="flex flex-col justify-center items-center w-full">*/}
-              {/*        <FiCheckCircle size={18} className="text-emerald-600" />*/}
-              {/*        <p className="text-xs text-center font-medium mt-2">*/}
-              {/*          You&#39;re all up to date*/}
-              {/*        </p>*/}
-              {/*        <p className="text-xs text-muted-foreground text-center mt-1">*/}
-              {/*          You have no new notifications at this time*/}
-              {/*        </p>*/}
-              {/*      </div>*/}
-              {/*    </PopoverContent>*/}
-              {/*  </Popover>*/}
-              {/*</div>*/}
+              <div>
+                <Popover
+                  onOpenChange={setIsNotifsMenuOpen}
+                  open={isNotifsMenuOpen}
+                >
+                  <Tooltip open={isNotifsTooltipOpen && !isAnyMenuOpen}>
+                    <TooltipTrigger
+                      asChild
+                      onMouseEnter={() => setIsNotifsTooltipOpen(true)}
+                      onMouseLeave={() => setIsNotifsTooltipOpen(false)}
+                    >
+                      <PopoverTrigger
+                        asChild
+                        onClick={(e) => e.preventDefault()}
+                        onPointerDown={() =>
+                          setIsNotifsMenuOpen((prev) => !prev)
+                        }
+                      >
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="rounded-full"
+                        >
+                          <FiBell size={15} className="text-muted-foreground" />
+                        </Button>
+                      </PopoverTrigger>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom" align="center" sideOffset={8}>
+                      <p>Notifications</p>
+                    </TooltipContent>
+                  </Tooltip>
+                  <PopoverContent
+                    onCloseAutoFocus={(e) => e.preventDefault()}
+                    collisionBoundary={ref?.current}
+                  >
+                    {/*<div className="flex items-center justify-between">*/}
+                    {/*  <p className="font-medium text-[13px]">Notifications</p>*/}
+                    {/*</div>*/}
+                    <div className="flex flex-col justify-center items-center w-full">
+                      <FiCheckCircle size={18} className="text-emerald-600" />
+                      <p className="text-xs text-center font-medium mt-2">
+                        You&#39;re all up to date
+                      </p>
+                      <p className="text-xs text-muted-foreground text-center mt-1">
+                        You have no new notifications at this time
+                      </p>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </div>
 
               <div>
                 <DropdownMenu

@@ -8,7 +8,7 @@ const DashboardLayout = async ({ children }) => {
 
   return (
     <>
-      <NextTopLoader showSpinner={false} color="#6366f1" height={2} />
+      <NextTopLoader showSpinner={false} color="#10b981" height={2} />
       <AppNav user={user} />
       <div className="max-w-[1400px] mx-auto">
         <div className="w-full flex">

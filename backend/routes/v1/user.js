@@ -6,6 +6,8 @@ const infoController = require("../../controllers/v1/user/info");
 const deleteController = require("../../controllers/v1/user/delete");
 const emailController = require("../../controllers/v1/user/email");
 const auth = require("../../middleware/auth");
+const multer = require("multer");
+const upload = multer();
 
 // middleware to check referrer
 // check referrer to make sure the request is coming from the frontend
@@ -22,6 +24,14 @@ router.patch("/verify-email", emailController.verifyEmail);
 
 // update user email
 router.patch("/update-email", auth, updateUserController.updateEmail);
+
+// update user avatar
+router.patch(
+  "/update-avatar",
+  auth,
+  upload.single("avatar"),
+  updateUserController.updateAvatar,
+);
 
 // update user name
 router.patch("/update-name", auth, updateUserController.updateName);

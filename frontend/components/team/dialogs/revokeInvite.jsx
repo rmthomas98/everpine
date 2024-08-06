@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "sonner";
 import { CgSpinner } from "react-icons/cg";
 
@@ -65,13 +65,12 @@ export const RevokeInvite = ({
               <Avatar className="h-8 w-8">
                 <AvatarImage
                   className="bg-zinc-200 dark:bg-foreground transition-all"
-                  src={
-                    invite?.user
-                      ? invite?.user.avatar
-                      : `https://api.dicebear.com/9.x/lorelei/png?seed=${invite?.email}`
-                  }
+                  src={invite?.user?.avatar || undefined}
                   alt="avatar"
                 />
+                <AvatarFallback>
+                  <p className="text-xs">{invite?.email[0].toUpperCase()}</p>
+                </AvatarFallback>
               </Avatar>
               <div className="flex flex-col">
                 <p className="text-[13px]">{invite?.email}</p>
